@@ -2,6 +2,12 @@ package mapreduce
 
 import (
 	"hash/fnv"
+    "io/ioutil"
+    "log"
+    "os"
+    "encoding/json"
+    "fmt"
+//    "strings"
 )
 
 func doMap(
@@ -53,6 +59,55 @@ func doMap(
 	//
 	// Your code here (Part I).
 	//
+
+    content, err := ioutil.ReadFile(inFile)
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    fmt.Printf("nReduce = %v \n", nReduce)
+    s := string(content)
+    KeyValue := mapF(inFile, s)
+//    fmt.Printf("KeyValue:\n%v\n", KeyValue)
+
+    fmt.Printf("inFile = %v\n", inFile)
+//    var tempFilename string
+    var intermediateFilename string
+    for _, kv := range KeyValue {
+        mod := ihash(kv.Key) % nReduce
+//        tempFilename = intermediateFilename
+        intermediateFilename = reduceName(jobName, mapTask, mod)
+/*
+        if strings.Compare(tempFilename, intermediateFilename) != 0 {
+            fmt.Printf("intermediateFilename = %v\n", intermediateFilename)
+            tempFilename = intermediateFilename
+        }
+*/
+/*
+        if _, err := os.Stat(intermediateFilename); os.IsNotExist(err) {
+            fmt.Printf("file does not exist\n")
+        }else {
+            fmt.Printf("file exist, than remove it\n")
+            err = os.Remove(intermediateFilename)
+            if err != nil {
+                fmt.Println("remove file failure\n")
+            }
+        }
+*/
+        file, err := os.OpenFile(intermediateFilename, os.O_RDWR | os.O_APPEND | os.O_CREATE, 0755)
+        if err != nil {
+            fmt.Println("OpenFile failure\n")
+        }
+
+        enc := json.NewEncoder(file)
+        err = enc.Encode(&kv)
+        if err != nil {
+            log.Fatal(err)
+        }
+
+        file.Close()
+    }
+
 }
 
 func ihash(s string) int {
@@ -60,3 +115,4 @@ func ihash(s string) int {
 	h.Write([]byte(s))
 	return int(h.Sum32() & 0x7fffffff)
 }
+

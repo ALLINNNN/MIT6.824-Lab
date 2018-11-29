@@ -4,6 +4,9 @@ import (
 	"fmt"
 	"mapreduce"
 	"os"
+    "strings"
+    "unicode"
+    "strconv"
 )
 
 //
@@ -15,6 +18,30 @@ import (
 //
 func mapF(filename string, contents string) []mapreduce.KeyValue {
 	// Your code here (Part II).
+
+    /* i. Split string to word  */
+    f := func(c rune) bool {
+        return !unicode.IsLetter(c) && !unicode.IsNumber(c)
+    }
+    temp := strings.FieldsFunc(contents, f)
+
+    /*ii. Pass words to kvs and return kvs*/
+    var kvs []mapreduce.KeyValue
+    fmt.Println("len(temp) = ", len(temp))
+    for i := 0; i < len(temp); i++ {
+        var kv mapreduce.KeyValue
+        kv.Key = temp[i]
+        kv.Value = "1"
+        kvs = append(kvs, kv)
+    }
+
+    /*iii. Check kvs*/
+/*
+    for i := 0; i < len(kvs); i++ {
+        fmt.Printf("kvs[%v].Key = %v, kvs[%v].Value = %v\n", i, kvs[i].Key, i, kvs[i].Value)
+    }
+*/
+    return kvs
 }
 
 //
@@ -24,6 +51,19 @@ func mapF(filename string, contents string) []mapreduce.KeyValue {
 //
 func reduceF(key string, values []string) string {
 	// Your code here (Part II).
+
+    total := 0
+//    fmt.Printf("reduceF, len(values) = %v\n", len(values))
+    for i := 0; i < len(values); i++ {
+        if temp, err := strconv.Atoi(values[i]); err != nil {
+            fmt.Println("value transfer to int failure")
+        } else {
+            total += temp
+        }
+    }
+//    fmt.Printf("reduceF, key = %v, total = %v\n", key, total)
+//    fmt.Printf("total string = %v\n", strconv.Itoa(total))
+    return strconv.Itoa(total)
 }
 
 // Can be run in 3 ways:
