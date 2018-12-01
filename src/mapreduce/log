@@ -1,0 +1,1616 @@
+/var/tmp/824-1000/mr4425-master: Starting Map/Reduce task test
+Schedule: 20 mapPhase tasks (10 I/Os)
+flagMapFiles default value = [false false false false false false false false false false false false false false false false false false false false]
+mapFiles length = 20
+mapFiles = 
+[824-mrinput-0.txt 824-mrinput-1.txt 824-mrinput-2.txt 824-mrinput-3.txt 824-mrinput-4.txt 824-mrinput-5.txt 824-mrinput-6.txt 824-mrinput-7.txt 824-mrinput-8.txt 824-mrinput-9.txt 824-mrinput-10.txt 824-mrinput-11.txt 824-mrinput-12.txt 824-mrinput-13.txt 824-mrinput-14.txt 824-mrinput-15.txt 824-mrinput-16.txt 824-mrinput-17.txt 824-mrinput-18.txt 824-mrinput-19.txt]
+n_other = 
+10
+ntasks = 
+20
+Get a resigerchan, value = /var/tmp/824-1000/mr4425-worker0
+srvCollection = [     /var/tmp/824-1000/mr4425-worker0]
+selec map file = 824-mrinput-0.txt
+flagMapFiles = 
+[false true true true true true true true true true true true true true true true true true true true]
+Get a resigerchan, value = /var/tmp/824-1000/mr4425-worker1
+srvCollection = [     /var/tmp/824-1000/mr4425-worker0 /var/tmp/824-1000/mr4425-worker1]
+selec map file = 824-mrinput-1.txt
+flagMapFiles = 
+[false false true true true true true true true true true true true true true true true true true true]
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......args.File = 824-mrinput-1.txt......]
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker0......]
+[......args.File = 824-mrinput-0.txt......]
+/var/tmp/824-1000/mr4425-worker1: given mapPhase task #1 on file 824-mrinput-1.txt (nios: 10)
+wk.concurrent + 1 = 1
+nReduce = 10 
+/var/tmp/824-1000/mr4425-worker0: given mapPhase task #0 on file 824-mrinput-0.txt (nios: 10)
+wk.concurrent + 1 = 1
+nReduce = 10 
+mapTask = 1
+inFile = 824-mrinput-1.txt
+mapTask = 0
+inFile = 824-mrinput-0.txt
+doMap has done, inFile = 824-mrinput-1.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker1: mapPhase task #1 done
+doMap has done, inFile = 824-mrinput-0.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker0: mapPhase task #0 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker0, index = 0, TaskNumber = 0, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 0
+[......rpc call done......]
+server = /var/tmp/824-1000/mr4425-worker0
+task = 824-mrinput-0.txt has finished
+selec map file = 824-mrinput-2.txt
+flagMapFiles = 
+[false false false true true true true true true true true true true true true true true true true true]
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker0......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 1, TaskNumber = 1, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 1
+server = /var/tmp/824-1000/mr4425-worker1
+task = 824-mrinput-1.txt has finished
+selec map file = 824-mrinput-3.txt
+flagMapFiles = 
+[false false false false true true true true true true true true true true true true true true true true]
+[......rpc call start......]
+[......args.File = 824-mrinput-2.txt......]
+[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......args.File = 824-mrinput-3.txt......]
+/var/tmp/824-1000/mr4425-worker0: given mapPhase task #2 on file 824-mrinput-2.txt (nios: 10)
+wk.concurrent + 1 = 1
+/var/tmp/824-1000/mr4425-worker1: given mapPhase task #3 on file 824-mrinput-3.txt (nios: 10)
+wk.concurrent + 1 = 1
+nReduce = 10 
+nReduce = 10 
+mapTask = 3
+inFile = 824-mrinput-3.txt
+mapTask = 2
+inFile = 824-mrinput-2.txt
+doMap has done, inFile = 824-mrinput-3.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker1: mapPhase task #3 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 3, TaskNumber = 3, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 2
+server = /var/tmp/824-1000/mr4425-worker1
+task = 824-mrinput-3.txt has finished
+selec map file = 824-mrinput-4.txt
+flagMapFiles = 
+[false false false false false true true true true true true true true true true true true true true true]
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......args.File = 824-mrinput-4.txt......]
+doMap has done, inFile = 824-mrinput-2.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker0: mapPhase task #2 done
+/var/tmp/824-1000/mr4425-worker1: given mapPhase task #4 on file 824-mrinput-4.txt (nios: 10)
+wk.concurrent + 1 = 1
+nReduce = 10 
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker0, index = 2, TaskNumber = 2, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 3
+server = /var/tmp/824-1000/mr4425-worker0
+task = 824-mrinput-2.txt has finished
+selec map file = 824-mrinput-5.txt
+flagMapFiles = 
+[false false false false false false true true true true true true true true true true true true true true]
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker0......]
+[......args.File = 824-mrinput-5.txt......]
+mapTask = 4
+inFile = 824-mrinput-4.txt
+/var/tmp/824-1000/mr4425-worker0: given mapPhase task #5 on file 824-mrinput-5.txt (nios: 10)
+wk.concurrent + 1 = 1
+nReduce = 10 
+mapTask = 5
+inFile = 824-mrinput-5.txt
+doMap has done, inFile = 824-mrinput-5.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker0: mapPhase task #5 done
+doMap has done, inFile = 824-mrinput-4.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker1: mapPhase task #4 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker0, index = 5, TaskNumber = 5, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 4
+server = /var/tmp/824-1000/mr4425-worker0
+task = 824-mrinput-5.txt has finished
+selec map file = 824-mrinput-6.txt
+[......rpc call done......]
+flagMapFiles = 
+[false false false false false false false true true true true true true true true true true true true true]
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker0......]
+[......args.File = 824-mrinput-6.txt......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 4, TaskNumber = 4, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 5
+server = /var/tmp/824-1000/mr4425-worker1
+task = 824-mrinput-4.txt has finished
+selec map file = 824-mrinput-7.txt
+flagMapFiles = 
+[false false false false false false false false true true true true true true true true true true true true]
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......args.File = 824-mrinput-7.txt......]
+/var/tmp/824-1000/mr4425-worker0: given mapPhase task #6 on file 824-mrinput-6.txt (nios: 10)
+/var/tmp/824-1000/mr4425-worker1: given mapPhase task #7 on file 824-mrinput-7.txt (nios: 10)
+wk.concurrent + 1 = 1
+nReduce = 10 
+wk.concurrent + 1 = 1
+nReduce = 10 
+mapTask = 7
+inFile = 824-mrinput-7.txt
+mapTask = 6
+inFile = 824-mrinput-6.txt
+doMap has done, inFile = 824-mrinput-7.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker1: mapPhase task #7 done
+doMap has done, inFile = 824-mrinput-6.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker0: mapPhase task #6 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 7, TaskNumber = 7, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 6
+server = /var/tmp/824-1000/mr4425-worker1
+task = 824-mrinput-7.txt has finished
+selec map file = 824-mrinput-8.txt
+flagMapFiles = 
+[false false false false false false false false false true true true true true true true true true true true]
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......args.File = 824-mrinput-8.txt......]
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker0, index = 6, TaskNumber = 6, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 7
+server = /var/tmp/824-1000/mr4425-worker0
+task = 824-mrinput-6.txt has finished
+selec map file = 824-mrinput-9.txt
+flagMapFiles = 
+[false false false false false false false false false false true true true true true true true true true true]
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker0......]
+[......args.File = 824-mrinput-9.txt......]
+/var/tmp/824-1000/mr4425-worker1: given mapPhase task #8 on file 824-mrinput-8.txt (nios: 10)
+wk.concurrent + 1 = 1
+nReduce = 10 
+/var/tmp/824-1000/mr4425-worker0: given mapPhase task #9 on file 824-mrinput-9.txt (nios: 10)
+wk.concurrent + 1 = 1
+nReduce = 10 
+mapTask = 8
+inFile = 824-mrinput-8.txt
+mapTask = 9
+inFile = 824-mrinput-9.txt
+doMap has done, inFile = 824-mrinput-8.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker1: mapPhase task #8 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 8, TaskNumber = 8, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 8
+server = /var/tmp/824-1000/mr4425-worker1
+task = 824-mrinput-8.txt has finished
+selec map file = 824-mrinput-10.txt
+flagMapFiles = 
+[false false false false false false false false false false false true true true true true true true true true]
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......args.File = 824-mrinput-10.txt......]
+/var/tmp/824-1000/mr4425-worker1: given mapPhase task #10 on file 824-mrinput-10.txt (nios: 10)
+wk.concurrent + 1 = 1
+nReduce = 10 
+doMap has done, inFile = 824-mrinput-9.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker0: mapPhase task #9 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker0, index = 9, TaskNumber = 9, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 9
+server = /var/tmp/824-1000/mr4425-worker0
+task = 824-mrinput-9.txt has finished
+selec map file = 824-mrinput-11.txt
+flagMapFiles = 
+[false false false false false false false false false false false false true true true true true true true true]
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker0......]
+[......args.File = 824-mrinput-11.txt......]
+mapTask = 10
+inFile = 824-mrinput-10.txt
+/var/tmp/824-1000/mr4425-worker0: given mapPhase task #11 on file 824-mrinput-11.txt (nios: 10)
+wk.concurrent + 1 = 1
+nReduce = 10 
+mapTask = 11
+inFile = 824-mrinput-11.txt
+doMap has done, inFile = 824-mrinput-10.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker1: mapPhase task #10 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 10, TaskNumber = 10, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 10
+server = /var/tmp/824-1000/mr4425-worker1
+task = 824-mrinput-10.txt has finished
+selec map file = 824-mrinput-12.txt
+flagMapFiles = 
+[false false false false false false false false false false false false false true true true true true true true]
+[......rpc call start......]
+doMap has done, inFile = 824-mrinput-11.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker0: mapPhase task #11 done
+[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......args.File = 824-mrinput-12.txt......]
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker0, index = 11, TaskNumber = 11, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 11
+server = /var/tmp/824-1000/mr4425-worker0
+task = 824-mrinput-11.txt has finished
+selec map file = 824-mrinput-13.txt
+flagMapFiles = 
+[false false false false false false false false false false false false false false true true true true true true]
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker0......]
+[......args.File = 824-mrinput-13.txt......]
+/var/tmp/824-1000/mr4425-worker1: given mapPhase task #12 on file 824-mrinput-12.txt (nios: 10)
+wk.concurrent + 1 = 1
+nReduce = 10 
+/var/tmp/824-1000/mr4425-worker0: given mapPhase task #13 on file 824-mrinput-13.txt (nios: 10)
+wk.concurrent + 1 = 1
+nReduce = 10 
+mapTask = 12
+inFile = 824-mrinput-12.txt
+mapTask = 13
+inFile = 824-mrinput-13.txt
+doMap has done, inFile = 824-mrinput-12.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker1: mapPhase task #12 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 12, TaskNumber = 12, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 12
+server = /var/tmp/824-1000/mr4425-worker1
+task = 824-mrinput-12.txt has finished
+selec map file = 824-mrinput-14.txt
+flagMapFiles = 
+[false false false false false false false false false false false false false false false true true true true true]
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......args.File = 824-mrinput-14.txt......]
+/var/tmp/824-1000/mr4425-worker1: given mapPhase task #14 on file 824-mrinput-14.txt (nios: 10)
+wk.concurrent + 1 = 1
+nReduce = 10 
+doMap has done, inFile = 824-mrinput-13.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker0: mapPhase task #13 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker0, index = 13, TaskNumber = 13, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 13
+server = /var/tmp/824-1000/mr4425-worker0
+task = 824-mrinput-13.txt has finished
+selec map file = 824-mrinput-15.txt
+flagMapFiles = 
+[false false false false false false false false false false false false false false false false true true true true]
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker0......]
+[......args.File = 824-mrinput-15.txt......]
+mapTask = 14
+inFile = 824-mrinput-14.txt
+/var/tmp/824-1000/mr4425-worker0: given mapPhase task #15 on file 824-mrinput-15.txt (nios: 10)
+wk.concurrent + 1 = 1
+nReduce = 10 
+mapTask = 15
+inFile = 824-mrinput-15.txt
+doMap has done, inFile = 824-mrinput-14.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker1: mapPhase task #14 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 14, TaskNumber = 14, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 14
+server = /var/tmp/824-1000/mr4425-worker1
+task = 824-mrinput-14.txt has finished
+selec map file = 824-mrinput-16.txt
+flagMapFiles = 
+[false false false false false false false false false false false false false false false false false true true true]
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......args.File = 824-mrinput-16.txt......]
+doMap has done, inFile = 824-mrinput-15.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker0: mapPhase task #15 done
+/var/tmp/824-1000/mr4425-worker1: given mapPhase task #16 on file 824-mrinput-16.txt (nios: 10)
+wk.concurrent + 1 = 1
+nReduce = 10 
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker0, index = 15, TaskNumber = 15, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 15
+server = /var/tmp/824-1000/mr4425-worker0
+task = 824-mrinput-15.txt has finished
+selec map file = 824-mrinput-17.txt
+flagMapFiles = 
+[false false false false false false false false false false false false false false false false false false true true]
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker0......]
+[......args.File = 824-mrinput-17.txt......]
+mapTask = 16
+inFile = 824-mrinput-16.txt
+/var/tmp/824-1000/mr4425-worker0: given mapPhase task #17 on file 824-mrinput-17.txt (nios: 10)
+wk.concurrent + 1 = 1
+nReduce = 10 
+mapTask = 17
+inFile = 824-mrinput-17.txt
+doMap has done, inFile = 824-mrinput-16.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker1: mapPhase task #16 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 16, TaskNumber = 16, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 16
+server = /var/tmp/824-1000/mr4425-worker1
+task = 824-mrinput-16.txt has finished
+selec map file = 824-mrinput-18.txt
+flagMapFiles = 
+[false false false false false false false false false false false false false false false false false false false true]
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......args.File = 824-mrinput-18.txt......]
+/var/tmp/824-1000/mr4425-worker1: given mapPhase task #18 on file 824-mrinput-18.txt (nios: 10)
+wk.concurrent + 1 = 1
+nReduce = 10 
+doMap has done, inFile = 824-mrinput-17.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker0: mapPhase task #17 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker0, index = 17, TaskNumber = 17, err = true......]
+mapTask = 18
+inFile = 824-mrinput-18.txt
+rpc call success, ntasks = 20, rpcSuccessCount = 17
+server = /var/tmp/824-1000/mr4425-worker0
+task = 824-mrinput-17.txt has finished
+selec map file = 824-mrinput-19.txt
+flagMapFiles = 
+[false false false false false false false false false false false false false false false false false false false false]
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker0......]
+[......args.File = 824-mrinput-19.txt......]
+/var/tmp/824-1000/mr4425-worker0: given mapPhase task #19 on file 824-mrinput-19.txt (nios: 10)
+wk.concurrent + 1 = 1
+nReduce = 10 
+mapTask = 19
+inFile = 824-mrinput-19.txt
+doMap has done, inFile = 824-mrinput-18.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker1: mapPhase task #18 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 18, TaskNumber = 18, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 18
+server = /var/tmp/824-1000/mr4425-worker1
+task = 824-mrinput-18.txt has finished
+All mapFiles has handed out, continue
+doMap has done, inFile = 824-mrinput-19.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker0: mapPhase task #19 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker0, index = 19, TaskNumber = 19, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 19
+server = /var/tmp/824-1000/mr4425-worker0
+task = 824-mrinput-19.txt has finished
+rpcSuccessCount = 20, ntasks = 20
+rpcSuccessCount > ntask - 1, break loop
+Schedule: mapPhase done
+Schedule: 10 reducePhase tasks (20 I/Os)
+flagMapFiles default value = [false false false false false false false false false false]
+mapFiles length = 20
+mapFiles = 
+[824-mrinput-0.txt 824-mrinput-1.txt 824-mrinput-2.txt 824-mrinput-3.txt 824-mrinput-4.txt 824-mrinput-5.txt 824-mrinput-6.txt 824-mrinput-7.txt 824-mrinput-8.txt 824-mrinput-9.txt 824-mrinput-10.txt 824-mrinput-11.txt 824-mrinput-12.txt 824-mrinput-13.txt 824-mrinput-14.txt 824-mrinput-15.txt 824-mrinput-16.txt 824-mrinput-17.txt 824-mrinput-18.txt 824-mrinput-19.txt]
+n_other = 
+20
+ntasks = 
+10
+Get a resigerchan, value = /var/tmp/824-1000/mr4425-worker0
+srvCollection = [     /var/tmp/824-1000/mr4425-worker0]
+args.TaskNumber = 0
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker0......]
+[......args.File = 824-mrinput-0.txt......]
+Get a resigerchan, value = /var/tmp/824-1000/mr4425-worker1
+srvCollection = [     /var/tmp/824-1000/mr4425-worker0 /var/tmp/824-1000/mr4425-worker1]
+args.TaskNumber = 1
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......args.File = 824-mrinput-1.txt......]
+/var/tmp/824-1000/mr4425-worker0: given reducePhase task #0 on file 824-mrinput-0.txt (nios: 20)
+wk.concurrent + 1 = 1
+outFile = mrtmp.test-res-0
+/var/tmp/824-1000/mr4425-worker1: given reducePhase task #1 on file 824-mrinput-1.txt (nios: 20)
+wk.concurrent + 1 = 1
+outFile = mrtmp.test-res-1
+sort kvs done!
+sort kvs done!
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker0: reducePhase task #0 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker0, index = 0, TaskNumber = 0, err = true......]
+rpc call success, ntasks = 10, rpcSuccessCount = 0
+server = /var/tmp/824-1000/mr4425-worker0
+task = 824-mrinput-0.txt has finished
+args.TaskNumber = 2
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker0......]
+[......args.File = 824-mrinput-2.txt......]
+/var/tmp/824-1000/mr4425-worker0: given reducePhase task #2 on file 824-mrinput-2.txt (nios: 20)
+wk.concurrent + 1 = 1
+outFile = mrtmp.test-res-2
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker1: reducePhase task #1 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 1, TaskNumber = 1, err = true......]
+rpc call success, ntasks = 10, rpcSuccessCount = 1
+server = /var/tmp/824-1000/mr4425-worker1
+task = 824-mrinput-1.txt has finished
+args.TaskNumber = 3
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......args.File = 824-mrinput-3.txt......]
+/var/tmp/824-1000/mr4425-worker1: given reducePhase task #3 on file 824-mrinput-3.txt (nios: 20)
+wk.concurrent + 1 = 1
+outFile = mrtmp.test-res-3
+sort kvs done!
+sort kvs done!
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker0: reducePhase task #2 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker0, index = 2, TaskNumber = 2, err = true......]
+rpc call success, ntasks = 10, rpcSuccessCount = 2
+server = /var/tmp/824-1000/mr4425-worker0
+task = 824-mrinput-2.txt has finished
+args.TaskNumber = 4
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker0......]
+[......args.File = 824-mrinput-4.txt......]
+/var/tmp/824-1000/mr4425-worker0: given reducePhase task #4 on file 824-mrinput-4.txt (nios: 20)
+wk.concurrent + 1 = 1
+outFile = mrtmp.test-res-4
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker1: reducePhase task #3 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 3, TaskNumber = 3, err = true......]
+rpc call success, ntasks = 10, rpcSuccessCount = 3
+server = /var/tmp/824-1000/mr4425-worker1
+task = 824-mrinput-3.txt has finished
+args.TaskNumber = 5
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......args.File = 824-mrinput-5.txt......]
+/var/tmp/824-1000/mr4425-worker1: given reducePhase task #5 on file 824-mrinput-5.txt (nios: 20)
+wk.concurrent + 1 = 1
+outFile = mrtmp.test-res-5
+sort kvs done!
+sort kvs done!
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker0: reducePhase task #4 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker0, index = 4, TaskNumber = 4, err = true......]
+rpc call success, ntasks = 10, rpcSuccessCount = 4
+server = /var/tmp/824-1000/mr4425-worker0
+task = 824-mrinput-4.txt has finished
+args.TaskNumber = 6
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker0......]
+[......args.File = 824-mrinput-6.txt......]
+/var/tmp/824-1000/mr4425-worker0: given reducePhase task #6 on file 824-mrinput-6.txt (nios: 20)
+wk.concurrent + 1 = 1
+outFile = mrtmp.test-res-6
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker1: reducePhase task #5 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 5, TaskNumber = 5, err = true......]
+rpc call success, ntasks = 10, rpcSuccessCount = 5
+server = /var/tmp/824-1000/mr4425-worker1
+task = 824-mrinput-5.txt has finished
+args.TaskNumber = 7
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......args.File = 824-mrinput-7.txt......]
+/var/tmp/824-1000/mr4425-worker1: given reducePhase task #7 on file 824-mrinput-7.txt (nios: 20)
+wk.concurrent + 1 = 1
+outFile = mrtmp.test-res-7
+sort kvs done!
+sort kvs done!
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker0: reducePhase task #6 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker0, index = 6, TaskNumber = 6, err = true......]
+rpc call success, ntasks = 10, rpcSuccessCount = 6
+server = /var/tmp/824-1000/mr4425-worker0
+task = 824-mrinput-6.txt has finished
+args.TaskNumber = 8
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker0......]
+[......args.File = 824-mrinput-8.txt......]
+/var/tmp/824-1000/mr4425-worker0: given reducePhase task #8 on file 824-mrinput-8.txt (nios: 20)
+wk.concurrent + 1 = 1
+outFile = mrtmp.test-res-8
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker1: reducePhase task #7 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 7, TaskNumber = 7, err = true......]
+rpc call success, ntasks = 10, rpcSuccessCount = 7
+server = /var/tmp/824-1000/mr4425-worker1
+task = 824-mrinput-7.txt has finished
+args.TaskNumber = 9
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......args.File = 824-mrinput-9.txt......]
+/var/tmp/824-1000/mr4425-worker1: given reducePhase task #9 on file 824-mrinput-9.txt (nios: 20)
+wk.concurrent + 1 = 1
+outFile = mrtmp.test-res-9
+sort kvs done!
+sort kvs done!
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker0: reducePhase task #8 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker0, index = 8, TaskNumber = 8, err = true......]
+rpc call success, ntasks = 10, rpcSuccessCount = 8
+server = /var/tmp/824-1000/mr4425-worker0
+task = 824-mrinput-8.txt has finished
+All mapFiles has handed out, continue
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker1: reducePhase task #9 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 9, TaskNumber = 9, err = true......]
+rpc call success, ntasks = 10, rpcSuccessCount = 9
+server = /var/tmp/824-1000/mr4425-worker1
+task = 824-mrinput-9.txt has finished
+rpcSuccessCount = 10, ntasks = 10
+rpcSuccessCount > ntask - 1, break loop
+Schedule: reducePhase done
+Merge: read mrtmp.test-res-0
+Merge: read mrtmp.test-res-1
+Merge: read mrtmp.test-res-2
+Merge: read mrtmp.test-res-3
+Merge: read mrtmp.test-res-4
+Merge: read mrtmp.test-res-5
+Merge: read mrtmp.test-res-6
+Merge: read mrtmp.test-res-7
+Merge: read mrtmp.test-res-8
+Merge: read mrtmp.test-res-9
+/var/tmp/824-1000/mr4425-master: Map/Reduce task completed
+master_splitmerge.go, removeFile = mrtmp.test-0-0
+master_splitmerge.go, removeFile = mrtmp.test-0-1
+master_splitmerge.go, removeFile = mrtmp.test-0-2
+master_splitmerge.go, removeFile = mrtmp.test-0-3
+master_splitmerge.go, removeFile = mrtmp.test-0-4
+master_splitmerge.go, removeFile = mrtmp.test-0-5
+master_splitmerge.go, removeFile = mrtmp.test-0-6
+master_splitmerge.go, removeFile = mrtmp.test-0-7
+master_splitmerge.go, removeFile = mrtmp.test-0-8
+master_splitmerge.go, removeFile = mrtmp.test-0-9
+master_splitmerge.go, removeFile = mrtmp.test-1-0
+master_splitmerge.go, removeFile = mrtmp.test-1-1
+master_splitmerge.go, removeFile = mrtmp.test-1-2
+master_splitmerge.go, removeFile = mrtmp.test-1-3
+master_splitmerge.go, removeFile = mrtmp.test-1-4
+master_splitmerge.go, removeFile = mrtmp.test-1-5
+master_splitmerge.go, removeFile = mrtmp.test-1-6
+master_splitmerge.go, removeFile = mrtmp.test-1-7
+master_splitmerge.go, removeFile = mrtmp.test-1-8
+master_splitmerge.go, removeFile = mrtmp.test-1-9
+master_splitmerge.go, removeFile = mrtmp.test-2-0
+master_splitmerge.go, removeFile = mrtmp.test-2-1
+master_splitmerge.go, removeFile = mrtmp.test-2-2
+master_splitmerge.go, removeFile = mrtmp.test-2-3
+master_splitmerge.go, removeFile = mrtmp.test-2-4
+master_splitmerge.go, removeFile = mrtmp.test-2-5
+master_splitmerge.go, removeFile = mrtmp.test-2-6
+master_splitmerge.go, removeFile = mrtmp.test-2-7
+master_splitmerge.go, removeFile = mrtmp.test-2-8
+master_splitmerge.go, removeFile = mrtmp.test-2-9
+master_splitmerge.go, removeFile = mrtmp.test-3-0
+master_splitmerge.go, removeFile = mrtmp.test-3-1
+master_splitmerge.go, removeFile = mrtmp.test-3-2
+master_splitmerge.go, removeFile = mrtmp.test-3-3
+master_splitmerge.go, removeFile = mrtmp.test-3-4
+master_splitmerge.go, removeFile = mrtmp.test-3-5
+master_splitmerge.go, removeFile = mrtmp.test-3-6
+master_splitmerge.go, removeFile = mrtmp.test-3-7
+master_splitmerge.go, removeFile = mrtmp.test-3-8
+master_splitmerge.go, removeFile = mrtmp.test-3-9
+master_splitmerge.go, removeFile = mrtmp.test-4-0
+master_splitmerge.go, removeFile = mrtmp.test-4-1
+master_splitmerge.go, removeFile = mrtmp.test-4-2
+master_splitmerge.go, removeFile = mrtmp.test-4-3
+master_splitmerge.go, removeFile = mrtmp.test-4-4
+master_splitmerge.go, removeFile = mrtmp.test-4-5
+master_splitmerge.go, removeFile = mrtmp.test-4-6
+master_splitmerge.go, removeFile = mrtmp.test-4-7
+master_splitmerge.go, removeFile = mrtmp.test-4-8
+master_splitmerge.go, removeFile = mrtmp.test-4-9
+master_splitmerge.go, removeFile = mrtmp.test-5-0
+master_splitmerge.go, removeFile = mrtmp.test-5-1
+master_splitmerge.go, removeFile = mrtmp.test-5-2
+master_splitmerge.go, removeFile = mrtmp.test-5-3
+master_splitmerge.go, removeFile = mrtmp.test-5-4
+master_splitmerge.go, removeFile = mrtmp.test-5-5
+master_splitmerge.go, removeFile = mrtmp.test-5-6
+master_splitmerge.go, removeFile = mrtmp.test-5-7
+master_splitmerge.go, removeFile = mrtmp.test-5-8
+master_splitmerge.go, removeFile = mrtmp.test-5-9
+master_splitmerge.go, removeFile = mrtmp.test-6-0
+master_splitmerge.go, removeFile = mrtmp.test-6-1
+master_splitmerge.go, removeFile = mrtmp.test-6-2
+master_splitmerge.go, removeFile = mrtmp.test-6-3
+master_splitmerge.go, removeFile = mrtmp.test-6-4
+master_splitmerge.go, removeFile = mrtmp.test-6-5
+master_splitmerge.go, removeFile = mrtmp.test-6-6
+master_splitmerge.go, removeFile = mrtmp.test-6-7
+master_splitmerge.go, removeFile = mrtmp.test-6-8
+master_splitmerge.go, removeFile = mrtmp.test-6-9
+master_splitmerge.go, removeFile = mrtmp.test-7-0
+master_splitmerge.go, removeFile = mrtmp.test-7-1
+master_splitmerge.go, removeFile = mrtmp.test-7-2
+master_splitmerge.go, removeFile = mrtmp.test-7-3
+master_splitmerge.go, removeFile = mrtmp.test-7-4
+master_splitmerge.go, removeFile = mrtmp.test-7-5
+master_splitmerge.go, removeFile = mrtmp.test-7-6
+master_splitmerge.go, removeFile = mrtmp.test-7-7
+master_splitmerge.go, removeFile = mrtmp.test-7-8
+master_splitmerge.go, removeFile = mrtmp.test-7-9
+master_splitmerge.go, removeFile = mrtmp.test-8-0
+master_splitmerge.go, removeFile = mrtmp.test-8-1
+master_splitmerge.go, removeFile = mrtmp.test-8-2
+master_splitmerge.go, removeFile = mrtmp.test-8-3
+master_splitmerge.go, removeFile = mrtmp.test-8-4
+master_splitmerge.go, removeFile = mrtmp.test-8-5
+master_splitmerge.go, removeFile = mrtmp.test-8-6
+master_splitmerge.go, removeFile = mrtmp.test-8-7
+master_splitmerge.go, removeFile = mrtmp.test-8-8
+master_splitmerge.go, removeFile = mrtmp.test-8-9
+master_splitmerge.go, removeFile = mrtmp.test-9-0
+master_splitmerge.go, removeFile = mrtmp.test-9-1
+master_splitmerge.go, removeFile = mrtmp.test-9-2
+master_splitmerge.go, removeFile = mrtmp.test-9-3
+master_splitmerge.go, removeFile = mrtmp.test-9-4
+master_splitmerge.go, removeFile = mrtmp.test-9-5
+master_splitmerge.go, removeFile = mrtmp.test-9-6
+master_splitmerge.go, removeFile = mrtmp.test-9-7
+master_splitmerge.go, removeFile = mrtmp.test-9-8
+master_splitmerge.go, removeFile = mrtmp.test-9-9
+master_splitmerge.go, removeFile = mrtmp.test-10-0
+master_splitmerge.go, removeFile = mrtmp.test-10-1
+master_splitmerge.go, removeFile = mrtmp.test-10-2
+master_splitmerge.go, removeFile = mrtmp.test-10-3
+master_splitmerge.go, removeFile = mrtmp.test-10-4
+master_splitmerge.go, removeFile = mrtmp.test-10-5
+master_splitmerge.go, removeFile = mrtmp.test-10-6
+master_splitmerge.go, removeFile = mrtmp.test-10-7
+master_splitmerge.go, removeFile = mrtmp.test-10-8
+master_splitmerge.go, removeFile = mrtmp.test-10-9
+master_splitmerge.go, removeFile = mrtmp.test-11-0
+master_splitmerge.go, removeFile = mrtmp.test-11-1
+master_splitmerge.go, removeFile = mrtmp.test-11-2
+master_splitmerge.go, removeFile = mrtmp.test-11-3
+master_splitmerge.go, removeFile = mrtmp.test-11-4
+master_splitmerge.go, removeFile = mrtmp.test-11-5
+master_splitmerge.go, removeFile = mrtmp.test-11-6
+master_splitmerge.go, removeFile = mrtmp.test-11-7
+master_splitmerge.go, removeFile = mrtmp.test-11-8
+master_splitmerge.go, removeFile = mrtmp.test-11-9
+master_splitmerge.go, removeFile = mrtmp.test-12-0
+master_splitmerge.go, removeFile = mrtmp.test-12-1
+master_splitmerge.go, removeFile = mrtmp.test-12-2
+master_splitmerge.go, removeFile = mrtmp.test-12-3
+master_splitmerge.go, removeFile = mrtmp.test-12-4
+master_splitmerge.go, removeFile = mrtmp.test-12-5
+master_splitmerge.go, removeFile = mrtmp.test-12-6
+master_splitmerge.go, removeFile = mrtmp.test-12-7
+master_splitmerge.go, removeFile = mrtmp.test-12-8
+master_splitmerge.go, removeFile = mrtmp.test-12-9
+master_splitmerge.go, removeFile = mrtmp.test-13-0
+master_splitmerge.go, removeFile = mrtmp.test-13-1
+master_splitmerge.go, removeFile = mrtmp.test-13-2
+master_splitmerge.go, removeFile = mrtmp.test-13-3
+master_splitmerge.go, removeFile = mrtmp.test-13-4
+master_splitmerge.go, removeFile = mrtmp.test-13-5
+master_splitmerge.go, removeFile = mrtmp.test-13-6
+master_splitmerge.go, removeFile = mrtmp.test-13-7
+master_splitmerge.go, removeFile = mrtmp.test-13-8
+master_splitmerge.go, removeFile = mrtmp.test-13-9
+master_splitmerge.go, removeFile = mrtmp.test-14-0
+master_splitmerge.go, removeFile = mrtmp.test-14-1
+master_splitmerge.go, removeFile = mrtmp.test-14-2
+master_splitmerge.go, removeFile = mrtmp.test-14-3
+master_splitmerge.go, removeFile = mrtmp.test-14-4
+master_splitmerge.go, removeFile = mrtmp.test-14-5
+master_splitmerge.go, removeFile = mrtmp.test-14-6
+master_splitmerge.go, removeFile = mrtmp.test-14-7
+master_splitmerge.go, removeFile = mrtmp.test-14-8
+master_splitmerge.go, removeFile = mrtmp.test-14-9
+master_splitmerge.go, removeFile = mrtmp.test-15-0
+master_splitmerge.go, removeFile = mrtmp.test-15-1
+master_splitmerge.go, removeFile = mrtmp.test-15-2
+master_splitmerge.go, removeFile = mrtmp.test-15-3
+master_splitmerge.go, removeFile = mrtmp.test-15-4
+master_splitmerge.go, removeFile = mrtmp.test-15-5
+master_splitmerge.go, removeFile = mrtmp.test-15-6
+master_splitmerge.go, removeFile = mrtmp.test-15-7
+master_splitmerge.go, removeFile = mrtmp.test-15-8
+master_splitmerge.go, removeFile = mrtmp.test-15-9
+master_splitmerge.go, removeFile = mrtmp.test-16-0
+master_splitmerge.go, removeFile = mrtmp.test-16-1
+master_splitmerge.go, removeFile = mrtmp.test-16-2
+master_splitmerge.go, removeFile = mrtmp.test-16-3
+master_splitmerge.go, removeFile = mrtmp.test-16-4
+master_splitmerge.go, removeFile = mrtmp.test-16-5
+master_splitmerge.go, removeFile = mrtmp.test-16-6
+master_splitmerge.go, removeFile = mrtmp.test-16-7
+master_splitmerge.go, removeFile = mrtmp.test-16-8
+master_splitmerge.go, removeFile = mrtmp.test-16-9
+master_splitmerge.go, removeFile = mrtmp.test-17-0
+master_splitmerge.go, removeFile = mrtmp.test-17-1
+master_splitmerge.go, removeFile = mrtmp.test-17-2
+master_splitmerge.go, removeFile = mrtmp.test-17-3
+master_splitmerge.go, removeFile = mrtmp.test-17-4
+master_splitmerge.go, removeFile = mrtmp.test-17-5
+master_splitmerge.go, removeFile = mrtmp.test-17-6
+master_splitmerge.go, removeFile = mrtmp.test-17-7
+master_splitmerge.go, removeFile = mrtmp.test-17-8
+master_splitmerge.go, removeFile = mrtmp.test-17-9
+master_splitmerge.go, removeFile = mrtmp.test-18-0
+master_splitmerge.go, removeFile = mrtmp.test-18-1
+master_splitmerge.go, removeFile = mrtmp.test-18-2
+master_splitmerge.go, removeFile = mrtmp.test-18-3
+master_splitmerge.go, removeFile = mrtmp.test-18-4
+master_splitmerge.go, removeFile = mrtmp.test-18-5
+master_splitmerge.go, removeFile = mrtmp.test-18-6
+master_splitmerge.go, removeFile = mrtmp.test-18-7
+master_splitmerge.go, removeFile = mrtmp.test-18-8
+master_splitmerge.go, removeFile = mrtmp.test-18-9
+master_splitmerge.go, removeFile = mrtmp.test-19-0
+master_splitmerge.go, removeFile = mrtmp.test-19-1
+master_splitmerge.go, removeFile = mrtmp.test-19-2
+master_splitmerge.go, removeFile = mrtmp.test-19-3
+master_splitmerge.go, removeFile = mrtmp.test-19-4
+master_splitmerge.go, removeFile = mrtmp.test-19-5
+master_splitmerge.go, removeFile = mrtmp.test-19-6
+master_splitmerge.go, removeFile = mrtmp.test-19-7
+master_splitmerge.go, removeFile = mrtmp.test-19-8
+master_splitmerge.go, removeFile = mrtmp.test-19-9
+master_splitmerge.go, removeFile = mrtmp.test-res-0
+master_splitmerge.go, removeFile = mrtmp.test-res-1
+master_splitmerge.go, removeFile = mrtmp.test-res-2
+master_splitmerge.go, removeFile = mrtmp.test-res-3
+master_splitmerge.go, removeFile = mrtmp.test-res-4
+master_splitmerge.go, removeFile = mrtmp.test-res-5
+master_splitmerge.go, removeFile = mrtmp.test-res-6
+master_splitmerge.go, removeFile = mrtmp.test-res-7
+master_splitmerge.go, removeFile = mrtmp.test-res-8
+master_splitmerge.go, removeFile = mrtmp.test-res-9
+master_splitmerge.go, removeFile = mrtmp.test
+master_splitmerge.go, removeFile = 824-mrinput-0.txt
+master_splitmerge.go, removeFile = 824-mrinput-1.txt
+master_splitmerge.go, removeFile = 824-mrinput-2.txt
+master_splitmerge.go, removeFile = 824-mrinput-3.txt
+master_splitmerge.go, removeFile = 824-mrinput-4.txt
+master_splitmerge.go, removeFile = 824-mrinput-5.txt
+master_splitmerge.go, removeFile = 824-mrinput-6.txt
+master_splitmerge.go, removeFile = 824-mrinput-7.txt
+master_splitmerge.go, removeFile = 824-mrinput-8.txt
+master_splitmerge.go, removeFile = 824-mrinput-9.txt
+master_splitmerge.go, removeFile = 824-mrinput-10.txt
+master_splitmerge.go, removeFile = 824-mrinput-11.txt
+master_splitmerge.go, removeFile = 824-mrinput-12.txt
+master_splitmerge.go, removeFile = 824-mrinput-13.txt
+master_splitmerge.go, removeFile = 824-mrinput-14.txt
+master_splitmerge.go, removeFile = 824-mrinput-15.txt
+master_splitmerge.go, removeFile = 824-mrinput-16.txt
+master_splitmerge.go, removeFile = 824-mrinput-17.txt
+master_splitmerge.go, removeFile = 824-mrinput-18.txt
+master_splitmerge.go, removeFile = 824-mrinput-19.txt
+/var/tmp/824-1000/mr4425-master: Starting Map/Reduce task test
+Schedule: 20 mapPhase tasks (10 I/Os)
+flagMapFiles default value = [false false false false false false false false false false false false false false false false false false false false]
+mapFiles length = 20
+mapFiles = 
+[824-mrinput-0.txt 824-mrinput-1.txt 824-mrinput-2.txt 824-mrinput-3.txt 824-mrinput-4.txt 824-mrinput-5.txt 824-mrinput-6.txt 824-mrinput-7.txt 824-mrinput-8.txt 824-mrinput-9.txt 824-mrinput-10.txt 824-mrinput-11.txt 824-mrinput-12.txt 824-mrinput-13.txt 824-mrinput-14.txt 824-mrinput-15.txt 824-mrinput-16.txt 824-mrinput-17.txt 824-mrinput-18.txt 824-mrinput-19.txt]
+n_other = 
+10
+ntasks = 
+20
+Get a resigerchan, value = /var/tmp/824-1000/mr4425-worker1
+srvCollection = [     /var/tmp/824-1000/mr4425-worker1]
+selec map file = 824-mrinput-0.txt
+flagMapFiles = 
+[false true true true true true true true true true true true true true true true true true true true]
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......args.File = 824-mrinput-0.txt......]
+Get a resigerchan, value = /var/tmp/824-1000/mr4425-worker0
+srvCollection = [     /var/tmp/824-1000/mr4425-worker1 /var/tmp/824-1000/mr4425-worker0]
+selec map file = 824-mrinput-1.txt
+flagMapFiles = 
+[false false true true true true true true true true true true true true true true true true true true]
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker0......]
+[......args.File = 824-mrinput-1.txt......]
+/var/tmp/824-1000/mr4425-worker0: given mapPhase task #1 on file 824-mrinput-1.txt (nios: 10)
+wk.concurrent + 1 = 1
+/var/tmp/824-1000/mr4425-worker1: given mapPhase task #0 on file 824-mrinput-0.txt (nios: 10)
+wk.concurrent + 1 = 1
+nReduce = 10 
+mapTask = 0
+inFile = 824-mrinput-0.txt
+doMap has done, inFile = 824-mrinput-0.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker1: mapPhase task #0 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 0, TaskNumber = 0, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 0
+server = /var/tmp/824-1000/mr4425-worker1
+task = 824-mrinput-0.txt has finished
+selec map file = 824-mrinput-2.txt
+flagMapFiles = 
+[false false false true true true true true true true true true true true true true true true true true]
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......args.File = 824-mrinput-2.txt......]
+/var/tmp/824-1000/mr4425-worker1: given mapPhase task #2 on file 824-mrinput-2.txt (nios: 10)
+wk.concurrent + 1 = 1
+nReduce = 10 
+mapTask = 2
+inFile = 824-mrinput-2.txt
+doMap has done, inFile = 824-mrinput-2.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker1: mapPhase task #2 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 2, TaskNumber = 2, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 1
+server = /var/tmp/824-1000/mr4425-worker1
+task = 824-mrinput-2.txt has finished
+selec map file = 824-mrinput-3.txt
+flagMapFiles = 
+[false false false false true true true true true true true true true true true true true true true true]
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......args.File = 824-mrinput-3.txt......]
+/var/tmp/824-1000/mr4425-worker1: given mapPhase task #3 on file 824-mrinput-3.txt (nios: 10)
+wk.concurrent + 1 = 1
+nReduce = 10 
+mapTask = 3
+inFile = 824-mrinput-3.txt
+doMap has done, inFile = 824-mrinput-3.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker1: mapPhase task #3 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 3, TaskNumber = 3, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 2
+server = /var/tmp/824-1000/mr4425-worker1
+task = 824-mrinput-3.txt has finished
+selec map file = 824-mrinput-4.txt
+flagMapFiles = 
+[false false false false false true true true true true true true true true true true true true true true]
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......args.File = 824-mrinput-4.txt......]
+/var/tmp/824-1000/mr4425-worker1: given mapPhase task #4 on file 824-mrinput-4.txt (nios: 10)
+wk.concurrent + 1 = 1
+nReduce = 10 
+mapTask = 4
+inFile = 824-mrinput-4.txt
+doMap has done, inFile = 824-mrinput-4.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker1: mapPhase task #4 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 4, TaskNumber = 4, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 3
+server = /var/tmp/824-1000/mr4425-worker1
+task = 824-mrinput-4.txt has finished
+selec map file = 824-mrinput-5.txt
+flagMapFiles = 
+[false false false false false false true true true true true true true true true true true true true true]
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......args.File = 824-mrinput-5.txt......]
+/var/tmp/824-1000/mr4425-worker1: given mapPhase task #5 on file 824-mrinput-5.txt (nios: 10)
+wk.concurrent + 1 = 1
+nReduce = 10 
+mapTask = 5
+inFile = 824-mrinput-5.txt
+doMap has done, inFile = 824-mrinput-5.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker1: mapPhase task #5 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 5, TaskNumber = 5, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 4
+server = /var/tmp/824-1000/mr4425-worker1
+task = 824-mrinput-5.txt has finished
+selec map file = 824-mrinput-6.txt
+flagMapFiles = 
+[false false false false false false false true true true true true true true true true true true true true]
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......args.File = 824-mrinput-6.txt......]
+/var/tmp/824-1000/mr4425-worker1: given mapPhase task #6 on file 824-mrinput-6.txt (nios: 10)
+wk.concurrent + 1 = 1
+nReduce = 10 
+mapTask = 6
+inFile = 824-mrinput-6.txt
+doMap has done, inFile = 824-mrinput-6.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker1: mapPhase task #6 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 6, TaskNumber = 6, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 5
+server = /var/tmp/824-1000/mr4425-worker1
+task = 824-mrinput-6.txt has finished
+selec map file = 824-mrinput-7.txt
+flagMapFiles = 
+[false false false false false false false false true true true true true true true true true true true true]
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......args.File = 824-mrinput-7.txt......]
+/var/tmp/824-1000/mr4425-worker1: given mapPhase task #7 on file 824-mrinput-7.txt (nios: 10)
+wk.concurrent + 1 = 1
+nReduce = 10 
+mapTask = 7
+inFile = 824-mrinput-7.txt
+doMap has done, inFile = 824-mrinput-7.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker1: mapPhase task #7 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 7, TaskNumber = 7, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 6
+server = /var/tmp/824-1000/mr4425-worker1
+task = 824-mrinput-7.txt has finished
+selec map file = 824-mrinput-8.txt
+flagMapFiles = 
+[false false false false false false false false false true true true true true true true true true true true]
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......args.File = 824-mrinput-8.txt......]
+/var/tmp/824-1000/mr4425-worker1: given mapPhase task #8 on file 824-mrinput-8.txt (nios: 10)
+wk.concurrent + 1 = 1
+nReduce = 10 
+mapTask = 8
+inFile = 824-mrinput-8.txt
+doMap has done, inFile = 824-mrinput-8.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker1: mapPhase task #8 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 8, TaskNumber = 8, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 7
+server = /var/tmp/824-1000/mr4425-worker1
+task = 824-mrinput-8.txt has finished
+selec map file = 824-mrinput-9.txt
+flagMapFiles = 
+[false false false false false false false false false false true true true true true true true true true true]
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......args.File = 824-mrinput-9.txt......]
+/var/tmp/824-1000/mr4425-worker1: given mapPhase task #9 on file 824-mrinput-9.txt (nios: 10)
+wk.concurrent + 1 = 1
+nReduce = 10 
+mapTask = 9
+inFile = 824-mrinput-9.txt
+doMap has done, inFile = 824-mrinput-9.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker1: mapPhase task #9 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 9, TaskNumber = 9, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 8
+server = /var/tmp/824-1000/mr4425-worker1
+task = 824-mrinput-9.txt has finished
+selec map file = 824-mrinput-10.txt
+flagMapFiles = 
+[false false false false false false false false false false false true true true true true true true true true]
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......args.File = 824-mrinput-10.txt......]
+/var/tmp/824-1000/mr4425-worker1: given mapPhase task #10 on file 824-mrinput-10.txt (nios: 10)
+wk.concurrent + 1 = 1
+nReduce = 10 
+mapTask = 10
+inFile = 824-mrinput-10.txt
+doMap has done, inFile = 824-mrinput-10.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker1: mapPhase task #10 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 10, TaskNumber = 10, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 9
+server = /var/tmp/824-1000/mr4425-worker1
+task = 824-mrinput-10.txt has finished
+selec map file = 824-mrinput-11.txt
+flagMapFiles = 
+[false false false false false false false false false false false false true true true true true true true true]
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......args.File = 824-mrinput-11.txt......]
+/var/tmp/824-1000/mr4425-worker1: given mapPhase task #11 on file 824-mrinput-11.txt (nios: 10)
+wk.concurrent + 1 = 1
+nReduce = 10 
+mapTask = 11
+inFile = 824-mrinput-11.txt
+doMap has done, inFile = 824-mrinput-11.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker1: mapPhase task #11 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 11, TaskNumber = 11, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 10
+server = /var/tmp/824-1000/mr4425-worker1
+task = 824-mrinput-11.txt has finished
+selec map file = 824-mrinput-12.txt
+flagMapFiles = 
+[false false false false false false false false false false false false false true true true true true true true]
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......args.File = 824-mrinput-12.txt......]
+/var/tmp/824-1000/mr4425-worker1: given mapPhase task #12 on file 824-mrinput-12.txt (nios: 10)
+wk.concurrent + 1 = 1
+nReduce = 10 
+mapTask = 12
+inFile = 824-mrinput-12.txt
+doMap has done, inFile = 824-mrinput-12.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker1: mapPhase task #12 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 12, TaskNumber = 12, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 11
+server = /var/tmp/824-1000/mr4425-worker1
+task = 824-mrinput-12.txt has finished
+selec map file = 824-mrinput-13.txt
+flagMapFiles = 
+[false false false false false false false false false false false false false false true true true true true true]
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......args.File = 824-mrinput-13.txt......]
+/var/tmp/824-1000/mr4425-worker1: given mapPhase task #13 on file 824-mrinput-13.txt (nios: 10)
+wk.concurrent + 1 = 1
+nReduce = 10 
+mapTask = 13
+inFile = 824-mrinput-13.txt
+doMap has done, inFile = 824-mrinput-13.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker1: mapPhase task #13 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 13, TaskNumber = 13, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 12
+server = /var/tmp/824-1000/mr4425-worker1
+task = 824-mrinput-13.txt has finished
+selec map file = 824-mrinput-14.txt
+flagMapFiles = 
+[false false false false false false false false false false false false false false false true true true true true]
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......args.File = 824-mrinput-14.txt......]
+/var/tmp/824-1000/mr4425-worker1: given mapPhase task #14 on file 824-mrinput-14.txt (nios: 10)
+wk.concurrent + 1 = 1
+nReduce = 10 
+mapTask = 14
+inFile = 824-mrinput-14.txt
+doMap has done, inFile = 824-mrinput-14.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker1: mapPhase task #14 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 14, TaskNumber = 14, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 13
+server = /var/tmp/824-1000/mr4425-worker1
+task = 824-mrinput-14.txt has finished
+selec map file = 824-mrinput-15.txt
+flagMapFiles = 
+[false false false false false false false false false false false false false false false false true true true true]
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......args.File = 824-mrinput-15.txt......]
+/var/tmp/824-1000/mr4425-worker1: given mapPhase task #15 on file 824-mrinput-15.txt (nios: 10)
+wk.concurrent + 1 = 1
+nReduce = 10 
+mapTask = 15
+inFile = 824-mrinput-15.txt
+doMap has done, inFile = 824-mrinput-15.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker1: mapPhase task #15 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 15, TaskNumber = 15, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 14
+server = /var/tmp/824-1000/mr4425-worker1
+task = 824-mrinput-15.txt has finished
+selec map file = 824-mrinput-16.txt
+flagMapFiles = 
+[false false false false false false false false false false false false false false false false false true true true]
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......args.File = 824-mrinput-16.txt......]
+/var/tmp/824-1000/mr4425-worker1: given mapPhase task #16 on file 824-mrinput-16.txt (nios: 10)
+wk.concurrent + 1 = 1
+nReduce = 10 
+mapTask = 16
+inFile = 824-mrinput-16.txt
+doMap has done, inFile = 824-mrinput-16.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker1: mapPhase task #16 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 16, TaskNumber = 16, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 15
+server = /var/tmp/824-1000/mr4425-worker1
+task = 824-mrinput-16.txt has finished
+selec map file = 824-mrinput-17.txt
+flagMapFiles = 
+[false false false false false false false false false false false false false false false false false false true true]
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......args.File = 824-mrinput-17.txt......]
+/var/tmp/824-1000/mr4425-worker1: given mapPhase task #17 on file 824-mrinput-17.txt (nios: 10)
+wk.concurrent + 1 = 1
+nReduce = 10 
+mapTask = 17
+inFile = 824-mrinput-17.txt
+doMap has done, inFile = 824-mrinput-17.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker1: mapPhase task #17 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 17, TaskNumber = 17, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 16
+server = /var/tmp/824-1000/mr4425-worker1
+task = 824-mrinput-17.txt has finished
+selec map file = 824-mrinput-18.txt
+flagMapFiles = 
+[false false false false false false false false false false false false false false false false false false false true]
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......args.File = 824-mrinput-18.txt......]
+/var/tmp/824-1000/mr4425-worker1: given mapPhase task #18 on file 824-mrinput-18.txt (nios: 10)
+wk.concurrent + 1 = 1
+nReduce = 10 
+mapTask = 18
+inFile = 824-mrinput-18.txt
+doMap has done, inFile = 824-mrinput-18.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker1: mapPhase task #18 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 18, TaskNumber = 18, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 17
+server = /var/tmp/824-1000/mr4425-worker1
+task = 824-mrinput-18.txt has finished
+selec map file = 824-mrinput-19.txt
+flagMapFiles = 
+[false false false false false false false false false false false false false false false false false false false false]
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......args.File = 824-mrinput-19.txt......]
+/var/tmp/824-1000/mr4425-worker1: given mapPhase task #19 on file 824-mrinput-19.txt (nios: 10)
+wk.concurrent + 1 = 1
+nReduce = 10 
+mapTask = 19
+inFile = 824-mrinput-19.txt
+doMap has done, inFile = 824-mrinput-19.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker1: mapPhase task #19 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 19, TaskNumber = 19, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 18
+server = /var/tmp/824-1000/mr4425-worker1
+task = 824-mrinput-19.txt has finished
+All mapFiles has handed out, continue
+nReduce = 10 
+mapTask = 1
+inFile = 824-mrinput-1.txt
+doMap has done, inFile = 824-mrinput-1.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker0: mapPhase task #1 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker0, index = 1, TaskNumber = 1, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 19
+server = /var/tmp/824-1000/mr4425-worker0
+task = 824-mrinput-1.txt has finished
+rpcSuccessCount = 20, ntasks = 20
+rpcSuccessCount > ntask - 1, break loop
+Schedule: mapPhase done
+Schedule: 10 reducePhase tasks (20 I/Os)
+flagMapFiles default value = [false false false false false false false false false false]
+mapFiles length = 20
+mapFiles = 
+[824-mrinput-0.txt 824-mrinput-1.txt 824-mrinput-2.txt 824-mrinput-3.txt 824-mrinput-4.txt 824-mrinput-5.txt 824-mrinput-6.txt 824-mrinput-7.txt 824-mrinput-8.txt 824-mrinput-9.txt 824-mrinput-10.txt 824-mrinput-11.txt 824-mrinput-12.txt 824-mrinput-13.txt 824-mrinput-14.txt 824-mrinput-15.txt 824-mrinput-16.txt 824-mrinput-17.txt 824-mrinput-18.txt 824-mrinput-19.txt]
+n_other = 
+20
+ntasks = 
+10
+Get a resigerchan, value = /var/tmp/824-1000/mr4425-worker0
+srvCollection = [     /var/tmp/824-1000/mr4425-worker0]
+args.TaskNumber = 0
+Get a resigerchan, value = /var/tmp/824-1000/mr4425-worker1
+srvCollection = [     /var/tmp/824-1000/mr4425-worker0 /var/tmp/824-1000/mr4425-worker1]
+args.TaskNumber = 1
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......args.File = 824-mrinput-1.txt......]
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker0......]
+[......args.File = 824-mrinput-0.txt......]
+/var/tmp/824-1000/mr4425-worker1: given reducePhase task #1 on file 824-mrinput-1.txt (nios: 20)
+wk.concurrent + 1 = 1
+outFile = mrtmp.test-res-1
+/var/tmp/824-1000/mr4425-worker0: given reducePhase task #0 on file 824-mrinput-0.txt (nios: 20)
+wk.concurrent + 1 = 1
+outFile = mrtmp.test-res-0
+sort kvs done!
+sort kvs done!
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker0: reducePhase task #0 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker0, index = 0, TaskNumber = 0, err = true......]
+rpc call success, ntasks = 10, rpcSuccessCount = 0
+server = /var/tmp/824-1000/mr4425-worker0
+task = 824-mrinput-0.txt has finished
+args.TaskNumber = 2
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker0......]
+[......args.File = 824-mrinput-2.txt......]
+/var/tmp/824-1000/mr4425-worker0: given reducePhase task #2 on file 824-mrinput-2.txt (nios: 20)
+wk.concurrent + 1 = 1
+outFile = mrtmp.test-res-2
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker1: reducePhase task #1 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 1, TaskNumber = 1, err = true......]
+rpc call success, ntasks = 10, rpcSuccessCount = 1
+server = /var/tmp/824-1000/mr4425-worker1
+task = 824-mrinput-1.txt has finished
+args.TaskNumber = 3
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......args.File = 824-mrinput-3.txt......]
+/var/tmp/824-1000/mr4425-worker1: given reducePhase task #3 on file 824-mrinput-3.txt (nios: 20)
+wk.concurrent + 1 = 1
+outFile = mrtmp.test-res-3
+sort kvs done!
+sort kvs done!
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker0: reducePhase task #2 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker0, index = 2, TaskNumber = 2, err = true......]
+rpc call success, ntasks = 10, rpcSuccessCount = 2
+server = /var/tmp/824-1000/mr4425-worker0
+task = 824-mrinput-2.txt has finished
+args.TaskNumber = 4
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker0......]
+[......args.File = 824-mrinput-4.txt......]
+/var/tmp/824-1000/mr4425-worker0: given reducePhase task #4 on file 824-mrinput-4.txt (nios: 20)
+wk.concurrent + 1 = 1
+outFile = mrtmp.test-res-4
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker1: reducePhase task #3 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 3, TaskNumber = 3, err = true......]
+rpc call success, ntasks = 10, rpcSuccessCount = 3
+server = /var/tmp/824-1000/mr4425-worker1
+task = 824-mrinput-3.txt has finished
+args.TaskNumber = 5
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......args.File = 824-mrinput-5.txt......]
+/var/tmp/824-1000/mr4425-worker1: given reducePhase task #5 on file 824-mrinput-5.txt (nios: 20)
+wk.concurrent + 1 = 1
+outFile = mrtmp.test-res-5
+sort kvs done!
+sort kvs done!
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker1: reducePhase task #5 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 5, TaskNumber = 5, err = true......]
+rpc call success, ntasks = 10, rpcSuccessCount = 4
+server = /var/tmp/824-1000/mr4425-worker1
+task = 824-mrinput-5.txt has finished
+args.TaskNumber = 6
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......args.File = 824-mrinput-6.txt......]
+/var/tmp/824-1000/mr4425-worker1: given reducePhase task #6 on file 824-mrinput-6.txt (nios: 20)
+wk.concurrent + 1 = 1
+outFile = mrtmp.test-res-6
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker0: reducePhase task #4 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker0, index = 4, TaskNumber = 4, err = true......]
+rpc call success, ntasks = 10, rpcSuccessCount = 5
+server = /var/tmp/824-1000/mr4425-worker0
+task = 824-mrinput-4.txt has finished
+args.TaskNumber = 7
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker0......]
+[......args.File = 824-mrinput-7.txt......]
+/var/tmp/824-1000/mr4425-worker0: given reducePhase task #7 on file 824-mrinput-7.txt (nios: 20)
+wk.concurrent + 1 = 1
+outFile = mrtmp.test-res-7
+sort kvs done!
+sort kvs done!
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker1: reducePhase task #6 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 6, TaskNumber = 6, err = true......]
+rpc call success, ntasks = 10, rpcSuccessCount = 6
+server = /var/tmp/824-1000/mr4425-worker1
+task = 824-mrinput-6.txt has finished
+args.TaskNumber = 8
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......args.File = 824-mrinput-8.txt......]
+/var/tmp/824-1000/mr4425-worker1: given reducePhase task #8 on file 824-mrinput-8.txt (nios: 20)
+wk.concurrent + 1 = 1
+outFile = mrtmp.test-res-8
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker0: reducePhase task #7 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker0, index = 7, TaskNumber = 7, err = true......]
+rpc call success, ntasks = 10, rpcSuccessCount = 7
+server = /var/tmp/824-1000/mr4425-worker0
+task = 824-mrinput-7.txt has finished
+args.TaskNumber = 9
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr4425-worker0......]
+[......args.File = 824-mrinput-9.txt......]
+/var/tmp/824-1000/mr4425-worker0: given reducePhase task #9 on file 824-mrinput-9.txt (nios: 20)
+wk.concurrent + 1 = 1
+outFile = mrtmp.test-res-9
+sort kvs done!
+sort kvs done!
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker1: reducePhase task #8 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 8, TaskNumber = 8, err = true......]
+rpc call success, ntasks = 10, rpcSuccessCount = 8
+server = /var/tmp/824-1000/mr4425-worker1
+task = 824-mrinput-8.txt has finished
+All mapFiles has handed out, continue
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr4425-worker0: reducePhase task #9 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker0, index = 9, TaskNumber = 9, err = true......]
+rpc call success, ntasks = 10, rpcSuccessCount = 9
+server = /var/tmp/824-1000/mr4425-worker0
+task = 824-mrinput-9.txt has finished
+rpcSuccessCount = 10, ntasks = 10
+rpcSuccessCount > ntask - 1, break loop
+Schedule: reducePhase done
+Merge: read mrtmp.test-res-0
+Merge: read mrtmp.test-res-1
+Merge: read mrtmp.test-res-2
+Merge: read mrtmp.test-res-3
+Merge: read mrtmp.test-res-4
+Merge: read mrtmp.test-res-5
+Merge: read mrtmp.test-res-6
+Merge: read mrtmp.test-res-7
+Merge: read mrtmp.test-res-8
+Merge: read mrtmp.test-res-9
+/var/tmp/824-1000/mr4425-master: Map/Reduce task completed
+master_splitmerge.go, removeFile = mrtmp.test-0-0
+master_splitmerge.go, removeFile = mrtmp.test-0-1
+master_splitmerge.go, removeFile = mrtmp.test-0-2
+master_splitmerge.go, removeFile = mrtmp.test-0-3
+master_splitmerge.go, removeFile = mrtmp.test-0-4
+master_splitmerge.go, removeFile = mrtmp.test-0-5
+master_splitmerge.go, removeFile = mrtmp.test-0-6
+master_splitmerge.go, removeFile = mrtmp.test-0-7
+master_splitmerge.go, removeFile = mrtmp.test-0-8
+master_splitmerge.go, removeFile = mrtmp.test-0-9
+master_splitmerge.go, removeFile = mrtmp.test-1-0
+master_splitmerge.go, removeFile = mrtmp.test-1-1
+master_splitmerge.go, removeFile = mrtmp.test-1-2
+master_splitmerge.go, removeFile = mrtmp.test-1-3
+master_splitmerge.go, removeFile = mrtmp.test-1-4
+master_splitmerge.go, removeFile = mrtmp.test-1-5
+master_splitmerge.go, removeFile = mrtmp.test-1-6
+master_splitmerge.go, removeFile = mrtmp.test-1-7
+master_splitmerge.go, removeFile = mrtmp.test-1-8
+master_splitmerge.go, removeFile = mrtmp.test-1-9
+master_splitmerge.go, removeFile = mrtmp.test-2-0
+master_splitmerge.go, removeFile = mrtmp.test-2-1
+master_splitmerge.go, removeFile = mrtmp.test-2-2
+master_splitmerge.go, removeFile = mrtmp.test-2-3
+master_splitmerge.go, removeFile = mrtmp.test-2-4
+master_splitmerge.go, removeFile = mrtmp.test-2-5
+master_splitmerge.go, removeFile = mrtmp.test-2-6
+master_splitmerge.go, removeFile = mrtmp.test-2-7
+master_splitmerge.go, removeFile = mrtmp.test-2-8
+master_splitmerge.go, removeFile = mrtmp.test-2-9
+master_splitmerge.go, removeFile = mrtmp.test-3-0
+master_splitmerge.go, removeFile = mrtmp.test-3-1
+master_splitmerge.go, removeFile = mrtmp.test-3-2
+master_splitmerge.go, removeFile = mrtmp.test-3-3
+master_splitmerge.go, removeFile = mrtmp.test-3-4
+master_splitmerge.go, removeFile = mrtmp.test-3-5
+master_splitmerge.go, removeFile = mrtmp.test-3-6
+master_splitmerge.go, removeFile = mrtmp.test-3-7
+master_splitmerge.go, removeFile = mrtmp.test-3-8
+master_splitmerge.go, removeFile = mrtmp.test-3-9
+master_splitmerge.go, removeFile = mrtmp.test-4-0
+master_splitmerge.go, removeFile = mrtmp.test-4-1
+master_splitmerge.go, removeFile = mrtmp.test-4-2
+master_splitmerge.go, removeFile = mrtmp.test-4-3
+master_splitmerge.go, removeFile = mrtmp.test-4-4
+master_splitmerge.go, removeFile = mrtmp.test-4-5
+master_splitmerge.go, removeFile = mrtmp.test-4-6
+master_splitmerge.go, removeFile = mrtmp.test-4-7
+master_splitmerge.go, removeFile = mrtmp.test-4-8
+master_splitmerge.go, removeFile = mrtmp.test-4-9
+master_splitmerge.go, removeFile = mrtmp.test-5-0
+master_splitmerge.go, removeFile = mrtmp.test-5-1
+master_splitmerge.go, removeFile = mrtmp.test-5-2
+master_splitmerge.go, removeFile = mrtmp.test-5-3
+master_splitmerge.go, removeFile = mrtmp.test-5-4
+master_splitmerge.go, removeFile = mrtmp.test-5-5
+master_splitmerge.go, removeFile = mrtmp.test-5-6
+master_splitmerge.go, removeFile = mrtmp.test-5-7
+master_splitmerge.go, removeFile = mrtmp.test-5-8
+master_splitmerge.go, removeFile = mrtmp.test-5-9
+master_splitmerge.go, removeFile = mrtmp.test-6-0
+master_splitmerge.go, removeFile = mrtmp.test-6-1
+master_splitmerge.go, removeFile = mrtmp.test-6-2
+master_splitmerge.go, removeFile = mrtmp.test-6-3
+master_splitmerge.go, removeFile = mrtmp.test-6-4
+master_splitmerge.go, removeFile = mrtmp.test-6-5
+master_splitmerge.go, removeFile = mrtmp.test-6-6
+master_splitmerge.go, removeFile = mrtmp.test-6-7
+master_splitmerge.go, removeFile = mrtmp.test-6-8
+master_splitmerge.go, removeFile = mrtmp.test-6-9
+master_splitmerge.go, removeFile = mrtmp.test-7-0
+master_splitmerge.go, removeFile = mrtmp.test-7-1
+master_splitmerge.go, removeFile = mrtmp.test-7-2
+master_splitmerge.go, removeFile = mrtmp.test-7-3
+master_splitmerge.go, removeFile = mrtmp.test-7-4
+master_splitmerge.go, removeFile = mrtmp.test-7-5
+master_splitmerge.go, removeFile = mrtmp.test-7-6
+master_splitmerge.go, removeFile = mrtmp.test-7-7
+master_splitmerge.go, removeFile = mrtmp.test-7-8
+master_splitmerge.go, removeFile = mrtmp.test-7-9
+master_splitmerge.go, removeFile = mrtmp.test-8-0
+master_splitmerge.go, removeFile = mrtmp.test-8-1
+master_splitmerge.go, removeFile = mrtmp.test-8-2
+master_splitmerge.go, removeFile = mrtmp.test-8-3
+master_splitmerge.go, removeFile = mrtmp.test-8-4
+master_splitmerge.go, removeFile = mrtmp.test-8-5
+master_splitmerge.go, removeFile = mrtmp.test-8-6
+master_splitmerge.go, removeFile = mrtmp.test-8-7
+master_splitmerge.go, removeFile = mrtmp.test-8-8
+master_splitmerge.go, removeFile = mrtmp.test-8-9
+master_splitmerge.go, removeFile = mrtmp.test-9-0
+master_splitmerge.go, removeFile = mrtmp.test-9-1
+master_splitmerge.go, removeFile = mrtmp.test-9-2
+master_splitmerge.go, removeFile = mrtmp.test-9-3
+master_splitmerge.go, removeFile = mrtmp.test-9-4
+master_splitmerge.go, removeFile = mrtmp.test-9-5
+master_splitmerge.go, removeFile = mrtmp.test-9-6
+master_splitmerge.go, removeFile = mrtmp.test-9-7
+master_splitmerge.go, removeFile = mrtmp.test-9-8
+master_splitmerge.go, removeFile = mrtmp.test-9-9
+master_splitmerge.go, removeFile = mrtmp.test-10-0
+master_splitmerge.go, removeFile = mrtmp.test-10-1
+master_splitmerge.go, removeFile = mrtmp.test-10-2
+master_splitmerge.go, removeFile = mrtmp.test-10-3
+master_splitmerge.go, removeFile = mrtmp.test-10-4
+master_splitmerge.go, removeFile = mrtmp.test-10-5
+master_splitmerge.go, removeFile = mrtmp.test-10-6
+master_splitmerge.go, removeFile = mrtmp.test-10-7
+master_splitmerge.go, removeFile = mrtmp.test-10-8
+master_splitmerge.go, removeFile = mrtmp.test-10-9
+master_splitmerge.go, removeFile = mrtmp.test-11-0
+master_splitmerge.go, removeFile = mrtmp.test-11-1
+master_splitmerge.go, removeFile = mrtmp.test-11-2
+master_splitmerge.go, removeFile = mrtmp.test-11-3
+master_splitmerge.go, removeFile = mrtmp.test-11-4
+master_splitmerge.go, removeFile = mrtmp.test-11-5
+master_splitmerge.go, removeFile = mrtmp.test-11-6
+master_splitmerge.go, removeFile = mrtmp.test-11-7
+master_splitmerge.go, removeFile = mrtmp.test-11-8
+master_splitmerge.go, removeFile = mrtmp.test-11-9
+master_splitmerge.go, removeFile = mrtmp.test-12-0
+master_splitmerge.go, removeFile = mrtmp.test-12-1
+master_splitmerge.go, removeFile = mrtmp.test-12-2
+master_splitmerge.go, removeFile = mrtmp.test-12-3
+master_splitmerge.go, removeFile = mrtmp.test-12-4
+master_splitmerge.go, removeFile = mrtmp.test-12-5
+master_splitmerge.go, removeFile = mrtmp.test-12-6
+master_splitmerge.go, removeFile = mrtmp.test-12-7
+master_splitmerge.go, removeFile = mrtmp.test-12-8
+master_splitmerge.go, removeFile = mrtmp.test-12-9
+master_splitmerge.go, removeFile = mrtmp.test-13-0
+master_splitmerge.go, removeFile = mrtmp.test-13-1
+master_splitmerge.go, removeFile = mrtmp.test-13-2
+master_splitmerge.go, removeFile = mrtmp.test-13-3
+master_splitmerge.go, removeFile = mrtmp.test-13-4
+master_splitmerge.go, removeFile = mrtmp.test-13-5
+master_splitmerge.go, removeFile = mrtmp.test-13-6
+master_splitmerge.go, removeFile = mrtmp.test-13-7
+master_splitmerge.go, removeFile = mrtmp.test-13-8
+master_splitmerge.go, removeFile = mrtmp.test-13-9
+master_splitmerge.go, removeFile = mrtmp.test-14-0
+master_splitmerge.go, removeFile = mrtmp.test-14-1
+master_splitmerge.go, removeFile = mrtmp.test-14-2
+master_splitmerge.go, removeFile = mrtmp.test-14-3
+master_splitmerge.go, removeFile = mrtmp.test-14-4
+master_splitmerge.go, removeFile = mrtmp.test-14-5
+master_splitmerge.go, removeFile = mrtmp.test-14-6
+master_splitmerge.go, removeFile = mrtmp.test-14-7
+master_splitmerge.go, removeFile = mrtmp.test-14-8
+master_splitmerge.go, removeFile = mrtmp.test-14-9
+master_splitmerge.go, removeFile = mrtmp.test-15-0
+master_splitmerge.go, removeFile = mrtmp.test-15-1
+master_splitmerge.go, removeFile = mrtmp.test-15-2
+master_splitmerge.go, removeFile = mrtmp.test-15-3
+master_splitmerge.go, removeFile = mrtmp.test-15-4
+master_splitmerge.go, removeFile = mrtmp.test-15-5
+master_splitmerge.go, removeFile = mrtmp.test-15-6
+master_splitmerge.go, removeFile = mrtmp.test-15-7
+master_splitmerge.go, removeFile = mrtmp.test-15-8
+master_splitmerge.go, removeFile = mrtmp.test-15-9
+master_splitmerge.go, removeFile = mrtmp.test-16-0
+master_splitmerge.go, removeFile = mrtmp.test-16-1
+master_splitmerge.go, removeFile = mrtmp.test-16-2
+master_splitmerge.go, removeFile = mrtmp.test-16-3
+master_splitmerge.go, removeFile = mrtmp.test-16-4
+master_splitmerge.go, removeFile = mrtmp.test-16-5
+master_splitmerge.go, removeFile = mrtmp.test-16-6
+master_splitmerge.go, removeFile = mrtmp.test-16-7
+master_splitmerge.go, removeFile = mrtmp.test-16-8
+master_splitmerge.go, removeFile = mrtmp.test-16-9
+master_splitmerge.go, removeFile = mrtmp.test-17-0
+master_splitmerge.go, removeFile = mrtmp.test-17-1
+master_splitmerge.go, removeFile = mrtmp.test-17-2
+master_splitmerge.go, removeFile = mrtmp.test-17-3
+master_splitmerge.go, removeFile = mrtmp.test-17-4
+master_splitmerge.go, removeFile = mrtmp.test-17-5
+master_splitmerge.go, removeFile = mrtmp.test-17-6
+master_splitmerge.go, removeFile = mrtmp.test-17-7
+master_splitmerge.go, removeFile = mrtmp.test-17-8
+master_splitmerge.go, removeFile = mrtmp.test-17-9
+master_splitmerge.go, removeFile = mrtmp.test-18-0
+master_splitmerge.go, removeFile = mrtmp.test-18-1
+master_splitmerge.go, removeFile = mrtmp.test-18-2
+master_splitmerge.go, removeFile = mrtmp.test-18-3
+master_splitmerge.go, removeFile = mrtmp.test-18-4
+master_splitmerge.go, removeFile = mrtmp.test-18-5
+master_splitmerge.go, removeFile = mrtmp.test-18-6
+master_splitmerge.go, removeFile = mrtmp.test-18-7
+master_splitmerge.go, removeFile = mrtmp.test-18-8
+master_splitmerge.go, removeFile = mrtmp.test-18-9
+master_splitmerge.go, removeFile = mrtmp.test-19-0
+master_splitmerge.go, removeFile = mrtmp.test-19-1
+master_splitmerge.go, removeFile = mrtmp.test-19-2
+master_splitmerge.go, removeFile = mrtmp.test-19-3
+master_splitmerge.go, removeFile = mrtmp.test-19-4
+master_splitmerge.go, removeFile = mrtmp.test-19-5
+master_splitmerge.go, removeFile = mrtmp.test-19-6
+master_splitmerge.go, removeFile = mrtmp.test-19-7
+master_splitmerge.go, removeFile = mrtmp.test-19-8
+master_splitmerge.go, removeFile = mrtmp.test-19-9
+master_splitmerge.go, removeFile = mrtmp.test-res-0
+master_splitmerge.go, removeFile = mrtmp.test-res-1
+master_splitmerge.go, removeFile = mrtmp.test-res-2
+master_splitmerge.go, removeFile = mrtmp.test-res-3
+master_splitmerge.go, removeFile = mrtmp.test-res-4
+master_splitmerge.go, removeFile = mrtmp.test-res-5
+master_splitmerge.go, removeFile = mrtmp.test-res-6
+master_splitmerge.go, removeFile = mrtmp.test-res-7
+master_splitmerge.go, removeFile = mrtmp.test-res-8
+master_splitmerge.go, removeFile = mrtmp.test-res-9
+master_splitmerge.go, removeFile = mrtmp.test
+master_splitmerge.go, removeFile = 824-mrinput-0.txt
+master_splitmerge.go, removeFile = 824-mrinput-1.txt
+master_splitmerge.go, removeFile = 824-mrinput-2.txt
+master_splitmerge.go, removeFile = 824-mrinput-3.txt
+master_splitmerge.go, removeFile = 824-mrinput-4.txt
+master_splitmerge.go, removeFile = 824-mrinput-5.txt
+master_splitmerge.go, removeFile = 824-mrinput-6.txt
+master_splitmerge.go, removeFile = 824-mrinput-7.txt
+master_splitmerge.go, removeFile = 824-mrinput-8.txt
+master_splitmerge.go, removeFile = 824-mrinput-9.txt
+master_splitmerge.go, removeFile = 824-mrinput-10.txt
+master_splitmerge.go, removeFile = 824-mrinput-11.txt
+master_splitmerge.go, removeFile = 824-mrinput-12.txt
+master_splitmerge.go, removeFile = 824-mrinput-13.txt
+master_splitmerge.go, removeFile = 824-mrinput-14.txt
+master_splitmerge.go, removeFile = 824-mrinput-15.txt
+master_splitmerge.go, removeFile = 824-mrinput-16.txt
+master_splitmerge.go, removeFile = 824-mrinput-17.txt
+master_splitmerge.go, removeFile = 824-mrinput-18.txt
+master_splitmerge.go, removeFile = 824-mrinput-19.txt
+PASS
+ok  	_/home/jun/Project/MIT6824/6.824/src/mapreduce	3.135s

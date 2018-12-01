@@ -1,6 +1,18 @@
 package mapreduce
 
-import "fmt"
+import (
+    "fmt"
+//    "net/rpc"
+    "sync"
+    "strings"
+)
+
+type ResultStruct struct {
+    Srv string
+    Index int
+    TaskNumberIndex int
+    Reply bool
+}
 
 //
 // schedule() starts and waits for all tasks in the given phase (mapPhase
@@ -30,5 +42,110 @@ func schedule(jobName string, mapFiles []string, nReduce int, phase jobPhase, re
 	//
 	// Your code here (Part III, Part IV).
 	//
-	fmt.Printf("Schedule: %v done\n", phase)
+
+
+    rpcSuccessCount := 0
+    rpcname := "Worker.DoTask"
+
+    var srv string
+    var index int
+    var wg sync.WaitGroup
+    var result ResultStruct
+
+    //taskNumberIndex := 0
+    srvCollection := make([]string, 5)
+    resultChan := make(chan ResultStruct)
+    flagMapFiles := make([]bool, ntasks)
+
+    fmt.Printf("flagMapFiles default value = %v\n", flagMapFiles)
+    for i := 0; i < ntasks; i++ {
+        flagMapFiles[i] = true
+    }
+
+    fmt.Printf("mapFiles = \n%v\n", mapFiles)
+    fmt.Printf("n_other = \n%v\n", n_other)
+    fmt.Printf("ntasks = \n%v\n", ntasks)
+
+    args := DoTaskArgs{jobName, "", phase, 0, n_other}
+
+Exit:
+    for i := 0; ; i++ {
+
+        if i >= ntasks {
+            i = 0
+        }
+        select {
+            case result = <-resultChan:
+                if result.Reply == true {       //current task had finished
+                    fmt.Printf("rpc call success, ntasks = %v, rpcSuccessCount = %v\n", ntasks, rpcSuccessCount)
+                    fmt.Printf("server = %v\n", result.Srv)
+//                    fmt.Printf("TaskNumberIndex = %v\n", result.TaskNumberIndex)
+                    fmt.Printf("task = %v has finished\n", mapFiles[result.Index])
+
+//                    args.TaskNumber = result.TaskNumberIndex
+                    srv = result.Srv            //Assign a task to the worker which had finished a task just now
+                    rpcSuccessCount++
+                    if rpcSuccessCount >= ntasks {
+                        fmt.Printf("rpcSuccessCount = %v, ntasks = %v\n", rpcSuccessCount, ntasks)
+                        fmt.Printf("rpcSuccessCount > ntask - 1, break loop\n")
+                        break Exit
+                    }
+                } else {                        //current task failure
+                    fmt.Printf("rpc call failure, failure worker = %v\n", result.Srv)
+                    for j := 0; j < len(srvCollection); j++ {               //find another worker for this task
+                        if strings.Compare(srvCollection[j], result.Srv) != 0 {
+                            srv = srvCollection[j]
+                            fmt.Printf("Select a new worker for task, new worker = %v\n", srv)
+                            break
+                        }
+                    }
+                    if phase == mapPhase {
+                        flagMapFiles[result.Index] = true
+                    }
+                }
+            case register := <-registerChan:
+                srv = register
+                srvCollection = append(srvCollection, register)
+                fmt.Printf("Get a resigerchan, value = %v\n", srv)
+                fmt.Printf("srvCollection = %v\n", srvCollection)
+        }
+
+        isHandOut := false
+        for j := 0; j < ntasks; j++ {
+            if flagMapFiles[j] == true {
+                index = j                   //Not use
+                args.File = mapFiles[j]
+                args.TaskNumber = j
+                fmt.Printf("selec map file = %v\n", args.File)
+                flagMapFiles[j] = false
+                break
+            }
+            if j == ntasks - 1 {
+               isHandOut = true
+            }
+        }
+        if isHandOut == true {
+            fmt.Printf("All mapFiles has handed out, continue\n")
+            continue
+        }
+        fmt.Printf("flagMapFiles = \n%v\n", flagMapFiles)
+
+        wg.Add(1)
+        go func(srv string, rpcname string, index int, args DoTaskArgs, resultChan chan ResultStruct) {
+
+            fmt.Printf("[......rpc call start......]\n")
+            fmt.Printf("[......svr = %v......]\n", srv)
+            fmt.Printf("[......args.File = %v......]\n", args.File)
+            err := call(srv, rpcname, args, nil)
+            fmt.Printf("[......rpc call done......]\n")
+            defer wg.Done()
+
+            fmt.Printf("[......rpc call done, srv = %v, index = %v, TaskNumber = %v, err = %v......]\n", srv, index, args.TaskNumber, err)
+            resultChan <- ResultStruct{srv, index, args.TaskNumber, err}
+        }(srv, rpcname, index, args, resultChan)
+    }
+
+    wg.Wait()
+    fmt.Printf("Schedule: %v done\n", phase)
 }
+

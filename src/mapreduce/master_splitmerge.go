@@ -52,6 +52,7 @@ func (mr *Master) merge() {
 
 // removeFile is a simple wrapper around os.Remove that logs errors.
 func removeFile(n string) {
+    fmt.Printf("master_splitmerge.go, removeFile = %v\n", n)
 	err := os.Remove(n)
 	if err != nil {
 		log.Fatal("CleanupFiles ", err)

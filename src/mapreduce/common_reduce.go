@@ -61,8 +61,9 @@ func doReduce(
     var kvs []KeyValue
     for i := 0; i < nMap; i++ {
 
-        filename := reduceName(jobName, i, reduceTask)
-        fmt.Printf("filename = %v\n", filename)
+        filename := reduceName(jobName, i, reduceTask)    //This is curious, which previous is ok, but now it needs to -1
+//        filename := reduceName(jobName, i, reduceTask -1 )
+//        fmt.Printf("filename = %v\n", filename)
         content, err := ioutil.ReadFile(filename)
         if err != nil {
             fmt.Println("ReadFile error")
@@ -111,7 +112,7 @@ func doReduce(
             }
             enc := json.NewEncoder(file)
             tempString := reduceF(kvs[i].Key, valueString)
-            fmt.Printf("reduceF return string = %v\n", tempString)
+//            fmt.Printf("reduceF return string = %v\n", tempString)
 //            enc.Encode(KeyValue{kvs[i].Key, reduceF(kvs[i].Key, valueString)})
             enc.Encode(KeyValue{kvs[i].Key, tempString})
             file.Close()
@@ -122,8 +123,8 @@ func doReduce(
         }
     }
 
-    content, _ := ioutil.ReadFile(outFile)
-    fmt.Printf("content:\n%v\n", string(content))
+//    content, _ := ioutil.ReadFile(outFile)
+//    fmt.Printf("content:\n%v\n", string(content))
 
 }
 

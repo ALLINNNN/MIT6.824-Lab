@@ -69,31 +69,17 @@ func doMap(
     s := string(content)
     KeyValue := mapF(inFile, s)
 //    fmt.Printf("KeyValue:\n%v\n", KeyValue)
-
+    fmt.Printf("mapTask = %v\n", mapTask)
     fmt.Printf("inFile = %v\n", inFile)
 //    var tempFilename string
     var intermediateFilename string
     for _, kv := range KeyValue {
         mod := ihash(kv.Key) % nReduce
-//        tempFilename = intermediateFilename
+//        fmt.Printf("------nReduce = %v------\n", nReduce)
+//        fmt.Printf("------mod = %v------\n", mod)
         intermediateFilename = reduceName(jobName, mapTask, mod)
-/*
-        if strings.Compare(tempFilename, intermediateFilename) != 0 {
-            fmt.Printf("intermediateFilename = %v\n", intermediateFilename)
-            tempFilename = intermediateFilename
-        }
-*/
-/*
-        if _, err := os.Stat(intermediateFilename); os.IsNotExist(err) {
-            fmt.Printf("file does not exist\n")
-        }else {
-            fmt.Printf("file exist, than remove it\n")
-            err = os.Remove(intermediateFilename)
-            if err != nil {
-                fmt.Println("remove file failure\n")
-            }
-        }
-*/
+//        fmt.Printf("------intermediateFilename = %v------\n", intermediateFilename)
+
         file, err := os.OpenFile(intermediateFilename, os.O_RDWR | os.O_APPEND | os.O_CREATE, 0755)
         if err != nil {
             fmt.Println("OpenFile failure\n")
@@ -107,7 +93,7 @@ func doMap(
 
         file.Close()
     }
-
+    fmt.Printf("doMap has done, inFile = %v\n", inFile)
 }
 
 func ihash(s string) int {
