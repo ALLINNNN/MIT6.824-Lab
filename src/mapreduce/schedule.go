@@ -4,12 +4,10 @@ import (
     "fmt"
 //    "net/rpc"
     "sync"
-//    "strings"
 )
 
 type ResultStruct struct {
     Srv string
-//    Index int
     TaskNumberIndex int
     Reply bool
 }
@@ -79,7 +77,6 @@ Exit:
                     fmt.Printf("Before appending availbSrvCollection, value = %v\n", availbSrvCollection)
                     availbSrvCollection = append(availbSrvCollection, result.Srv)
                     fmt.Printf("After appending availbSrvCollection, value = %v\n", availbSrvCollection)
-//                    srv = result.Srv            //Assign a task to the worker which had finished a task just now
                     rpcSuccessCount++
                     if rpcSuccessCount >= ntasks {
                         fmt.Printf("rpcSuccessCount = %v, ntasks = %v\n", rpcSuccessCount, ntasks)
@@ -88,20 +85,10 @@ Exit:
                     }
                 } else {                        //current task failure
                     fmt.Printf("rpc call failure, failure worker = %v\n", result.Srv)
-/*
-                    for j := 0; j < len(srvCollection); j++ {               //find another worker for this task
-                        if strings.Compare(srvCollection[j], result.Srv) != 0 {
-                            srv = srvCollection[j]
-                            fmt.Printf("Select a new worker for task, new worker = %v\n", srv)
-                            break
-                        }
-                    }
-*/
                     fmt.Printf("Task number index = %v, flag = %v\n", result.TaskNumberIndex, flagMapFiles[result.TaskNumberIndex])
                     flagMapFiles[result.TaskNumberIndex] = false
                 }
             case register := <-registerChan:
-//                srv = register
                 fmt.Printf("Get a resigerchan, value = %v\n", register)
                 srvCollection = append(srvCollection, register)
                 fmt.Printf("Before appending availbSrvCollection, value = %v\n", availbSrvCollection)

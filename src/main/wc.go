@@ -27,20 +27,15 @@ func mapF(filename string, contents string) []mapreduce.KeyValue {
 
     /*ii. Pass words to kvs and return kvs*/
     var kvs []mapreduce.KeyValue
-    fmt.Println("len(temp) = ", len(temp))
-    for i := 0; i < len(temp); i++ {
+    tempLen := len(temp)
+    fmt.Println("len(temp) = ", tempLen)
+    for i := 0; i < tempLen; i++ {
         var kv mapreduce.KeyValue
         kv.Key = temp[i]
         kv.Value = "1"
         kvs = append(kvs, kv)
     }
 
-    /*iii. Check kvs*/
-/*
-    for i := 0; i < len(kvs); i++ {
-        fmt.Printf("kvs[%v].Key = %v, kvs[%v].Value = %v\n", i, kvs[i].Key, i, kvs[i].Value)
-    }
-*/
     return kvs
 }
 
@@ -53,8 +48,9 @@ func reduceF(key string, values []string) string {
 	// Your code here (Part II).
 
     total := 0
+    valuesLen := len(values)
 //    fmt.Printf("reduceF, len(values) = %v\n", len(values))
-    for i := 0; i < len(values); i++ {
+    for i := 0; i < valuesLen; i++ {
         if temp, err := strconv.Atoi(values[i]); err != nil {
             fmt.Println("value transfer to int failure")
         } else {

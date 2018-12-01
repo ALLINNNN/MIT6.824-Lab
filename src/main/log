@@ -1,0 +1,51 @@
+master: Starting Map/Reduce task iiseq
+nReduce = 3 
+temp length = 24250
+mapTask = 0
+inFile = pg-being_ernest.txt
+doMap has done, inFile = pg-being_ernest.txt
+nReduce = 3 
+temp length = 83632
+mapTask = 1
+inFile = pg-dorian_gray.txt
+doMap has done, inFile = pg-dorian_gray.txt
+nReduce = 3 
+temp length = 78475
+mapTask = 2
+inFile = pg-frankenstein.txt
+doMap has done, inFile = pg-frankenstein.txt
+nReduce = 3 
+temp length = 105324
+mapTask = 3
+inFile = pg-grimm.txt
+doMap has done, inFile = pg-grimm.txt
+nReduce = 3 
+temp length = 120896
+mapTask = 4
+inFile = pg-huckleberry_finn.txt
+doMap has done, inFile = pg-huckleberry_finn.txt
+nReduce = 3 
+temp length = 25641
+mapTask = 5
+inFile = pg-metamorphosis.txt
+doMap has done, inFile = pg-metamorphosis.txt
+nReduce = 3 
+temp length = 109214
+mapTask = 6
+inFile = pg-sherlock_holmes.txt
+doMap has done, inFile = pg-sherlock_holmes.txt
+nReduce = 3 
+temp length = 77607
+mapTask = 7
+inFile = pg-tom_sawyer.txt
+doMap has done, inFile = pg-tom_sawyer.txt
+outFile = mrtmp.iiseq-res-0
+sort kvs done!
+outFile = mrtmp.iiseq-res-1
+sort kvs done!
+outFile = mrtmp.iiseq-res-2
+sort kvs done!
+Merge: read mrtmp.iiseq-res-0
+Merge: read mrtmp.iiseq-res-1
+Merge: read mrtmp.iiseq-res-2
+master: Map/Reduce task completed
