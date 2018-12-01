@@ -4,7 +4,7 @@ import (
     "fmt"
 //    "net/rpc"
     "sync"
-    "strings"
+//    "strings"
 )
 
 type ResultStruct struct {
@@ -51,7 +51,8 @@ func schedule(jobName string, mapFiles []string, nReduce int, phase jobPhase, re
     var wg sync.WaitGroup
     var result ResultStruct
 
-    srvCollection := make([]string, 5)
+    srvCollection := make([]string, 0)
+    availbSrvCollection := make([]string, 0)
     resultChan := make(chan ResultStruct)
     flagMapFiles := make([]bool, ntasks)
 
@@ -75,7 +76,10 @@ Exit:
                     fmt.Printf("server = %v\n", result.Srv)
                     fmt.Printf("task = %v has finished\n", mapFiles[result.TaskNumberIndex])
 
-                    srv = result.Srv            //Assign a task to the worker which had finished a task just now
+                    fmt.Printf("Before appending availbSrvCollection, value = %v\n", availbSrvCollection)
+                    availbSrvCollection = append(availbSrvCollection, result.Srv)
+                    fmt.Printf("After appending availbSrvCollection, value = %v\n", availbSrvCollection)
+//                    srv = result.Srv            //Assign a task to the worker which had finished a task just now
                     rpcSuccessCount++
                     if rpcSuccessCount >= ntasks {
                         fmt.Printf("rpcSuccessCount = %v, ntasks = %v\n", rpcSuccessCount, ntasks)
@@ -84,6 +88,7 @@ Exit:
                     }
                 } else {                        //current task failure
                     fmt.Printf("rpc call failure, failure worker = %v\n", result.Srv)
+/*
                     for j := 0; j < len(srvCollection); j++ {               //find another worker for this task
                         if strings.Compare(srvCollection[j], result.Srv) != 0 {
                             srv = srvCollection[j]
@@ -91,21 +96,27 @@ Exit:
                             break
                         }
                     }
+*/
+                    fmt.Printf("Task number index = %v, flag = %v\n", result.TaskNumberIndex, flagMapFiles[result.TaskNumberIndex])
                     flagMapFiles[result.TaskNumberIndex] = false
                 }
             case register := <-registerChan:
-                srv = register
+//                srv = register
+                fmt.Printf("Get a resigerchan, value = %v\n", register)
                 srvCollection = append(srvCollection, register)
-                fmt.Printf("Get a resigerchan, value = %v\n", srv)
+                fmt.Printf("Before appending availbSrvCollection, value = %v\n", availbSrvCollection)
+                availbSrvCollection = append(availbSrvCollection, register)
+                fmt.Printf("After appending availbSrvCollection, value = %v\n", availbSrvCollection)
                 fmt.Printf("srvCollection = %v\n", srvCollection)
         }
 
+        /*Preventing additional worker's invocations*/
         isHandOut := false
         for j := 0; j < ntasks; j++ {
             if flagMapFiles[j] == false {
                 args.File = mapFiles[j]
                 args.TaskNumber = j
-                fmt.Printf("selec map file = %v\n", args.File)
+                fmt.Printf("Selecting a map file = %v\n", args.File)
                 flagMapFiles[j] = true
                 break
             }
@@ -117,6 +128,24 @@ Exit:
             fmt.Printf("All mapFiles has handed out, continue\n")
             continue
         }
+
+        /*Selecting a worker to asign a task*/
+        if len(availbSrvCollection) != 0 {
+            srv = availbSrvCollection[0]
+            fmt.Printf("Before deleting availbSrvCollection, value = %v\n", availbSrvCollection)
+            availbSrvCollection = append(availbSrvCollection[:0], availbSrvCollection[1:]...)
+            fmt.Printf("After deleting availbSrvCollection, value = %v\n", availbSrvCollection)
+            fmt.Printf("Selecting srv = %v\n", srv)
+        } else {
+            fmt.Printf("There is no available worker, so discarding this task and waiting for available worker\n")
+            fmt.Printf("Current task number index = %v\n", args.TaskNumber)
+            fmt.Printf("Changing task number flag\n")
+            fmt.Printf("Pre flag = %v\n", flagMapFiles[args.TaskNumber])
+            flagMapFiles[args.TaskNumber] = false
+            fmt.Printf("Now flag = %v\n", flagMapFiles[args.TaskNumber])
+            continue
+        }
+
 
         wg.Add(1)
         go func(srv string, rpcname string, args DoTaskArgs, resultChan chan ResultStruct) {

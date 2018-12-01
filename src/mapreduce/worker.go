@@ -45,7 +45,6 @@ func (wk *Worker) DoTask(arg *DoTaskArgs, _ *struct{}) error {
 	wk.nTasks += 1
 	wk.concurrent += 1
 	nc := wk.concurrent
-    fmt.Printf("wk.concurrent + 1 = %v\n", nc)
 	wk.Unlock()
 
 	if nc > 1 {
@@ -82,7 +81,6 @@ func (wk *Worker) DoTask(arg *DoTaskArgs, _ *struct{}) error {
 
 	wk.Lock()
 	wk.concurrent -= 1
-    fmt.Printf("wk.concurrent - 1 = %v\n", wk.concurrent)
 	wk.Unlock()
 
 	if wk.parallelism != nil {
