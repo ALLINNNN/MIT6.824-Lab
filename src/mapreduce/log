@@ -1,565 +1,519 @@
-/var/tmp/824-1000/mr4425-master: Starting Map/Reduce task test
+/var/tmp/824-1000/mr3073-master: Starting Map/Reduce task test
 Schedule: 20 mapPhase tasks (10 I/Os)
 flagMapFiles default value = [false false false false false false false false false false false false false false false false false false false false]
-mapFiles length = 20
 mapFiles = 
 [824-mrinput-0.txt 824-mrinput-1.txt 824-mrinput-2.txt 824-mrinput-3.txt 824-mrinput-4.txt 824-mrinput-5.txt 824-mrinput-6.txt 824-mrinput-7.txt 824-mrinput-8.txt 824-mrinput-9.txt 824-mrinput-10.txt 824-mrinput-11.txt 824-mrinput-12.txt 824-mrinput-13.txt 824-mrinput-14.txt 824-mrinput-15.txt 824-mrinput-16.txt 824-mrinput-17.txt 824-mrinput-18.txt 824-mrinput-19.txt]
-n_other = 
-10
-ntasks = 
-20
-Get a resigerchan, value = /var/tmp/824-1000/mr4425-worker0
-srvCollection = [     /var/tmp/824-1000/mr4425-worker0]
+n_other = 10
+ntasks = 20
+Get a resigerchan, value = /var/tmp/824-1000/mr3073-worker1
+srvCollection = [     /var/tmp/824-1000/mr3073-worker1]
 selec map file = 824-mrinput-0.txt
-flagMapFiles = 
-[false true true true true true true true true true true true true true true true true true true true]
-Get a resigerchan, value = /var/tmp/824-1000/mr4425-worker1
-srvCollection = [     /var/tmp/824-1000/mr4425-worker0 /var/tmp/824-1000/mr4425-worker1]
-selec map file = 824-mrinput-1.txt
-flagMapFiles = 
-[false false true true true true true true true true true true true true true true true true true true]
 [......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker1......]
-[......args.File = 824-mrinput-1.txt......]
-[......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker0......]
+[......svr = /var/tmp/824-1000/mr3073-worker1......]
 [......args.File = 824-mrinput-0.txt......]
-/var/tmp/824-1000/mr4425-worker1: given mapPhase task #1 on file 824-mrinput-1.txt (nios: 10)
+Get a resigerchan, value = /var/tmp/824-1000/mr3073-worker0
+srvCollection = [     /var/tmp/824-1000/mr3073-worker1 /var/tmp/824-1000/mr3073-worker0]
+selec map file = 824-mrinput-1.txt
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr3073-worker0......]
+[......args.File = 824-mrinput-1.txt......]
+/var/tmp/824-1000/mr3073-worker1: given mapPhase task #0 on file 824-mrinput-0.txt (nios: 10)
 wk.concurrent + 1 = 1
 nReduce = 10 
-/var/tmp/824-1000/mr4425-worker0: given mapPhase task #0 on file 824-mrinput-0.txt (nios: 10)
+/var/tmp/824-1000/mr3073-worker0: given mapPhase task #1 on file 824-mrinput-1.txt (nios: 10)
 wk.concurrent + 1 = 1
 nReduce = 10 
-mapTask = 1
-inFile = 824-mrinput-1.txt
 mapTask = 0
 inFile = 824-mrinput-0.txt
-doMap has done, inFile = 824-mrinput-1.txt
-wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker1: mapPhase task #1 done
+mapTask = 1
+inFile = 824-mrinput-1.txt
 doMap has done, inFile = 824-mrinput-0.txt
 wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker0: mapPhase task #0 done
+/var/tmp/824-1000/mr3073-worker1: mapPhase task #0 done
 [......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker0, index = 0, TaskNumber = 0, err = true......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker1, TaskNumber = 0, err = true......]
 rpc call success, ntasks = 20, rpcSuccessCount = 0
-[......rpc call done......]
-server = /var/tmp/824-1000/mr4425-worker0
+server = /var/tmp/824-1000/mr3073-worker1
 task = 824-mrinput-0.txt has finished
 selec map file = 824-mrinput-2.txt
-flagMapFiles = 
-[false false false true true true true true true true true true true true true true true true true true]
 [......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker0......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 1, TaskNumber = 1, err = true......]
-rpc call success, ntasks = 20, rpcSuccessCount = 1
-server = /var/tmp/824-1000/mr4425-worker1
-task = 824-mrinput-1.txt has finished
-selec map file = 824-mrinput-3.txt
-flagMapFiles = 
-[false false false false true true true true true true true true true true true true true true true true]
-[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr3073-worker1......]
 [......args.File = 824-mrinput-2.txt......]
-[......svr = /var/tmp/824-1000/mr4425-worker1......]
-[......args.File = 824-mrinput-3.txt......]
-/var/tmp/824-1000/mr4425-worker0: given mapPhase task #2 on file 824-mrinput-2.txt (nios: 10)
-wk.concurrent + 1 = 1
-/var/tmp/824-1000/mr4425-worker1: given mapPhase task #3 on file 824-mrinput-3.txt (nios: 10)
+/var/tmp/824-1000/mr3073-worker1: given mapPhase task #2 on file 824-mrinput-2.txt (nios: 10)
 wk.concurrent + 1 = 1
 nReduce = 10 
+doMap has done, inFile = 824-mrinput-1.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr3073-worker0: mapPhase task #1 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker0, TaskNumber = 1, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 1
+server = /var/tmp/824-1000/mr3073-worker0
+mapTask = 2
+inFile = 824-mrinput-2.txt
+task = 824-mrinput-1.txt has finished
+selec map file = 824-mrinput-3.txt
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr3073-worker0......]
+[......args.File = 824-mrinput-3.txt......]
+/var/tmp/824-1000/mr3073-worker0: given mapPhase task #3 on file 824-mrinput-3.txt (nios: 10)
+wk.concurrent + 1 = 1
 nReduce = 10 
 mapTask = 3
 inFile = 824-mrinput-3.txt
-mapTask = 2
-inFile = 824-mrinput-2.txt
-doMap has done, inFile = 824-mrinput-3.txt
-wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker1: mapPhase task #3 done
-[......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 3, TaskNumber = 3, err = true......]
-rpc call success, ntasks = 20, rpcSuccessCount = 2
-server = /var/tmp/824-1000/mr4425-worker1
-task = 824-mrinput-3.txt has finished
-selec map file = 824-mrinput-4.txt
-flagMapFiles = 
-[false false false false false true true true true true true true true true true true true true true true]
-[......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker1......]
-[......args.File = 824-mrinput-4.txt......]
 doMap has done, inFile = 824-mrinput-2.txt
 wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker0: mapPhase task #2 done
-/var/tmp/824-1000/mr4425-worker1: given mapPhase task #4 on file 824-mrinput-4.txt (nios: 10)
+/var/tmp/824-1000/mr3073-worker1: mapPhase task #2 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker1, TaskNumber = 2, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 2
+server = /var/tmp/824-1000/mr3073-worker1
+task = 824-mrinput-2.txt has finished
+selec map file = 824-mrinput-4.txt
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr3073-worker1......]
+[......args.File = 824-mrinput-4.txt......]
+/var/tmp/824-1000/mr3073-worker1: given mapPhase task #4 on file 824-mrinput-4.txt (nios: 10)
 wk.concurrent + 1 = 1
 nReduce = 10 
+doMap has done, inFile = 824-mrinput-3.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr3073-worker0: mapPhase task #3 done
 [......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker0, index = 2, TaskNumber = 2, err = true......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker0, TaskNumber = 3, err = true......]
 rpc call success, ntasks = 20, rpcSuccessCount = 3
-server = /var/tmp/824-1000/mr4425-worker0
-task = 824-mrinput-2.txt has finished
+server = /var/tmp/824-1000/mr3073-worker0
+task = 824-mrinput-3.txt has finished
 selec map file = 824-mrinput-5.txt
-flagMapFiles = 
-[false false false false false false true true true true true true true true true true true true true true]
 [......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker0......]
+[......svr = /var/tmp/824-1000/mr3073-worker0......]
 [......args.File = 824-mrinput-5.txt......]
+/var/tmp/824-1000/mr3073-worker0: given mapPhase task #5 on file 824-mrinput-5.txt (nios: 10)
+wk.concurrent + 1 = 1
+nReduce = 10 
 mapTask = 4
 inFile = 824-mrinput-4.txt
-/var/tmp/824-1000/mr4425-worker0: given mapPhase task #5 on file 824-mrinput-5.txt (nios: 10)
-wk.concurrent + 1 = 1
-nReduce = 10 
 mapTask = 5
 inFile = 824-mrinput-5.txt
-doMap has done, inFile = 824-mrinput-5.txt
-wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker0: mapPhase task #5 done
 doMap has done, inFile = 824-mrinput-4.txt
 wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker1: mapPhase task #4 done
+/var/tmp/824-1000/mr3073-worker1: mapPhase task #4 done
 [......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker0, index = 5, TaskNumber = 5, err = true......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker1, TaskNumber = 4, err = true......]
 rpc call success, ntasks = 20, rpcSuccessCount = 4
-server = /var/tmp/824-1000/mr4425-worker0
-task = 824-mrinput-5.txt has finished
-selec map file = 824-mrinput-6.txt
-[......rpc call done......]
-flagMapFiles = 
-[false false false false false false false true true true true true true true true true true true true true]
-[......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker0......]
-[......args.File = 824-mrinput-6.txt......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 4, TaskNumber = 4, err = true......]
-rpc call success, ntasks = 20, rpcSuccessCount = 5
-server = /var/tmp/824-1000/mr4425-worker1
+server = /var/tmp/824-1000/mr3073-worker1
 task = 824-mrinput-4.txt has finished
-selec map file = 824-mrinput-7.txt
-flagMapFiles = 
-[false false false false false false false false true true true true true true true true true true true true]
+selec map file = 824-mrinput-6.txt
 [......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker1......]
-[......args.File = 824-mrinput-7.txt......]
-/var/tmp/824-1000/mr4425-worker0: given mapPhase task #6 on file 824-mrinput-6.txt (nios: 10)
-/var/tmp/824-1000/mr4425-worker1: given mapPhase task #7 on file 824-mrinput-7.txt (nios: 10)
+[......svr = /var/tmp/824-1000/mr3073-worker1......]
+[......args.File = 824-mrinput-6.txt......]
+/var/tmp/824-1000/mr3073-worker1: given mapPhase task #6 on file 824-mrinput-6.txt (nios: 10)
 wk.concurrent + 1 = 1
 nReduce = 10 
+mapTask = 6
+inFile = 824-mrinput-6.txt
+doMap has done, inFile = 824-mrinput-5.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr3073-worker0: mapPhase task #5 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker0, TaskNumber = 5, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 5
+server = /var/tmp/824-1000/mr3073-worker0
+task = 824-mrinput-5.txt has finished
+selec map file = 824-mrinput-7.txt
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr3073-worker0......]
+[......args.File = 824-mrinput-7.txt......]
+/var/tmp/824-1000/mr3073-worker0: given mapPhase task #7 on file 824-mrinput-7.txt (nios: 10)
 wk.concurrent + 1 = 1
 nReduce = 10 
 mapTask = 7
 inFile = 824-mrinput-7.txt
-mapTask = 6
-inFile = 824-mrinput-6.txt
-doMap has done, inFile = 824-mrinput-7.txt
-wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker1: mapPhase task #7 done
 doMap has done, inFile = 824-mrinput-6.txt
 wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker0: mapPhase task #6 done
+/var/tmp/824-1000/mr3073-worker1: mapPhase task #6 done
 [......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 7, TaskNumber = 7, err = true......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker1, TaskNumber = 6, err = true......]
 rpc call success, ntasks = 20, rpcSuccessCount = 6
-server = /var/tmp/824-1000/mr4425-worker1
-task = 824-mrinput-7.txt has finished
-selec map file = 824-mrinput-8.txt
-flagMapFiles = 
-[false false false false false false false false false true true true true true true true true true true true]
-[......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker1......]
-[......args.File = 824-mrinput-8.txt......]
-[......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker0, index = 6, TaskNumber = 6, err = true......]
-rpc call success, ntasks = 20, rpcSuccessCount = 7
-server = /var/tmp/824-1000/mr4425-worker0
+server = /var/tmp/824-1000/mr3073-worker1
 task = 824-mrinput-6.txt has finished
-selec map file = 824-mrinput-9.txt
-flagMapFiles = 
-[false false false false false false false false false false true true true true true true true true true true]
+selec map file = 824-mrinput-8.txt
 [......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker0......]
-[......args.File = 824-mrinput-9.txt......]
-/var/tmp/824-1000/mr4425-worker1: given mapPhase task #8 on file 824-mrinput-8.txt (nios: 10)
+[......svr = /var/tmp/824-1000/mr3073-worker1......]
+[......args.File = 824-mrinput-8.txt......]
+/var/tmp/824-1000/mr3073-worker1: given mapPhase task #8 on file 824-mrinput-8.txt (nios: 10)
 wk.concurrent + 1 = 1
 nReduce = 10 
-/var/tmp/824-1000/mr4425-worker0: given mapPhase task #9 on file 824-mrinput-9.txt (nios: 10)
-wk.concurrent + 1 = 1
-nReduce = 10 
+doMap has done, inFile = 824-mrinput-7.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr3073-worker0: mapPhase task #7 done
 mapTask = 8
 inFile = 824-mrinput-8.txt
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker0, TaskNumber = 7, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 7
+server = /var/tmp/824-1000/mr3073-worker0
+task = 824-mrinput-7.txt has finished
+selec map file = 824-mrinput-9.txt
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr3073-worker0......]
+[......args.File = 824-mrinput-9.txt......]
+/var/tmp/824-1000/mr3073-worker0: given mapPhase task #9 on file 824-mrinput-9.txt (nios: 10)
+wk.concurrent + 1 = 1
+nReduce = 10 
 mapTask = 9
 inFile = 824-mrinput-9.txt
 doMap has done, inFile = 824-mrinput-8.txt
 wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker1: mapPhase task #8 done
+/var/tmp/824-1000/mr3073-worker1: mapPhase task #8 done
 [......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 8, TaskNumber = 8, err = true......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker1, TaskNumber = 8, err = true......]
 rpc call success, ntasks = 20, rpcSuccessCount = 8
-server = /var/tmp/824-1000/mr4425-worker1
+server = /var/tmp/824-1000/mr3073-worker1
 task = 824-mrinput-8.txt has finished
 selec map file = 824-mrinput-10.txt
-flagMapFiles = 
-[false false false false false false false false false false false true true true true true true true true true]
 [......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......svr = /var/tmp/824-1000/mr3073-worker1......]
 [......args.File = 824-mrinput-10.txt......]
-/var/tmp/824-1000/mr4425-worker1: given mapPhase task #10 on file 824-mrinput-10.txt (nios: 10)
+/var/tmp/824-1000/mr3073-worker1: given mapPhase task #10 on file 824-mrinput-10.txt (nios: 10)
 wk.concurrent + 1 = 1
 nReduce = 10 
-doMap has done, inFile = 824-mrinput-9.txt
-wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker0: mapPhase task #9 done
-[......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker0, index = 9, TaskNumber = 9, err = true......]
-rpc call success, ntasks = 20, rpcSuccessCount = 9
-server = /var/tmp/824-1000/mr4425-worker0
-task = 824-mrinput-9.txt has finished
-selec map file = 824-mrinput-11.txt
-flagMapFiles = 
-[false false false false false false false false false false false false true true true true true true true true]
-[......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker0......]
-[......args.File = 824-mrinput-11.txt......]
 mapTask = 10
 inFile = 824-mrinput-10.txt
-/var/tmp/824-1000/mr4425-worker0: given mapPhase task #11 on file 824-mrinput-11.txt (nios: 10)
+doMap has done, inFile = 824-mrinput-9.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr3073-worker0: mapPhase task #9 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker0, TaskNumber = 9, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 9
+server = /var/tmp/824-1000/mr3073-worker0
+task = 824-mrinput-9.txt has finished
+selec map file = 824-mrinput-11.txt
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr3073-worker0......]
+[......args.File = 824-mrinput-11.txt......]
+/var/tmp/824-1000/mr3073-worker0: given mapPhase task #11 on file 824-mrinput-11.txt (nios: 10)
 wk.concurrent + 1 = 1
 nReduce = 10 
 mapTask = 11
 inFile = 824-mrinput-11.txt
 doMap has done, inFile = 824-mrinput-10.txt
 wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker1: mapPhase task #10 done
+/var/tmp/824-1000/mr3073-worker1: mapPhase task #10 done
 [......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 10, TaskNumber = 10, err = true......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker1, TaskNumber = 10, err = true......]
 rpc call success, ntasks = 20, rpcSuccessCount = 10
-server = /var/tmp/824-1000/mr4425-worker1
+server = /var/tmp/824-1000/mr3073-worker1
 task = 824-mrinput-10.txt has finished
 selec map file = 824-mrinput-12.txt
-flagMapFiles = 
-[false false false false false false false false false false false false false true true true true true true true]
 [......rpc call start......]
-doMap has done, inFile = 824-mrinput-11.txt
-wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker0: mapPhase task #11 done
-[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......svr = /var/tmp/824-1000/mr3073-worker1......]
 [......args.File = 824-mrinput-12.txt......]
-[......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker0, index = 11, TaskNumber = 11, err = true......]
-rpc call success, ntasks = 20, rpcSuccessCount = 11
-server = /var/tmp/824-1000/mr4425-worker0
-task = 824-mrinput-11.txt has finished
-selec map file = 824-mrinput-13.txt
-flagMapFiles = 
-[false false false false false false false false false false false false false false true true true true true true]
-[......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker0......]
-[......args.File = 824-mrinput-13.txt......]
-/var/tmp/824-1000/mr4425-worker1: given mapPhase task #12 on file 824-mrinput-12.txt (nios: 10)
-wk.concurrent + 1 = 1
-nReduce = 10 
-/var/tmp/824-1000/mr4425-worker0: given mapPhase task #13 on file 824-mrinput-13.txt (nios: 10)
+/var/tmp/824-1000/mr3073-worker1: given mapPhase task #12 on file 824-mrinput-12.txt (nios: 10)
 wk.concurrent + 1 = 1
 nReduce = 10 
 mapTask = 12
 inFile = 824-mrinput-12.txt
+doMap has done, inFile = 824-mrinput-11.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr3073-worker0: mapPhase task #11 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker0, TaskNumber = 11, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 11
+server = /var/tmp/824-1000/mr3073-worker0
+task = 824-mrinput-11.txt has finished
+selec map file = 824-mrinput-13.txt
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr3073-worker0......]
+[......args.File = 824-mrinput-13.txt......]
+/var/tmp/824-1000/mr3073-worker0: given mapPhase task #13 on file 824-mrinput-13.txt (nios: 10)
+wk.concurrent + 1 = 1
+nReduce = 10 
 mapTask = 13
 inFile = 824-mrinput-13.txt
 doMap has done, inFile = 824-mrinput-12.txt
 wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker1: mapPhase task #12 done
+/var/tmp/824-1000/mr3073-worker1: mapPhase task #12 done
 [......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 12, TaskNumber = 12, err = true......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker1, TaskNumber = 12, err = true......]
 rpc call success, ntasks = 20, rpcSuccessCount = 12
-server = /var/tmp/824-1000/mr4425-worker1
+server = /var/tmp/824-1000/mr3073-worker1
 task = 824-mrinput-12.txt has finished
 selec map file = 824-mrinput-14.txt
-flagMapFiles = 
-[false false false false false false false false false false false false false false false true true true true true]
 [......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......svr = /var/tmp/824-1000/mr3073-worker1......]
 [......args.File = 824-mrinput-14.txt......]
-/var/tmp/824-1000/mr4425-worker1: given mapPhase task #14 on file 824-mrinput-14.txt (nios: 10)
+/var/tmp/824-1000/mr3073-worker1: given mapPhase task #14 on file 824-mrinput-14.txt (nios: 10)
 wk.concurrent + 1 = 1
 nReduce = 10 
-doMap has done, inFile = 824-mrinput-13.txt
-wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker0: mapPhase task #13 done
-[......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker0, index = 13, TaskNumber = 13, err = true......]
-rpc call success, ntasks = 20, rpcSuccessCount = 13
-server = /var/tmp/824-1000/mr4425-worker0
-task = 824-mrinput-13.txt has finished
-selec map file = 824-mrinput-15.txt
-flagMapFiles = 
-[false false false false false false false false false false false false false false false false true true true true]
-[......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker0......]
-[......args.File = 824-mrinput-15.txt......]
 mapTask = 14
 inFile = 824-mrinput-14.txt
-/var/tmp/824-1000/mr4425-worker0: given mapPhase task #15 on file 824-mrinput-15.txt (nios: 10)
+doMap has done, inFile = 824-mrinput-13.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr3073-worker0: mapPhase task #13 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker0, TaskNumber = 13, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 13
+server = /var/tmp/824-1000/mr3073-worker0
+task = 824-mrinput-13.txt has finished
+selec map file = 824-mrinput-15.txt
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr3073-worker0......]
+[......args.File = 824-mrinput-15.txt......]
+/var/tmp/824-1000/mr3073-worker0: given mapPhase task #15 on file 824-mrinput-15.txt (nios: 10)
 wk.concurrent + 1 = 1
 nReduce = 10 
 mapTask = 15
 inFile = 824-mrinput-15.txt
 doMap has done, inFile = 824-mrinput-14.txt
 wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker1: mapPhase task #14 done
+/var/tmp/824-1000/mr3073-worker1: mapPhase task #14 done
 [......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 14, TaskNumber = 14, err = true......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker1, TaskNumber = 14, err = true......]
 rpc call success, ntasks = 20, rpcSuccessCount = 14
-server = /var/tmp/824-1000/mr4425-worker1
+server = /var/tmp/824-1000/mr3073-worker1
 task = 824-mrinput-14.txt has finished
 selec map file = 824-mrinput-16.txt
-flagMapFiles = 
-[false false false false false false false false false false false false false false false false false true true true]
 [......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......svr = /var/tmp/824-1000/mr3073-worker1......]
 [......args.File = 824-mrinput-16.txt......]
-doMap has done, inFile = 824-mrinput-15.txt
-wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker0: mapPhase task #15 done
-/var/tmp/824-1000/mr4425-worker1: given mapPhase task #16 on file 824-mrinput-16.txt (nios: 10)
+/var/tmp/824-1000/mr3073-worker1: given mapPhase task #16 on file 824-mrinput-16.txt (nios: 10)
 wk.concurrent + 1 = 1
 nReduce = 10 
-[......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker0, index = 15, TaskNumber = 15, err = true......]
-rpc call success, ntasks = 20, rpcSuccessCount = 15
-server = /var/tmp/824-1000/mr4425-worker0
-task = 824-mrinput-15.txt has finished
-selec map file = 824-mrinput-17.txt
-flagMapFiles = 
-[false false false false false false false false false false false false false false false false false false true true]
-[......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker0......]
-[......args.File = 824-mrinput-17.txt......]
 mapTask = 16
 inFile = 824-mrinput-16.txt
-/var/tmp/824-1000/mr4425-worker0: given mapPhase task #17 on file 824-mrinput-17.txt (nios: 10)
+doMap has done, inFile = 824-mrinput-15.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr3073-worker0: mapPhase task #15 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker0, TaskNumber = 15, err = true......]
+rpc call success, ntasks = 20, rpcSuccessCount = 15
+server = /var/tmp/824-1000/mr3073-worker0
+task = 824-mrinput-15.txt has finished
+selec map file = 824-mrinput-17.txt
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr3073-worker0......]
+[......args.File = 824-mrinput-17.txt......]
+/var/tmp/824-1000/mr3073-worker0: given mapPhase task #17 on file 824-mrinput-17.txt (nios: 10)
 wk.concurrent + 1 = 1
 nReduce = 10 
 mapTask = 17
 inFile = 824-mrinput-17.txt
 doMap has done, inFile = 824-mrinput-16.txt
 wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker1: mapPhase task #16 done
+/var/tmp/824-1000/mr3073-worker1: mapPhase task #16 done
 [......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 16, TaskNumber = 16, err = true......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker1, TaskNumber = 16, err = true......]
 rpc call success, ntasks = 20, rpcSuccessCount = 16
-server = /var/tmp/824-1000/mr4425-worker1
+server = /var/tmp/824-1000/mr3073-worker1
 task = 824-mrinput-16.txt has finished
 selec map file = 824-mrinput-18.txt
-flagMapFiles = 
-[false false false false false false false false false false false false false false false false false false false true]
 [......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......svr = /var/tmp/824-1000/mr3073-worker1......]
 [......args.File = 824-mrinput-18.txt......]
-/var/tmp/824-1000/mr4425-worker1: given mapPhase task #18 on file 824-mrinput-18.txt (nios: 10)
+/var/tmp/824-1000/mr3073-worker1: given mapPhase task #18 on file 824-mrinput-18.txt (nios: 10)
 wk.concurrent + 1 = 1
 nReduce = 10 
-doMap has done, inFile = 824-mrinput-17.txt
-wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker0: mapPhase task #17 done
-[......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker0, index = 17, TaskNumber = 17, err = true......]
 mapTask = 18
 inFile = 824-mrinput-18.txt
+doMap has done, inFile = 824-mrinput-17.txt
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr3073-worker0: mapPhase task #17 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker0, TaskNumber = 17, err = true......]
 rpc call success, ntasks = 20, rpcSuccessCount = 17
-server = /var/tmp/824-1000/mr4425-worker0
+server = /var/tmp/824-1000/mr3073-worker0
 task = 824-mrinput-17.txt has finished
 selec map file = 824-mrinput-19.txt
-flagMapFiles = 
-[false false false false false false false false false false false false false false false false false false false false]
 [......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker0......]
+[......svr = /var/tmp/824-1000/mr3073-worker0......]
 [......args.File = 824-mrinput-19.txt......]
-/var/tmp/824-1000/mr4425-worker0: given mapPhase task #19 on file 824-mrinput-19.txt (nios: 10)
+/var/tmp/824-1000/mr3073-worker0: given mapPhase task #19 on file 824-mrinput-19.txt (nios: 10)
 wk.concurrent + 1 = 1
 nReduce = 10 
 mapTask = 19
 inFile = 824-mrinput-19.txt
 doMap has done, inFile = 824-mrinput-18.txt
 wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker1: mapPhase task #18 done
+/var/tmp/824-1000/mr3073-worker1: mapPhase task #18 done
 [......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 18, TaskNumber = 18, err = true......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker1, TaskNumber = 18, err = true......]
 rpc call success, ntasks = 20, rpcSuccessCount = 18
-server = /var/tmp/824-1000/mr4425-worker1
+server = /var/tmp/824-1000/mr3073-worker1
 task = 824-mrinput-18.txt has finished
 All mapFiles has handed out, continue
 doMap has done, inFile = 824-mrinput-19.txt
 wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker0: mapPhase task #19 done
+/var/tmp/824-1000/mr3073-worker0: mapPhase task #19 done
 [......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker0, index = 19, TaskNumber = 19, err = true......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker0, TaskNumber = 19, err = true......]
 rpc call success, ntasks = 20, rpcSuccessCount = 19
-server = /var/tmp/824-1000/mr4425-worker0
+server = /var/tmp/824-1000/mr3073-worker0
 task = 824-mrinput-19.txt has finished
 rpcSuccessCount = 20, ntasks = 20
 rpcSuccessCount > ntask - 1, break loop
 Schedule: mapPhase done
 Schedule: 10 reducePhase tasks (20 I/Os)
 flagMapFiles default value = [false false false false false false false false false false]
-mapFiles length = 20
 mapFiles = 
 [824-mrinput-0.txt 824-mrinput-1.txt 824-mrinput-2.txt 824-mrinput-3.txt 824-mrinput-4.txt 824-mrinput-5.txt 824-mrinput-6.txt 824-mrinput-7.txt 824-mrinput-8.txt 824-mrinput-9.txt 824-mrinput-10.txt 824-mrinput-11.txt 824-mrinput-12.txt 824-mrinput-13.txt 824-mrinput-14.txt 824-mrinput-15.txt 824-mrinput-16.txt 824-mrinput-17.txt 824-mrinput-18.txt 824-mrinput-19.txt]
-n_other = 
-20
-ntasks = 
-10
-Get a resigerchan, value = /var/tmp/824-1000/mr4425-worker0
-srvCollection = [     /var/tmp/824-1000/mr4425-worker0]
-args.TaskNumber = 0
+n_other = 20
+ntasks = 10
+Get a resigerchan, value = /var/tmp/824-1000/mr3073-worker1
+srvCollection = [     /var/tmp/824-1000/mr3073-worker1]
+selec map file = 824-mrinput-0.txt
 [......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker0......]
+[......svr = /var/tmp/824-1000/mr3073-worker1......]
 [......args.File = 824-mrinput-0.txt......]
-Get a resigerchan, value = /var/tmp/824-1000/mr4425-worker1
-srvCollection = [     /var/tmp/824-1000/mr4425-worker0 /var/tmp/824-1000/mr4425-worker1]
-args.TaskNumber = 1
+Get a resigerchan, value = /var/tmp/824-1000/mr3073-worker0
+srvCollection = [     /var/tmp/824-1000/mr3073-worker1 /var/tmp/824-1000/mr3073-worker0]
+selec map file = 824-mrinput-1.txt
 [......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......svr = /var/tmp/824-1000/mr3073-worker0......]
 [......args.File = 824-mrinput-1.txt......]
-/var/tmp/824-1000/mr4425-worker0: given reducePhase task #0 on file 824-mrinput-0.txt (nios: 20)
+/var/tmp/824-1000/mr3073-worker1: given reducePhase task #0 on file 824-mrinput-0.txt (nios: 20)
 wk.concurrent + 1 = 1
 outFile = mrtmp.test-res-0
-/var/tmp/824-1000/mr4425-worker1: given reducePhase task #1 on file 824-mrinput-1.txt (nios: 20)
+/var/tmp/824-1000/mr3073-worker0: given reducePhase task #1 on file 824-mrinput-1.txt (nios: 20)
 wk.concurrent + 1 = 1
 outFile = mrtmp.test-res-1
 sort kvs done!
 sort kvs done!
 wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker0: reducePhase task #0 done
+/var/tmp/824-1000/mr3073-worker0: reducePhase task #1 done
 [......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker0, index = 0, TaskNumber = 0, err = true......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker0, TaskNumber = 1, err = true......]
 rpc call success, ntasks = 10, rpcSuccessCount = 0
-server = /var/tmp/824-1000/mr4425-worker0
-task = 824-mrinput-0.txt has finished
-args.TaskNumber = 2
+server = /var/tmp/824-1000/mr3073-worker0
+task = 824-mrinput-1.txt has finished
+selec map file = 824-mrinput-2.txt
 [......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker0......]
+[......svr = /var/tmp/824-1000/mr3073-worker0......]
 [......args.File = 824-mrinput-2.txt......]
-/var/tmp/824-1000/mr4425-worker0: given reducePhase task #2 on file 824-mrinput-2.txt (nios: 20)
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr3073-worker1: reducePhase task #0 done
+/var/tmp/824-1000/mr3073-worker0: given reducePhase task #2 on file 824-mrinput-2.txt (nios: 20)
 wk.concurrent + 1 = 1
 outFile = mrtmp.test-res-2
-wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker1: reducePhase task #1 done
 [......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 1, TaskNumber = 1, err = true......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker1, TaskNumber = 0, err = true......]
 rpc call success, ntasks = 10, rpcSuccessCount = 1
-server = /var/tmp/824-1000/mr4425-worker1
-task = 824-mrinput-1.txt has finished
-args.TaskNumber = 3
+server = /var/tmp/824-1000/mr3073-worker1
+task = 824-mrinput-0.txt has finished
+selec map file = 824-mrinput-3.txt
 [......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......svr = /var/tmp/824-1000/mr3073-worker1......]
 [......args.File = 824-mrinput-3.txt......]
-/var/tmp/824-1000/mr4425-worker1: given reducePhase task #3 on file 824-mrinput-3.txt (nios: 20)
+/var/tmp/824-1000/mr3073-worker1: given reducePhase task #3 on file 824-mrinput-3.txt (nios: 20)
 wk.concurrent + 1 = 1
 outFile = mrtmp.test-res-3
 sort kvs done!
 sort kvs done!
 wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker0: reducePhase task #2 done
+/var/tmp/824-1000/mr3073-worker0: reducePhase task #2 done
 [......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker0, index = 2, TaskNumber = 2, err = true......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker0, TaskNumber = 2, err = true......]
 rpc call success, ntasks = 10, rpcSuccessCount = 2
-server = /var/tmp/824-1000/mr4425-worker0
+server = /var/tmp/824-1000/mr3073-worker0
 task = 824-mrinput-2.txt has finished
-args.TaskNumber = 4
+selec map file = 824-mrinput-4.txt
 [......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker0......]
+[......svr = /var/tmp/824-1000/mr3073-worker0......]
 [......args.File = 824-mrinput-4.txt......]
-/var/tmp/824-1000/mr4425-worker0: given reducePhase task #4 on file 824-mrinput-4.txt (nios: 20)
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr3073-worker1: reducePhase task #3 done
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker1, TaskNumber = 3, err = true......]
+rpc call success, ntasks = 10, rpcSuccessCount = 3
+server = /var/tmp/824-1000/mr3073-worker1
+task = 824-mrinput-3.txt has finished
+selec map file = 824-mrinput-5.txt
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr3073-worker1......]
+[......args.File = 824-mrinput-5.txt......]
+/var/tmp/824-1000/mr3073-worker0: given reducePhase task #4 on file 824-mrinput-4.txt (nios: 20)
 wk.concurrent + 1 = 1
 outFile = mrtmp.test-res-4
-wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker1: reducePhase task #3 done
-[......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 3, TaskNumber = 3, err = true......]
-rpc call success, ntasks = 10, rpcSuccessCount = 3
-server = /var/tmp/824-1000/mr4425-worker1
-task = 824-mrinput-3.txt has finished
-args.TaskNumber = 5
-[......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker1......]
-[......args.File = 824-mrinput-5.txt......]
-/var/tmp/824-1000/mr4425-worker1: given reducePhase task #5 on file 824-mrinput-5.txt (nios: 20)
+/var/tmp/824-1000/mr3073-worker1: given reducePhase task #5 on file 824-mrinput-5.txt (nios: 20)
 wk.concurrent + 1 = 1
 outFile = mrtmp.test-res-5
 sort kvs done!
 sort kvs done!
 wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker0: reducePhase task #4 done
+/var/tmp/824-1000/mr3073-worker1: reducePhase task #5 done
 [......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker0, index = 4, TaskNumber = 4, err = true......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker1, TaskNumber = 5, err = true......]
 rpc call success, ntasks = 10, rpcSuccessCount = 4
-server = /var/tmp/824-1000/mr4425-worker0
-task = 824-mrinput-4.txt has finished
-args.TaskNumber = 6
+server = /var/tmp/824-1000/mr3073-worker1
+task = 824-mrinput-5.txt has finished
+selec map file = 824-mrinput-6.txt
 [......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker0......]
+[......svr = /var/tmp/824-1000/mr3073-worker1......]
 [......args.File = 824-mrinput-6.txt......]
-/var/tmp/824-1000/mr4425-worker0: given reducePhase task #6 on file 824-mrinput-6.txt (nios: 20)
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr3073-worker0: reducePhase task #4 done
+/var/tmp/824-1000/mr3073-worker1: given reducePhase task #6 on file 824-mrinput-6.txt (nios: 20)
 wk.concurrent + 1 = 1
 outFile = mrtmp.test-res-6
-wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker1: reducePhase task #5 done
 [......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 5, TaskNumber = 5, err = true......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker0, TaskNumber = 4, err = true......]
 rpc call success, ntasks = 10, rpcSuccessCount = 5
-server = /var/tmp/824-1000/mr4425-worker1
-task = 824-mrinput-5.txt has finished
-args.TaskNumber = 7
+server = /var/tmp/824-1000/mr3073-worker0
+task = 824-mrinput-4.txt has finished
+selec map file = 824-mrinput-7.txt
 [......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......svr = /var/tmp/824-1000/mr3073-worker0......]
 [......args.File = 824-mrinput-7.txt......]
-/var/tmp/824-1000/mr4425-worker1: given reducePhase task #7 on file 824-mrinput-7.txt (nios: 20)
+/var/tmp/824-1000/mr3073-worker0: given reducePhase task #7 on file 824-mrinput-7.txt (nios: 20)
 wk.concurrent + 1 = 1
 outFile = mrtmp.test-res-7
 sort kvs done!
 sort kvs done!
 wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker0: reducePhase task #6 done
+/var/tmp/824-1000/mr3073-worker0: reducePhase task #7 done
 [......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker0, index = 6, TaskNumber = 6, err = true......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker0, TaskNumber = 7, err = true......]
 rpc call success, ntasks = 10, rpcSuccessCount = 6
-server = /var/tmp/824-1000/mr4425-worker0
-task = 824-mrinput-6.txt has finished
-args.TaskNumber = 8
+server = /var/tmp/824-1000/mr3073-worker0
+task = 824-mrinput-7.txt has finished
+selec map file = 824-mrinput-8.txt
 [......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker0......]
+[......svr = /var/tmp/824-1000/mr3073-worker0......]
 [......args.File = 824-mrinput-8.txt......]
-/var/tmp/824-1000/mr4425-worker0: given reducePhase task #8 on file 824-mrinput-8.txt (nios: 20)
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr3073-worker1: reducePhase task #6 done
+/var/tmp/824-1000/mr3073-worker0: given reducePhase task #8 on file 824-mrinput-8.txt (nios: 20)
 wk.concurrent + 1 = 1
 outFile = mrtmp.test-res-8
-wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker1: reducePhase task #7 done
 [......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 7, TaskNumber = 7, err = true......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker1, TaskNumber = 6, err = true......]
 rpc call success, ntasks = 10, rpcSuccessCount = 7
-server = /var/tmp/824-1000/mr4425-worker1
-task = 824-mrinput-7.txt has finished
-args.TaskNumber = 9
+server = /var/tmp/824-1000/mr3073-worker1
+task = 824-mrinput-6.txt has finished
+selec map file = 824-mrinput-9.txt
 [......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......svr = /var/tmp/824-1000/mr3073-worker1......]
 [......args.File = 824-mrinput-9.txt......]
-/var/tmp/824-1000/mr4425-worker1: given reducePhase task #9 on file 824-mrinput-9.txt (nios: 20)
+/var/tmp/824-1000/mr3073-worker1: given reducePhase task #9 on file 824-mrinput-9.txt (nios: 20)
 wk.concurrent + 1 = 1
 outFile = mrtmp.test-res-9
 sort kvs done!
 sort kvs done!
 wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker0: reducePhase task #8 done
-[......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker0, index = 8, TaskNumber = 8, err = true......]
-rpc call success, ntasks = 10, rpcSuccessCount = 8
-server = /var/tmp/824-1000/mr4425-worker0
-task = 824-mrinput-8.txt has finished
-All mapFiles has handed out, continue
+/var/tmp/824-1000/mr3073-worker1: reducePhase task #9 done
 wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker1: reducePhase task #9 done
+/var/tmp/824-1000/mr3073-worker0: reducePhase task #8 done
 [......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 9, TaskNumber = 9, err = true......]
-rpc call success, ntasks = 10, rpcSuccessCount = 9
-server = /var/tmp/824-1000/mr4425-worker1
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker1, TaskNumber = 9, err = true......]
+rpc call success, ntasks = 10, rpcSuccessCount = 8
+server = /var/tmp/824-1000/mr3073-worker1
 task = 824-mrinput-9.txt has finished
+All mapFiles has handed out, continue
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker0, TaskNumber = 8, err = true......]
+rpc call success, ntasks = 10, rpcSuccessCount = 9
+server = /var/tmp/824-1000/mr3073-worker0
+task = 824-mrinput-8.txt has finished
 rpcSuccessCount = 10, ntasks = 10
 rpcSuccessCount > ntask - 1, break loop
 Schedule: reducePhase done
@@ -573,7 +527,7 @@ Merge: read mrtmp.test-res-6
 Merge: read mrtmp.test-res-7
 Merge: read mrtmp.test-res-8
 Merge: read mrtmp.test-res-9
-/var/tmp/824-1000/mr4425-master: Map/Reduce task completed
+/var/tmp/824-1000/mr3073-master: Map/Reduce task completed
 master_splitmerge.go, removeFile = mrtmp.test-0-0
 master_splitmerge.go, removeFile = mrtmp.test-0-1
 master_splitmerge.go, removeFile = mrtmp.test-0-2
@@ -805,388 +759,345 @@ master_splitmerge.go, removeFile = 824-mrinput-16.txt
 master_splitmerge.go, removeFile = 824-mrinput-17.txt
 master_splitmerge.go, removeFile = 824-mrinput-18.txt
 master_splitmerge.go, removeFile = 824-mrinput-19.txt
-/var/tmp/824-1000/mr4425-master: Starting Map/Reduce task test
+/var/tmp/824-1000/mr3073-master: Starting Map/Reduce task test
 Schedule: 20 mapPhase tasks (10 I/Os)
 flagMapFiles default value = [false false false false false false false false false false false false false false false false false false false false]
-mapFiles length = 20
 mapFiles = 
 [824-mrinput-0.txt 824-mrinput-1.txt 824-mrinput-2.txt 824-mrinput-3.txt 824-mrinput-4.txt 824-mrinput-5.txt 824-mrinput-6.txt 824-mrinput-7.txt 824-mrinput-8.txt 824-mrinput-9.txt 824-mrinput-10.txt 824-mrinput-11.txt 824-mrinput-12.txt 824-mrinput-13.txt 824-mrinput-14.txt 824-mrinput-15.txt 824-mrinput-16.txt 824-mrinput-17.txt 824-mrinput-18.txt 824-mrinput-19.txt]
-n_other = 
-10
-ntasks = 
-20
-Get a resigerchan, value = /var/tmp/824-1000/mr4425-worker1
-srvCollection = [     /var/tmp/824-1000/mr4425-worker1]
+n_other = 10
+ntasks = 20
+Get a resigerchan, value = /var/tmp/824-1000/mr3073-worker1
+srvCollection = [     /var/tmp/824-1000/mr3073-worker1]
 selec map file = 824-mrinput-0.txt
-flagMapFiles = 
-[false true true true true true true true true true true true true true true true true true true true]
 [......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......svr = /var/tmp/824-1000/mr3073-worker1......]
 [......args.File = 824-mrinput-0.txt......]
-Get a resigerchan, value = /var/tmp/824-1000/mr4425-worker0
-srvCollection = [     /var/tmp/824-1000/mr4425-worker1 /var/tmp/824-1000/mr4425-worker0]
+Get a resigerchan, value = /var/tmp/824-1000/mr3073-worker0
+srvCollection = [     /var/tmp/824-1000/mr3073-worker1 /var/tmp/824-1000/mr3073-worker0]
 selec map file = 824-mrinput-1.txt
-flagMapFiles = 
-[false false true true true true true true true true true true true true true true true true true true]
 [......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker0......]
+[......svr = /var/tmp/824-1000/mr3073-worker0......]
 [......args.File = 824-mrinput-1.txt......]
-/var/tmp/824-1000/mr4425-worker0: given mapPhase task #1 on file 824-mrinput-1.txt (nios: 10)
+/var/tmp/824-1000/mr3073-worker0: given mapPhase task #1 on file 824-mrinput-1.txt (nios: 10)
 wk.concurrent + 1 = 1
-/var/tmp/824-1000/mr4425-worker1: given mapPhase task #0 on file 824-mrinput-0.txt (nios: 10)
+/var/tmp/824-1000/mr3073-worker1: given mapPhase task #0 on file 824-mrinput-0.txt (nios: 10)
 wk.concurrent + 1 = 1
 nReduce = 10 
 mapTask = 0
 inFile = 824-mrinput-0.txt
 doMap has done, inFile = 824-mrinput-0.txt
 wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker1: mapPhase task #0 done
+/var/tmp/824-1000/mr3073-worker1: mapPhase task #0 done
 [......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 0, TaskNumber = 0, err = true......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker1, TaskNumber = 0, err = true......]
 rpc call success, ntasks = 20, rpcSuccessCount = 0
-server = /var/tmp/824-1000/mr4425-worker1
+server = /var/tmp/824-1000/mr3073-worker1
 task = 824-mrinput-0.txt has finished
 selec map file = 824-mrinput-2.txt
-flagMapFiles = 
-[false false false true true true true true true true true true true true true true true true true true]
 [......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......svr = /var/tmp/824-1000/mr3073-worker1......]
 [......args.File = 824-mrinput-2.txt......]
-/var/tmp/824-1000/mr4425-worker1: given mapPhase task #2 on file 824-mrinput-2.txt (nios: 10)
+/var/tmp/824-1000/mr3073-worker1: given mapPhase task #2 on file 824-mrinput-2.txt (nios: 10)
 wk.concurrent + 1 = 1
 nReduce = 10 
 mapTask = 2
 inFile = 824-mrinput-2.txt
 doMap has done, inFile = 824-mrinput-2.txt
 wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker1: mapPhase task #2 done
+/var/tmp/824-1000/mr3073-worker1: mapPhase task #2 done
 [......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 2, TaskNumber = 2, err = true......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker1, TaskNumber = 2, err = true......]
 rpc call success, ntasks = 20, rpcSuccessCount = 1
-server = /var/tmp/824-1000/mr4425-worker1
+server = /var/tmp/824-1000/mr3073-worker1
 task = 824-mrinput-2.txt has finished
 selec map file = 824-mrinput-3.txt
-flagMapFiles = 
-[false false false false true true true true true true true true true true true true true true true true]
 [......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......svr = /var/tmp/824-1000/mr3073-worker1......]
 [......args.File = 824-mrinput-3.txt......]
-/var/tmp/824-1000/mr4425-worker1: given mapPhase task #3 on file 824-mrinput-3.txt (nios: 10)
+/var/tmp/824-1000/mr3073-worker1: given mapPhase task #3 on file 824-mrinput-3.txt (nios: 10)
 wk.concurrent + 1 = 1
 nReduce = 10 
 mapTask = 3
 inFile = 824-mrinput-3.txt
 doMap has done, inFile = 824-mrinput-3.txt
 wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker1: mapPhase task #3 done
+/var/tmp/824-1000/mr3073-worker1: mapPhase task #3 done
 [......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 3, TaskNumber = 3, err = true......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker1, TaskNumber = 3, err = true......]
 rpc call success, ntasks = 20, rpcSuccessCount = 2
-server = /var/tmp/824-1000/mr4425-worker1
+server = /var/tmp/824-1000/mr3073-worker1
 task = 824-mrinput-3.txt has finished
 selec map file = 824-mrinput-4.txt
-flagMapFiles = 
-[false false false false false true true true true true true true true true true true true true true true]
 [......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......svr = /var/tmp/824-1000/mr3073-worker1......]
 [......args.File = 824-mrinput-4.txt......]
-/var/tmp/824-1000/mr4425-worker1: given mapPhase task #4 on file 824-mrinput-4.txt (nios: 10)
+/var/tmp/824-1000/mr3073-worker1: given mapPhase task #4 on file 824-mrinput-4.txt (nios: 10)
 wk.concurrent + 1 = 1
 nReduce = 10 
 mapTask = 4
 inFile = 824-mrinput-4.txt
 doMap has done, inFile = 824-mrinput-4.txt
 wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker1: mapPhase task #4 done
+/var/tmp/824-1000/mr3073-worker1: mapPhase task #4 done
 [......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 4, TaskNumber = 4, err = true......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker1, TaskNumber = 4, err = true......]
 rpc call success, ntasks = 20, rpcSuccessCount = 3
-server = /var/tmp/824-1000/mr4425-worker1
+server = /var/tmp/824-1000/mr3073-worker1
 task = 824-mrinput-4.txt has finished
 selec map file = 824-mrinput-5.txt
-flagMapFiles = 
-[false false false false false false true true true true true true true true true true true true true true]
 [......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......svr = /var/tmp/824-1000/mr3073-worker1......]
 [......args.File = 824-mrinput-5.txt......]
-/var/tmp/824-1000/mr4425-worker1: given mapPhase task #5 on file 824-mrinput-5.txt (nios: 10)
+/var/tmp/824-1000/mr3073-worker1: given mapPhase task #5 on file 824-mrinput-5.txt (nios: 10)
 wk.concurrent + 1 = 1
 nReduce = 10 
 mapTask = 5
 inFile = 824-mrinput-5.txt
 doMap has done, inFile = 824-mrinput-5.txt
 wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker1: mapPhase task #5 done
+/var/tmp/824-1000/mr3073-worker1: mapPhase task #5 done
 [......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 5, TaskNumber = 5, err = true......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker1, TaskNumber = 5, err = true......]
 rpc call success, ntasks = 20, rpcSuccessCount = 4
-server = /var/tmp/824-1000/mr4425-worker1
+server = /var/tmp/824-1000/mr3073-worker1
 task = 824-mrinput-5.txt has finished
 selec map file = 824-mrinput-6.txt
-flagMapFiles = 
-[false false false false false false false true true true true true true true true true true true true true]
 [......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......svr = /var/tmp/824-1000/mr3073-worker1......]
 [......args.File = 824-mrinput-6.txt......]
-/var/tmp/824-1000/mr4425-worker1: given mapPhase task #6 on file 824-mrinput-6.txt (nios: 10)
+/var/tmp/824-1000/mr3073-worker1: given mapPhase task #6 on file 824-mrinput-6.txt (nios: 10)
 wk.concurrent + 1 = 1
 nReduce = 10 
 mapTask = 6
 inFile = 824-mrinput-6.txt
 doMap has done, inFile = 824-mrinput-6.txt
 wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker1: mapPhase task #6 done
+/var/tmp/824-1000/mr3073-worker1: mapPhase task #6 done
 [......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 6, TaskNumber = 6, err = true......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker1, TaskNumber = 6, err = true......]
 rpc call success, ntasks = 20, rpcSuccessCount = 5
-server = /var/tmp/824-1000/mr4425-worker1
+server = /var/tmp/824-1000/mr3073-worker1
 task = 824-mrinput-6.txt has finished
 selec map file = 824-mrinput-7.txt
-flagMapFiles = 
-[false false false false false false false false true true true true true true true true true true true true]
 [......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......svr = /var/tmp/824-1000/mr3073-worker1......]
 [......args.File = 824-mrinput-7.txt......]
-/var/tmp/824-1000/mr4425-worker1: given mapPhase task #7 on file 824-mrinput-7.txt (nios: 10)
+/var/tmp/824-1000/mr3073-worker1: given mapPhase task #7 on file 824-mrinput-7.txt (nios: 10)
 wk.concurrent + 1 = 1
 nReduce = 10 
 mapTask = 7
 inFile = 824-mrinput-7.txt
 doMap has done, inFile = 824-mrinput-7.txt
 wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker1: mapPhase task #7 done
+/var/tmp/824-1000/mr3073-worker1: mapPhase task #7 done
 [......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 7, TaskNumber = 7, err = true......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker1, TaskNumber = 7, err = true......]
 rpc call success, ntasks = 20, rpcSuccessCount = 6
-server = /var/tmp/824-1000/mr4425-worker1
+server = /var/tmp/824-1000/mr3073-worker1
 task = 824-mrinput-7.txt has finished
 selec map file = 824-mrinput-8.txt
-flagMapFiles = 
-[false false false false false false false false false true true true true true true true true true true true]
 [......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......svr = /var/tmp/824-1000/mr3073-worker1......]
 [......args.File = 824-mrinput-8.txt......]
-/var/tmp/824-1000/mr4425-worker1: given mapPhase task #8 on file 824-mrinput-8.txt (nios: 10)
+/var/tmp/824-1000/mr3073-worker1: given mapPhase task #8 on file 824-mrinput-8.txt (nios: 10)
 wk.concurrent + 1 = 1
 nReduce = 10 
 mapTask = 8
 inFile = 824-mrinput-8.txt
 doMap has done, inFile = 824-mrinput-8.txt
 wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker1: mapPhase task #8 done
+/var/tmp/824-1000/mr3073-worker1: mapPhase task #8 done
 [......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 8, TaskNumber = 8, err = true......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker1, TaskNumber = 8, err = true......]
 rpc call success, ntasks = 20, rpcSuccessCount = 7
-server = /var/tmp/824-1000/mr4425-worker1
+server = /var/tmp/824-1000/mr3073-worker1
 task = 824-mrinput-8.txt has finished
 selec map file = 824-mrinput-9.txt
-flagMapFiles = 
-[false false false false false false false false false false true true true true true true true true true true]
 [......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......svr = /var/tmp/824-1000/mr3073-worker1......]
 [......args.File = 824-mrinput-9.txt......]
-/var/tmp/824-1000/mr4425-worker1: given mapPhase task #9 on file 824-mrinput-9.txt (nios: 10)
+/var/tmp/824-1000/mr3073-worker1: given mapPhase task #9 on file 824-mrinput-9.txt (nios: 10)
 wk.concurrent + 1 = 1
 nReduce = 10 
 mapTask = 9
 inFile = 824-mrinput-9.txt
 doMap has done, inFile = 824-mrinput-9.txt
 wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker1: mapPhase task #9 done
+/var/tmp/824-1000/mr3073-worker1: mapPhase task #9 done
 [......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 9, TaskNumber = 9, err = true......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker1, TaskNumber = 9, err = true......]
 rpc call success, ntasks = 20, rpcSuccessCount = 8
-server = /var/tmp/824-1000/mr4425-worker1
+server = /var/tmp/824-1000/mr3073-worker1
 task = 824-mrinput-9.txt has finished
 selec map file = 824-mrinput-10.txt
-flagMapFiles = 
-[false false false false false false false false false false false true true true true true true true true true]
 [......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......svr = /var/tmp/824-1000/mr3073-worker1......]
 [......args.File = 824-mrinput-10.txt......]
-/var/tmp/824-1000/mr4425-worker1: given mapPhase task #10 on file 824-mrinput-10.txt (nios: 10)
+/var/tmp/824-1000/mr3073-worker1: given mapPhase task #10 on file 824-mrinput-10.txt (nios: 10)
 wk.concurrent + 1 = 1
 nReduce = 10 
 mapTask = 10
 inFile = 824-mrinput-10.txt
 doMap has done, inFile = 824-mrinput-10.txt
 wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker1: mapPhase task #10 done
+/var/tmp/824-1000/mr3073-worker1: mapPhase task #10 done
 [......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 10, TaskNumber = 10, err = true......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker1, TaskNumber = 10, err = true......]
 rpc call success, ntasks = 20, rpcSuccessCount = 9
-server = /var/tmp/824-1000/mr4425-worker1
+server = /var/tmp/824-1000/mr3073-worker1
 task = 824-mrinput-10.txt has finished
 selec map file = 824-mrinput-11.txt
-flagMapFiles = 
-[false false false false false false false false false false false false true true true true true true true true]
 [......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......svr = /var/tmp/824-1000/mr3073-worker1......]
 [......args.File = 824-mrinput-11.txt......]
-/var/tmp/824-1000/mr4425-worker1: given mapPhase task #11 on file 824-mrinput-11.txt (nios: 10)
+/var/tmp/824-1000/mr3073-worker1: given mapPhase task #11 on file 824-mrinput-11.txt (nios: 10)
 wk.concurrent + 1 = 1
 nReduce = 10 
 mapTask = 11
 inFile = 824-mrinput-11.txt
 doMap has done, inFile = 824-mrinput-11.txt
 wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker1: mapPhase task #11 done
+/var/tmp/824-1000/mr3073-worker1: mapPhase task #11 done
 [......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 11, TaskNumber = 11, err = true......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker1, TaskNumber = 11, err = true......]
 rpc call success, ntasks = 20, rpcSuccessCount = 10
-server = /var/tmp/824-1000/mr4425-worker1
+server = /var/tmp/824-1000/mr3073-worker1
 task = 824-mrinput-11.txt has finished
 selec map file = 824-mrinput-12.txt
-flagMapFiles = 
-[false false false false false false false false false false false false false true true true true true true true]
 [......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......svr = /var/tmp/824-1000/mr3073-worker1......]
 [......args.File = 824-mrinput-12.txt......]
-/var/tmp/824-1000/mr4425-worker1: given mapPhase task #12 on file 824-mrinput-12.txt (nios: 10)
+/var/tmp/824-1000/mr3073-worker1: given mapPhase task #12 on file 824-mrinput-12.txt (nios: 10)
 wk.concurrent + 1 = 1
 nReduce = 10 
 mapTask = 12
 inFile = 824-mrinput-12.txt
 doMap has done, inFile = 824-mrinput-12.txt
 wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker1: mapPhase task #12 done
+/var/tmp/824-1000/mr3073-worker1: mapPhase task #12 done
 [......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 12, TaskNumber = 12, err = true......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker1, TaskNumber = 12, err = true......]
 rpc call success, ntasks = 20, rpcSuccessCount = 11
-server = /var/tmp/824-1000/mr4425-worker1
+server = /var/tmp/824-1000/mr3073-worker1
 task = 824-mrinput-12.txt has finished
 selec map file = 824-mrinput-13.txt
-flagMapFiles = 
-[false false false false false false false false false false false false false false true true true true true true]
 [......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......svr = /var/tmp/824-1000/mr3073-worker1......]
 [......args.File = 824-mrinput-13.txt......]
-/var/tmp/824-1000/mr4425-worker1: given mapPhase task #13 on file 824-mrinput-13.txt (nios: 10)
+/var/tmp/824-1000/mr3073-worker1: given mapPhase task #13 on file 824-mrinput-13.txt (nios: 10)
 wk.concurrent + 1 = 1
 nReduce = 10 
 mapTask = 13
 inFile = 824-mrinput-13.txt
 doMap has done, inFile = 824-mrinput-13.txt
 wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker1: mapPhase task #13 done
+/var/tmp/824-1000/mr3073-worker1: mapPhase task #13 done
 [......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 13, TaskNumber = 13, err = true......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker1, TaskNumber = 13, err = true......]
 rpc call success, ntasks = 20, rpcSuccessCount = 12
-server = /var/tmp/824-1000/mr4425-worker1
+server = /var/tmp/824-1000/mr3073-worker1
 task = 824-mrinput-13.txt has finished
 selec map file = 824-mrinput-14.txt
-flagMapFiles = 
-[false false false false false false false false false false false false false false false true true true true true]
 [......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......svr = /var/tmp/824-1000/mr3073-worker1......]
 [......args.File = 824-mrinput-14.txt......]
-/var/tmp/824-1000/mr4425-worker1: given mapPhase task #14 on file 824-mrinput-14.txt (nios: 10)
+/var/tmp/824-1000/mr3073-worker1: given mapPhase task #14 on file 824-mrinput-14.txt (nios: 10)
 wk.concurrent + 1 = 1
 nReduce = 10 
 mapTask = 14
 inFile = 824-mrinput-14.txt
 doMap has done, inFile = 824-mrinput-14.txt
 wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker1: mapPhase task #14 done
+/var/tmp/824-1000/mr3073-worker1: mapPhase task #14 done
 [......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 14, TaskNumber = 14, err = true......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker1, TaskNumber = 14, err = true......]
 rpc call success, ntasks = 20, rpcSuccessCount = 13
-server = /var/tmp/824-1000/mr4425-worker1
+server = /var/tmp/824-1000/mr3073-worker1
 task = 824-mrinput-14.txt has finished
 selec map file = 824-mrinput-15.txt
-flagMapFiles = 
-[false false false false false false false false false false false false false false false false true true true true]
 [......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......svr = /var/tmp/824-1000/mr3073-worker1......]
 [......args.File = 824-mrinput-15.txt......]
-/var/tmp/824-1000/mr4425-worker1: given mapPhase task #15 on file 824-mrinput-15.txt (nios: 10)
+/var/tmp/824-1000/mr3073-worker1: given mapPhase task #15 on file 824-mrinput-15.txt (nios: 10)
 wk.concurrent + 1 = 1
 nReduce = 10 
 mapTask = 15
 inFile = 824-mrinput-15.txt
 doMap has done, inFile = 824-mrinput-15.txt
 wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker1: mapPhase task #15 done
+/var/tmp/824-1000/mr3073-worker1: mapPhase task #15 done
 [......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 15, TaskNumber = 15, err = true......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker1, TaskNumber = 15, err = true......]
 rpc call success, ntasks = 20, rpcSuccessCount = 14
-server = /var/tmp/824-1000/mr4425-worker1
+server = /var/tmp/824-1000/mr3073-worker1
 task = 824-mrinput-15.txt has finished
 selec map file = 824-mrinput-16.txt
-flagMapFiles = 
-[false false false false false false false false false false false false false false false false false true true true]
 [......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......svr = /var/tmp/824-1000/mr3073-worker1......]
 [......args.File = 824-mrinput-16.txt......]
-/var/tmp/824-1000/mr4425-worker1: given mapPhase task #16 on file 824-mrinput-16.txt (nios: 10)
+/var/tmp/824-1000/mr3073-worker1: given mapPhase task #16 on file 824-mrinput-16.txt (nios: 10)
 wk.concurrent + 1 = 1
 nReduce = 10 
 mapTask = 16
 inFile = 824-mrinput-16.txt
 doMap has done, inFile = 824-mrinput-16.txt
 wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker1: mapPhase task #16 done
+/var/tmp/824-1000/mr3073-worker1: mapPhase task #16 done
 [......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 16, TaskNumber = 16, err = true......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker1, TaskNumber = 16, err = true......]
 rpc call success, ntasks = 20, rpcSuccessCount = 15
-server = /var/tmp/824-1000/mr4425-worker1
+server = /var/tmp/824-1000/mr3073-worker1
 task = 824-mrinput-16.txt has finished
 selec map file = 824-mrinput-17.txt
-flagMapFiles = 
-[false false false false false false false false false false false false false false false false false false true true]
 [......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......svr = /var/tmp/824-1000/mr3073-worker1......]
 [......args.File = 824-mrinput-17.txt......]
-/var/tmp/824-1000/mr4425-worker1: given mapPhase task #17 on file 824-mrinput-17.txt (nios: 10)
+/var/tmp/824-1000/mr3073-worker1: given mapPhase task #17 on file 824-mrinput-17.txt (nios: 10)
 wk.concurrent + 1 = 1
 nReduce = 10 
 mapTask = 17
 inFile = 824-mrinput-17.txt
 doMap has done, inFile = 824-mrinput-17.txt
 wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker1: mapPhase task #17 done
+/var/tmp/824-1000/mr3073-worker1: mapPhase task #17 done
 [......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 17, TaskNumber = 17, err = true......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker1, TaskNumber = 17, err = true......]
 rpc call success, ntasks = 20, rpcSuccessCount = 16
-server = /var/tmp/824-1000/mr4425-worker1
+server = /var/tmp/824-1000/mr3073-worker1
 task = 824-mrinput-17.txt has finished
 selec map file = 824-mrinput-18.txt
-flagMapFiles = 
-[false false false false false false false false false false false false false false false false false false false true]
 [......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......svr = /var/tmp/824-1000/mr3073-worker1......]
 [......args.File = 824-mrinput-18.txt......]
-/var/tmp/824-1000/mr4425-worker1: given mapPhase task #18 on file 824-mrinput-18.txt (nios: 10)
+/var/tmp/824-1000/mr3073-worker1: given mapPhase task #18 on file 824-mrinput-18.txt (nios: 10)
 wk.concurrent + 1 = 1
 nReduce = 10 
 mapTask = 18
 inFile = 824-mrinput-18.txt
 doMap has done, inFile = 824-mrinput-18.txt
 wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker1: mapPhase task #18 done
+/var/tmp/824-1000/mr3073-worker1: mapPhase task #18 done
 [......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 18, TaskNumber = 18, err = true......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker1, TaskNumber = 18, err = true......]
 rpc call success, ntasks = 20, rpcSuccessCount = 17
-server = /var/tmp/824-1000/mr4425-worker1
+server = /var/tmp/824-1000/mr3073-worker1
 task = 824-mrinput-18.txt has finished
 selec map file = 824-mrinput-19.txt
-flagMapFiles = 
-[false false false false false false false false false false false false false false false false false false false false]
 [......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker1......]
+[......svr = /var/tmp/824-1000/mr3073-worker1......]
 [......args.File = 824-mrinput-19.txt......]
-/var/tmp/824-1000/mr4425-worker1: given mapPhase task #19 on file 824-mrinput-19.txt (nios: 10)
+/var/tmp/824-1000/mr3073-worker1: given mapPhase task #19 on file 824-mrinput-19.txt (nios: 10)
 wk.concurrent + 1 = 1
 nReduce = 10 
 mapTask = 19
 inFile = 824-mrinput-19.txt
 doMap has done, inFile = 824-mrinput-19.txt
 wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker1: mapPhase task #19 done
+/var/tmp/824-1000/mr3073-worker1: mapPhase task #19 done
 [......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 19, TaskNumber = 19, err = true......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker1, TaskNumber = 19, err = true......]
 rpc call success, ntasks = 20, rpcSuccessCount = 18
-server = /var/tmp/824-1000/mr4425-worker1
+server = /var/tmp/824-1000/mr3073-worker1
 task = 824-mrinput-19.txt has finished
 All mapFiles has handed out, continue
 nReduce = 10 
@@ -1194,179 +1105,176 @@ mapTask = 1
 inFile = 824-mrinput-1.txt
 doMap has done, inFile = 824-mrinput-1.txt
 wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker0: mapPhase task #1 done
+/var/tmp/824-1000/mr3073-worker0: mapPhase task #1 done
 [......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker0, index = 1, TaskNumber = 1, err = true......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker0, TaskNumber = 1, err = true......]
 rpc call success, ntasks = 20, rpcSuccessCount = 19
-server = /var/tmp/824-1000/mr4425-worker0
+server = /var/tmp/824-1000/mr3073-worker0
 task = 824-mrinput-1.txt has finished
 rpcSuccessCount = 20, ntasks = 20
 rpcSuccessCount > ntask - 1, break loop
 Schedule: mapPhase done
 Schedule: 10 reducePhase tasks (20 I/Os)
 flagMapFiles default value = [false false false false false false false false false false]
-mapFiles length = 20
 mapFiles = 
 [824-mrinput-0.txt 824-mrinput-1.txt 824-mrinput-2.txt 824-mrinput-3.txt 824-mrinput-4.txt 824-mrinput-5.txt 824-mrinput-6.txt 824-mrinput-7.txt 824-mrinput-8.txt 824-mrinput-9.txt 824-mrinput-10.txt 824-mrinput-11.txt 824-mrinput-12.txt 824-mrinput-13.txt 824-mrinput-14.txt 824-mrinput-15.txt 824-mrinput-16.txt 824-mrinput-17.txt 824-mrinput-18.txt 824-mrinput-19.txt]
-n_other = 
-20
-ntasks = 
-10
-Get a resigerchan, value = /var/tmp/824-1000/mr4425-worker0
-srvCollection = [     /var/tmp/824-1000/mr4425-worker0]
-args.TaskNumber = 0
-Get a resigerchan, value = /var/tmp/824-1000/mr4425-worker1
-srvCollection = [     /var/tmp/824-1000/mr4425-worker0 /var/tmp/824-1000/mr4425-worker1]
-args.TaskNumber = 1
+n_other = 20
+ntasks = 10
+Get a resigerchan, value = /var/tmp/824-1000/mr3073-worker0
+srvCollection = [     /var/tmp/824-1000/mr3073-worker0]
+selec map file = 824-mrinput-0.txt
 [......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker1......]
-[......args.File = 824-mrinput-1.txt......]
-[......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker0......]
+[......svr = /var/tmp/824-1000/mr3073-worker0......]
 [......args.File = 824-mrinput-0.txt......]
-/var/tmp/824-1000/mr4425-worker1: given reducePhase task #1 on file 824-mrinput-1.txt (nios: 20)
-wk.concurrent + 1 = 1
-outFile = mrtmp.test-res-1
-/var/tmp/824-1000/mr4425-worker0: given reducePhase task #0 on file 824-mrinput-0.txt (nios: 20)
+Get a resigerchan, value = /var/tmp/824-1000/mr3073-worker1
+srvCollection = [     /var/tmp/824-1000/mr3073-worker0 /var/tmp/824-1000/mr3073-worker1]
+selec map file = 824-mrinput-1.txt
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr3073-worker1......]
+[......args.File = 824-mrinput-1.txt......]
+/var/tmp/824-1000/mr3073-worker0: given reducePhase task #0 on file 824-mrinput-0.txt (nios: 20)
 wk.concurrent + 1 = 1
 outFile = mrtmp.test-res-0
+/var/tmp/824-1000/mr3073-worker1: given reducePhase task #1 on file 824-mrinput-1.txt (nios: 20)
+wk.concurrent + 1 = 1
+outFile = mrtmp.test-res-1
 sort kvs done!
 sort kvs done!
 wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker0: reducePhase task #0 done
+/var/tmp/824-1000/mr3073-worker0: reducePhase task #0 done
 [......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker0, index = 0, TaskNumber = 0, err = true......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker0, TaskNumber = 0, err = true......]
 rpc call success, ntasks = 10, rpcSuccessCount = 0
-server = /var/tmp/824-1000/mr4425-worker0
+server = /var/tmp/824-1000/mr3073-worker0
 task = 824-mrinput-0.txt has finished
-args.TaskNumber = 2
+selec map file = 824-mrinput-2.txt
 [......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker0......]
+[......svr = /var/tmp/824-1000/mr3073-worker0......]
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr3073-worker1: reducePhase task #1 done
 [......args.File = 824-mrinput-2.txt......]
-/var/tmp/824-1000/mr4425-worker0: given reducePhase task #2 on file 824-mrinput-2.txt (nios: 20)
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker1, TaskNumber = 1, err = true......]
+rpc call success, ntasks = 10, rpcSuccessCount = 1
+server = /var/tmp/824-1000/mr3073-worker1
+task = 824-mrinput-1.txt has finished
+selec map file = 824-mrinput-3.txt
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr3073-worker1......]
+[......args.File = 824-mrinput-3.txt......]
+/var/tmp/824-1000/mr3073-worker0: given reducePhase task #2 on file 824-mrinput-2.txt (nios: 20)
 wk.concurrent + 1 = 1
 outFile = mrtmp.test-res-2
-wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker1: reducePhase task #1 done
-[......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 1, TaskNumber = 1, err = true......]
-rpc call success, ntasks = 10, rpcSuccessCount = 1
-server = /var/tmp/824-1000/mr4425-worker1
-task = 824-mrinput-1.txt has finished
-args.TaskNumber = 3
-[......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker1......]
-[......args.File = 824-mrinput-3.txt......]
-/var/tmp/824-1000/mr4425-worker1: given reducePhase task #3 on file 824-mrinput-3.txt (nios: 20)
+/var/tmp/824-1000/mr3073-worker1: given reducePhase task #3 on file 824-mrinput-3.txt (nios: 20)
 wk.concurrent + 1 = 1
 outFile = mrtmp.test-res-3
 sort kvs done!
 sort kvs done!
 wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker0: reducePhase task #2 done
+/var/tmp/824-1000/mr3073-worker0: reducePhase task #2 done
 [......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker0, index = 2, TaskNumber = 2, err = true......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker0, TaskNumber = 2, err = true......]
 rpc call success, ntasks = 10, rpcSuccessCount = 2
-server = /var/tmp/824-1000/mr4425-worker0
+server = /var/tmp/824-1000/mr3073-worker0
 task = 824-mrinput-2.txt has finished
-args.TaskNumber = 4
+selec map file = 824-mrinput-4.txt
 [......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker0......]
+wk.concurrent - 1 = 0
+/var/tmp/824-1000/mr3073-worker1: reducePhase task #3 done
+[......svr = /var/tmp/824-1000/mr3073-worker0......]
 [......args.File = 824-mrinput-4.txt......]
-/var/tmp/824-1000/mr4425-worker0: given reducePhase task #4 on file 824-mrinput-4.txt (nios: 20)
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker1, TaskNumber = 3, err = true......]
+rpc call success, ntasks = 10, rpcSuccessCount = 3
+server = /var/tmp/824-1000/mr3073-worker1
+task = 824-mrinput-3.txt has finished
+selec map file = 824-mrinput-5.txt
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr3073-worker1......]
+[......args.File = 824-mrinput-5.txt......]
+/var/tmp/824-1000/mr3073-worker0: given reducePhase task #4 on file 824-mrinput-4.txt (nios: 20)
 wk.concurrent + 1 = 1
 outFile = mrtmp.test-res-4
-wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker1: reducePhase task #3 done
-[......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 3, TaskNumber = 3, err = true......]
-rpc call success, ntasks = 10, rpcSuccessCount = 3
-server = /var/tmp/824-1000/mr4425-worker1
-task = 824-mrinput-3.txt has finished
-args.TaskNumber = 5
-[......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker1......]
-[......args.File = 824-mrinput-5.txt......]
-/var/tmp/824-1000/mr4425-worker1: given reducePhase task #5 on file 824-mrinput-5.txt (nios: 20)
+/var/tmp/824-1000/mr3073-worker1: given reducePhase task #5 on file 824-mrinput-5.txt (nios: 20)
 wk.concurrent + 1 = 1
 outFile = mrtmp.test-res-5
 sort kvs done!
 sort kvs done!
 wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker1: reducePhase task #5 done
+/var/tmp/824-1000/mr3073-worker1: reducePhase task #5 done
 [......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 5, TaskNumber = 5, err = true......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker1, TaskNumber = 5, err = true......]
 rpc call success, ntasks = 10, rpcSuccessCount = 4
-server = /var/tmp/824-1000/mr4425-worker1
+server = /var/tmp/824-1000/mr3073-worker1
 task = 824-mrinput-5.txt has finished
-args.TaskNumber = 6
+selec map file = 824-mrinput-6.txt
+wk.concurrent - 1 = 0
 [......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker1......]
+/var/tmp/824-1000/mr3073-worker0: reducePhase task #4 done
+[......svr = /var/tmp/824-1000/mr3073-worker1......]
 [......args.File = 824-mrinput-6.txt......]
-/var/tmp/824-1000/mr4425-worker1: given reducePhase task #6 on file 824-mrinput-6.txt (nios: 20)
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker0, TaskNumber = 4, err = true......]
+rpc call success, ntasks = 10, rpcSuccessCount = 5
+server = /var/tmp/824-1000/mr3073-worker0
+task = 824-mrinput-4.txt has finished
+selec map file = 824-mrinput-7.txt
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr3073-worker0......]
+[......args.File = 824-mrinput-7.txt......]
+/var/tmp/824-1000/mr3073-worker1: given reducePhase task #6 on file 824-mrinput-6.txt (nios: 20)
 wk.concurrent + 1 = 1
 outFile = mrtmp.test-res-6
-wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker0: reducePhase task #4 done
-[......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker0, index = 4, TaskNumber = 4, err = true......]
-rpc call success, ntasks = 10, rpcSuccessCount = 5
-server = /var/tmp/824-1000/mr4425-worker0
-task = 824-mrinput-4.txt has finished
-args.TaskNumber = 7
-[......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker0......]
-[......args.File = 824-mrinput-7.txt......]
-/var/tmp/824-1000/mr4425-worker0: given reducePhase task #7 on file 824-mrinput-7.txt (nios: 20)
+/var/tmp/824-1000/mr3073-worker0: given reducePhase task #7 on file 824-mrinput-7.txt (nios: 20)
 wk.concurrent + 1 = 1
 outFile = mrtmp.test-res-7
 sort kvs done!
 sort kvs done!
 wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker1: reducePhase task #6 done
-[......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 6, TaskNumber = 6, err = true......]
-rpc call success, ntasks = 10, rpcSuccessCount = 6
-server = /var/tmp/824-1000/mr4425-worker1
-task = 824-mrinput-6.txt has finished
-args.TaskNumber = 8
-[......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker1......]
-[......args.File = 824-mrinput-8.txt......]
-/var/tmp/824-1000/mr4425-worker1: given reducePhase task #8 on file 824-mrinput-8.txt (nios: 20)
-wk.concurrent + 1 = 1
-outFile = mrtmp.test-res-8
+/var/tmp/824-1000/mr3073-worker1: reducePhase task #6 done
 wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker0: reducePhase task #7 done
+/var/tmp/824-1000/mr3073-worker0: reducePhase task #7 done
 [......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker0, index = 7, TaskNumber = 7, err = true......]
-rpc call success, ntasks = 10, rpcSuccessCount = 7
-server = /var/tmp/824-1000/mr4425-worker0
-task = 824-mrinput-7.txt has finished
-args.TaskNumber = 9
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker1, TaskNumber = 6, err = true......]
+rpc call success, ntasks = 10, rpcSuccessCount = 6
+server = /var/tmp/824-1000/mr3073-worker1
+task = 824-mrinput-6.txt has finished
+selec map file = 824-mrinput-8.txt
 [......rpc call start......]
-[......svr = /var/tmp/824-1000/mr4425-worker0......]
+[......svr = /var/tmp/824-1000/mr3073-worker1......]
+[......args.File = 824-mrinput-8.txt......]
+[......rpc call done......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker0, TaskNumber = 7, err = true......]
+rpc call success, ntasks = 10, rpcSuccessCount = 7
+server = /var/tmp/824-1000/mr3073-worker0
+task = 824-mrinput-7.txt has finished
+selec map file = 824-mrinput-9.txt
+[......rpc call start......]
+[......svr = /var/tmp/824-1000/mr3073-worker0......]
 [......args.File = 824-mrinput-9.txt......]
-/var/tmp/824-1000/mr4425-worker0: given reducePhase task #9 on file 824-mrinput-9.txt (nios: 20)
+/var/tmp/824-1000/mr3073-worker0: given reducePhase task #9 on file 824-mrinput-9.txt (nios: 20)
 wk.concurrent + 1 = 1
 outFile = mrtmp.test-res-9
+/var/tmp/824-1000/mr3073-worker1: given reducePhase task #8 on file 824-mrinput-8.txt (nios: 20)
+wk.concurrent + 1 = 1
+outFile = mrtmp.test-res-8
 sort kvs done!
 sort kvs done!
 wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker1: reducePhase task #8 done
+/var/tmp/824-1000/mr3073-worker0: reducePhase task #9 done
 [......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker1, index = 8, TaskNumber = 8, err = true......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker0, TaskNumber = 9, err = true......]
 rpc call success, ntasks = 10, rpcSuccessCount = 8
-server = /var/tmp/824-1000/mr4425-worker1
-task = 824-mrinput-8.txt has finished
+server = /var/tmp/824-1000/mr3073-worker0
+task = 824-mrinput-9.txt has finished
 All mapFiles has handed out, continue
 wk.concurrent - 1 = 0
-/var/tmp/824-1000/mr4425-worker0: reducePhase task #9 done
+/var/tmp/824-1000/mr3073-worker1: reducePhase task #8 done
 [......rpc call done......]
-[......rpc call done, srv = /var/tmp/824-1000/mr4425-worker0, index = 9, TaskNumber = 9, err = true......]
+[......rpc call done, srv = /var/tmp/824-1000/mr3073-worker1, TaskNumber = 8, err = true......]
 rpc call success, ntasks = 10, rpcSuccessCount = 9
-server = /var/tmp/824-1000/mr4425-worker0
-task = 824-mrinput-9.txt has finished
+server = /var/tmp/824-1000/mr3073-worker1
+task = 824-mrinput-8.txt has finished
 rpcSuccessCount = 10, ntasks = 10
 rpcSuccessCount > ntask - 1, break loop
 Schedule: reducePhase done
@@ -1380,7 +1288,7 @@ Merge: read mrtmp.test-res-6
 Merge: read mrtmp.test-res-7
 Merge: read mrtmp.test-res-8
 Merge: read mrtmp.test-res-9
-/var/tmp/824-1000/mr4425-master: Map/Reduce task completed
+/var/tmp/824-1000/mr3073-master: Map/Reduce task completed
 master_splitmerge.go, removeFile = mrtmp.test-0-0
 master_splitmerge.go, removeFile = mrtmp.test-0-1
 master_splitmerge.go, removeFile = mrtmp.test-0-2
@@ -1613,4 +1521,4 @@ master_splitmerge.go, removeFile = 824-mrinput-17.txt
 master_splitmerge.go, removeFile = 824-mrinput-18.txt
 master_splitmerge.go, removeFile = 824-mrinput-19.txt
 PASS
-ok  	_/home/jun/Project/MIT6824/6.824/src/mapreduce	3.135s
+ok  	_/home/jun/Project/MIT6824/6.824/src/mapreduce	2.327s

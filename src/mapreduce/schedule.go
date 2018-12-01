@@ -9,7 +9,7 @@ import (
 
 type ResultStruct struct {
     Srv string
-    Index int
+//    Index int
     TaskNumberIndex int
     Reply bool
 }
@@ -48,23 +48,17 @@ func schedule(jobName string, mapFiles []string, nReduce int, phase jobPhase, re
     rpcname := "Worker.DoTask"
 
     var srv string
-    var index int
     var wg sync.WaitGroup
     var result ResultStruct
 
-    //taskNumberIndex := 0
     srvCollection := make([]string, 5)
     resultChan := make(chan ResultStruct)
     flagMapFiles := make([]bool, ntasks)
 
     fmt.Printf("flagMapFiles default value = %v\n", flagMapFiles)
-    for i := 0; i < ntasks; i++ {
-        flagMapFiles[i] = true
-    }
-
     fmt.Printf("mapFiles = \n%v\n", mapFiles)
-    fmt.Printf("n_other = \n%v\n", n_other)
-    fmt.Printf("ntasks = \n%v\n", ntasks)
+    fmt.Printf("n_other = %v\n", n_other)
+    fmt.Printf("ntasks = %v\n", ntasks)
 
     args := DoTaskArgs{jobName, "", phase, 0, n_other}
 
@@ -79,10 +73,8 @@ Exit:
                 if result.Reply == true {       //current task had finished
                     fmt.Printf("rpc call success, ntasks = %v, rpcSuccessCount = %v\n", ntasks, rpcSuccessCount)
                     fmt.Printf("server = %v\n", result.Srv)
-//                    fmt.Printf("TaskNumberIndex = %v\n", result.TaskNumberIndex)
-                    fmt.Printf("task = %v has finished\n", mapFiles[result.Index])
+                    fmt.Printf("task = %v has finished\n", mapFiles[result.TaskNumberIndex])
 
-//                    args.TaskNumber = result.TaskNumberIndex
                     srv = result.Srv            //Assign a task to the worker which had finished a task just now
                     rpcSuccessCount++
                     if rpcSuccessCount >= ntasks {
@@ -99,9 +91,7 @@ Exit:
                             break
                         }
                     }
-                    if phase == mapPhase {
-                        flagMapFiles[result.Index] = true
-                    }
+                    flagMapFiles[result.TaskNumberIndex] = false
                 }
             case register := <-registerChan:
                 srv = register
@@ -112,12 +102,11 @@ Exit:
 
         isHandOut := false
         for j := 0; j < ntasks; j++ {
-            if flagMapFiles[j] == true {
-                index = j                   //Not use
+            if flagMapFiles[j] == false {
                 args.File = mapFiles[j]
                 args.TaskNumber = j
                 fmt.Printf("selec map file = %v\n", args.File)
-                flagMapFiles[j] = false
+                flagMapFiles[j] = true
                 break
             }
             if j == ntasks - 1 {
@@ -128,10 +117,9 @@ Exit:
             fmt.Printf("All mapFiles has handed out, continue\n")
             continue
         }
-        fmt.Printf("flagMapFiles = \n%v\n", flagMapFiles)
 
         wg.Add(1)
-        go func(srv string, rpcname string, index int, args DoTaskArgs, resultChan chan ResultStruct) {
+        go func(srv string, rpcname string, args DoTaskArgs, resultChan chan ResultStruct) {
 
             fmt.Printf("[......rpc call start......]\n")
             fmt.Printf("[......svr = %v......]\n", srv)
@@ -140,9 +128,9 @@ Exit:
             fmt.Printf("[......rpc call done......]\n")
             defer wg.Done()
 
-            fmt.Printf("[......rpc call done, srv = %v, index = %v, TaskNumber = %v, err = %v......]\n", srv, index, args.TaskNumber, err)
-            resultChan <- ResultStruct{srv, index, args.TaskNumber, err}
-        }(srv, rpcname, index, args, resultChan)
+            fmt.Printf("[......rpc call done, srv = %v, TaskNumber = %v, err = %v......]\n", srv, args.TaskNumber, err)
+            resultChan <- ResultStruct{srv, args.TaskNumber, err}
+        }(srv, rpcname, args, resultChan)
     }
 
     wg.Wait()
