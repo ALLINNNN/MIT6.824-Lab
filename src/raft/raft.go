@@ -94,10 +94,8 @@ type Raft struct {
     nextIndex       []int
     matchIndex      []int
 
-    voteDoneChan        chan bool
+    voteDoneChan    chan bool
     role                int                //0: follower, 1: candidate, 2: leader
-//    heartbeatState      chan HeartbeatState
-//    voteState           chan VoteState
     rpcState        chan RpcState
 }
 
@@ -109,13 +107,11 @@ func (rf *Raft) GetState() (int, bool) {
 	var isleader bool
 	// Your code here (2A).
     term = rf.currentTerm
-    s, _ := strconv.Atoi(rf.votedFor)
-    fmt.Printf("GetState, rf.votedFor = %v, me = %v, role = %v, term = %v\n", s, rf.me, rf.role, rf.currentTerm)
     if rf.role == 2 {
-        fmt.Printf("My role = %v, Id = %v, term = %v, I am a reader\n", rf.role, rf.me, rf.currentTerm)
+        fmt.Printf("Get state, My role = %v, Id = %v, term = %v, I am a reader\n", rf.role, rf.me, rf.currentTerm)
         isleader = true
     } else {
-        fmt.Printf("My role = %v, Id = %v, term = %v, I am not a reader\n", rf.role, rf.me, rf.currentTerm)
+        fmt.Printf("Get state, My role = %v, Id = %v, term = %v, I am not a reader\n", rf.role, rf.me, rf.currentTerm)
         isleader = false
     }
 	return term, isleader
@@ -235,8 +231,8 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
     }
 
     /*pass rpc state to current server*/
-    go func(role, currentServer, candidateId int, isGrant, isChangeRole bool) {
-//    func(role, currentServer, candidateId int, isGrant, isChangeRole bool) {
+//    go func(role, currentServer, candidateId int, isGrant, isChangeRole bool) {
+    func(role, currentServer, candidateId int, isGrant, isChangeRole bool) {
         fmt.Printf("My role = %v, my Id = %v, voteDone, start send channel, candidate = %v\n", role, currentServer, candidateId)
         rf.rpcState <- RpcState { HeartbeatState{} , VoteState{isGrant}, isChangeRole}
         fmt.Printf("My role = %v, my Id = %v, voteDone, somewhere receive channel, candidate = %v\n", role, currentServer, candidateId)
@@ -321,7 +317,8 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
     }
 
     fmt.Printf("My role = %v, Id = %v, term = %v, send heartbeatChan start\n", rf.role, rf.me, rf.currentTerm)
-    go func(leader int, isChangeRole bool) {
+//    go func(leader int, isChangeRole bool) {
+    func(leader int, isChangeRole bool) {
         rf.rpcState <- RpcState{ HeartbeatState{}, VoteState{}, isChangeRole}
     }(args.LeaderId, isChangeRole)
     fmt.Printf("My role = %v, Id = %v, term = %v, send heartbeatChan end\n", rf.role, rf.me, rf.currentTerm)
@@ -368,8 +365,10 @@ func (rf *Raft) Kill() {
 }
 
 type ServerState struct {
-    id          int
-    rpcState    bool
+    id              int
+    rpcFailCount    int
+    isHandout       bool
+    isFailure       bool
 }
 
 //
@@ -414,6 +413,7 @@ type Candidate struct {
     flagRpcCalled   []bool
 }
 
+
 func serverHandler (rf *Raft) {
 
     for {
@@ -430,7 +430,7 @@ func serverHandler (rf *Raft) {
                 ExitFollower:
                 for {
 
-                    timeout := GetRandamNumber(300, 500)
+                    timeout := GetRandamNumber(800, 1000)
                     fmt.Printf("timeout = %v\n", timeout)
                     followerTimer := time.NewTimer(time.Duration(timeout) * time.Millisecond)
                     defer followerTimer.Stop()
@@ -457,7 +457,8 @@ func serverHandler (rf *Raft) {
 
             /*Current server is candidate*/
             case 1:
-                var numberOfVotes int
+//                var wg sync.WaitGroup
+                var numberOfVotes   int
                 var rpcSucceedCount int
 
                 rf.mu.Lock()
@@ -470,10 +471,9 @@ func serverHandler (rf *Raft) {
                 fmt.Printf("Candidate = %v, term = %v, stage start......\n", rf.me, rf.currentTerm)
 
                 rpcCandidateReplyChan := make(chan RpcCandidateReply)
-                flagRpcCalled := make([]bool, len(rf.peers))
-                serverRpcFailCount := make([]int, len(rf.peers))
+                serverState   := make([]ServerState, len(rf.peers))
 
-                electTime := GetRandamNumber(300, 500)
+                electTime := GetRandamNumber(400, 500)
                 fmt.Printf("electTimer = %v\n", electTime)
                 candidateTimer := time.NewTimer(time.Duration(electTime) * time.Millisecond)
                 defer candidateTimer.Stop()
@@ -495,6 +495,7 @@ func serverHandler (rf *Raft) {
                             }
                         case <-candidateTimer.C:
                             fmt.Printf("candidate = %v, term = %v, election time out, start a new election\n", rf.me, rf.currentTerm)
+                            CalculateVotes(rf, serverState, numberOfVotes)
                             break ExitCandidate
                         default:
                     }
@@ -503,6 +504,10 @@ func serverHandler (rf *Raft) {
                         case rpcResult := <-rpcCandidateReplyChan:
                             if rpcResult.Result == true {           //previous rpc call succeed
                                 fmt.Printf("candidate = %v, term = %v, follower = %v, rpc succeeded\n", rf.me, rf.currentTerm, rpcResult.ExecutedId)
+
+                                serverState[rpcResult.ExecutedId].rpcFailCount = 0
+                                serverState[rpcResult.ExecutedId].isFailure = false
+
                                 rpcSucceedCount++
                                 if rpcResult.Reply.VoteGranted == true {
                                     fmt.Printf("candidate = %v, term = %v, follower = %v voted a granted vote\n", rf.me, rf.currentTerm, rpcResult.ExecutedId)
@@ -512,30 +517,28 @@ func serverHandler (rf *Raft) {
                                 }
 
                                 /*All server has reply the result of vote*/
-                                if IsFlagAllTrue(rf.me, flagRpcCalled) == true  && len(flagRpcCalled) <= rpcSucceedCount {
-                                    fmt.Printf("candidate = %v, term = %v, numberOfVotes = %v, len(rf.peers) = %v, rpcSucceedCount = %v\n", rf.me, rf.currentTerm, numberOfVotes, len(rf.peers), rpcSucceedCount)
-                                    if IsGetMajorVote(numberOfVotes, len(rf.peers)) {
-                                        fmt.Printf("candidate = %v, term = %v, get majority votes\n", rf.me, rf.currentTerm)
-                                        rf.mu.Lock()
-                                        rf.role = 2
-                                        rf.mu.Unlock()
-                                    } else {
-                                        fmt.Printf("candidate = %v, term = %v, get less votes\n", rf.me, rf.currentTerm)
-                                        rf.mu.Lock()
-                                        rf.role = 0
-                                        rf.mu.Unlock()
-                                    }
-                                    break ExitCandidate         //stage of candidate has finished, jump out it
+                                fmt.Printf("candidate = %v, term = %v, server = %v, IsServerAllTrue = %v, ValidServerCount = %v, rpcCount = %v\n", rf.me, rf.currentTerm, rpcResult.ExecutedId, IsServerAllTrue(serverState), ValidServerCount(serverState), rpcSucceedCount)
+                                if IsServerAllTrue(serverState) == true && ValidServerCount(serverState) <= rpcSucceedCount{
+
+                                    CalculateVotes(rf, serverState, numberOfVotes)
+                                    break ExitCandidate
                                 }
                             } else {                            //previous rpc call failure
-                                /**/
-                                serverRpcFailCount[rpcResult.ExecutedId]++
-                                if serverRpcFailCount[rpcResult.ExecutedId] > 5 {
-                                    fmt.Printf("server = %v failure")
+                                serverState[rpcResult.ExecutedId].rpcFailCount++
+                                fmt.Printf("candidate = %v, term = %v, server = %v rpc failure, failCount = %v\n", rf.me, rf.currentTerm, rpcResult.ExecutedId, serverState[rpcResult.ExecutedId].rpcFailCount)
+                                if serverState[rpcResult.ExecutedId].rpcFailCount >= 1 {
+                                    fmt.Printf("candidate = %v, term = %v, server = %v failure times more than 5, set failure flag to it\n", rf.me, rf.currentTerm, rpcResult.ExecutedId)
+                                    serverState[rpcResult.ExecutedId].isFailure = true
                                 }
 
-                                flagRpcCalled[rpcResult.ExecutedId] = false
-                                fmt.Printf("candidate = %v, term = %v, follower = %v, rpc failed\n", rf.me, rf.currentTerm, rpcResult.ExecutedId)
+                                if IsServerAllTrue(serverState) == true && ValidServerCount(serverState) <= rpcSucceedCount{
+
+                                    CalculateVotes(rf, serverState, numberOfVotes)
+                                    break ExitCandidate
+                                }
+                                serverState[rpcResult.ExecutedId].isHandout = false         //re-transmit rpc call to the server
+
+                                fmt.Printf("candidate = %v, term = %v, server = %v, rpc failed\n", rf.me, rf.currentTerm, rpcResult.ExecutedId)
                             }
                         default:
                     }
@@ -545,26 +548,28 @@ func serverHandler (rf *Raft) {
                     }
 
                     if i == rf.me {
+                        serverState[i].isHandout = true
                         continue
                     }
 
-                    if flagRpcCalled[i] == true {
+
+                    if serverState[i].isHandout == true || serverState[i].isFailure == true {
                         continue
                     } else {
-                        flagRpcCalled[i] = true
+                        serverState[i].isHandout = true
                     }
-
                     var args  RequestVoteArgs
                     var reply RequestVoteReply
 
                     args.Term = rf.currentTerm
                     args.CandidateId = rf.me
                     args.LastLogIndex = rf.commitIndex
-//                    args.LastLogTerm = rf.log[rf.lastApplied].termEntry
 
-
+//                    wg.Add(1)
                     go func(server int, args *RequestVoteArgs, reply *RequestVoteReply, rpcCandidateReplyChan chan RpcCandidateReply){
 
+//                        defer wg.Done()
+//                        rpcTimer = time.NewTimer(time.Duration(50) * time.Millisecond)
                         fmt.Printf("candidate = %v, rpc executedId = %v, term = %v, send rpc request start......\n", args.CandidateId, server, args.Term)
                         err := rf.sendRequestVote(server, args, reply)
                         fmt.Printf("candidate = %v, rpc executedId = %v, term = %v, send rpc request end, result = %v......\n", args.CandidateId, server, args.Term, err)
@@ -575,6 +580,7 @@ func serverHandler (rf *Raft) {
 
                     }(i, &args, &reply, rpcCandidateReplyChan)
                 }
+//                wg.Wait()
                 numberOfVotes   = 0
                 rpcSucceedCount = 0
                 fmt.Printf("Candidate = %v, term = %v, stage end......\n", rf.me, rf.currentTerm)
@@ -585,8 +591,8 @@ func serverHandler (rf *Raft) {
                 fmt.Printf("leader = %v, term = %v, I am a leader now\n", rf.me, rf.currentTerm)
 
                 var rpcSucceedCount int
-                rpcLeaderReplyChan := make(chan RpcLeaderReply)
-                flagLeaderRpcCalled := make([]bool, len(rf.peers))
+                rpcLeaderReplyChan  := make(chan RpcLeaderReply)
+                serverState         := make([]ServerState, len(rf.peers))
 
                 rpcSucceedCount++
 
@@ -594,7 +600,7 @@ func serverHandler (rf *Raft) {
                 for {
 
                     fmt.Printf("leader = %v, term = %v, start a heartbeatTimer\n", rf.me, rf.currentTerm)
-                    heartbeatTime := 100
+                    heartbeatTime := 200
                     leaderTimer   := time.NewTimer(time.Duration(heartbeatTime) * time.Millisecond)
                     defer leaderTimer.Stop()
 
@@ -610,20 +616,37 @@ func serverHandler (rf *Raft) {
                                         if rpcResult.Result == true {
                                             fmt.Printf("leader = %v, term = %v, follower = %v, rpc succeed\n", rf.me, rf.currentTerm, rpcResult.ExecutedId)
                                             rpcSucceedCount++
+
+                                            serverState[rpcResult.ExecutedId].rpcFailCount = 0
+                                            serverState[rpcResult.ExecutedId].isFailure    = false
+
+
                                             if rpcResult.Reply.Success == true {
                                                 fmt.Printf("heartbeat success......\n")
                                             } else {
                                                 fmt.Printf("heartbeat failure......\n")
                                             }
 
-                                            fmt.Printf("leader = %v, term = %v, isFlagAllTrue = %v, len(flagLeaderRpcCalled) = %v, rpcSucceedCount = %v\n", rf.me, rf.currentTerm, IsFlagAllTrue(rf.me, flagLeaderRpcCalled), len(flagLeaderRpcCalled), rpcSucceedCount)
-                                            if IsFlagAllTrue(rf.me, flagLeaderRpcCalled) == true && len(flagLeaderRpcCalled) <= rpcSucceedCount {
-                                                fmt.Printf("leader = %v, term = %v, len(flagLeaderRpcCalled) = %v, rpcSucceedCount = %v, a heartbeat round is end, exit heartbeat\n", rf.me, rf.currentTerm, len(flagLeaderRpcCalled), rpcSucceedCount)
+                                            fmt.Printf("leader = %v, term = %v, isServerAllTrue = %v, ValidServerCount = %v, rpcSucceedCount = %v\n", rf.me, rf.currentTerm, IsServerAllTrue(serverState), ValidServerCount(serverState), rpcSucceedCount)
+//                                            if IsFlagAllTrue(rf.me, flagLeaderRpcCalled) == true && len(flagLeaderRpcCalled) <= rpcSucceedCount {
+                                            if IsServerAllTrue(serverState) == true && ValidServerCount(serverState) <= rpcSucceedCount {
+                                                fmt.Printf("leader = %v, term = %v, ValidServerCount = %v, rpcSucceedCount = %v, a heartbeat round is end, exit heartbeat\n", rf.me, rf.currentTerm, ValidServerCount(serverState), rpcSucceedCount)
                                                 break ExitHeartbeat
                                             }
                                         } else {
+                                            fmt.Printf("leader = %v, term = %v, isServerAllTrue = %v, ValidServerCount = %v, rpcSucceedCount = %v, rpc failure\n", rf.me, rf.currentTerm, IsServerAllTrue(serverState), ValidServerCount(serverState), rpcSucceedCount)
+
+                                            serverState[rpcResult.ExecutedId].rpcFailCount++
+
+                                            if serverState[rpcResult.ExecutedId].rpcFailCount >= 1 {
+                                                serverState[rpcResult.ExecutedId].isFailure = true
+                                            }
+
+                                            if IsServerAllTrue(serverState) == true && ValidServerCount(serverState) <= rpcSucceedCount {
+                                                break ExitHeartbeat
+                                            }
                                             fmt.Printf("leader = %v, term = %v, follower = %v, rpc failure\n", rf.me, rf.currentTerm, rpcResult.ExecutedId)
-                                            flagLeaderRpcCalled[rpcResult.ExecutedId] = false
+                                            serverState[rpcResult.ExecutedId].isHandout = false
                                         }
 
                                     case state := <-rf.rpcState:
@@ -644,15 +667,15 @@ func serverHandler (rf *Raft) {
                                 }
 
                                 if i == rf.me {
+                                    serverState[i].isHandout = true
                                     continue
                                 }
 
-                                if flagLeaderRpcCalled[i] == true {
+                                if serverState[i].isHandout == true || serverState[i].isFailure == true {
                                     continue
                                 } else {
-                                    flagLeaderRpcCalled[i] = true
+                                    serverState[i].isHandout = true
                                 }
-
                                 var args  AppendEntriesArgs
                                 var reply AppendEntriesReply
 
@@ -684,24 +707,51 @@ func GetRandamNumber(min, max int) int {
     randNum := rand.Intn(max - min) + min
     return randNum
 }
-
-func IsFlagAllTrue(me int, flag []bool) bool {
-    for i := 0; i < len(flag); i++ {
-        if i == me {
-            continue
-        }
-        if flag[i] == false {
+func IsServerAllTrue(server []ServerState) bool {
+    for i := 0; i < len(server); i++ {
+        if server[i].isHandout == false {
+            if server[i].isFailure == true {
+                continue
+            }
             return false
         }
     }
     return true
 }
-
 func IsGetMajorVote(numberOfVote, total int) bool {
-    if numberOfVote >= total / 2 {
+    if numberOfVote*2 >= total {
         return true
     } else {
         return false
     }
 
+}
+func ValidServerCount(server []ServerState) int {
+    count := 0
+    for i := 0; i < len(server); i++ {
+        if server[i].isFailure == true {
+            continue
+        }
+        count++
+    }
+    return count
+}
+func CalculateVotes(rf *Raft, server []ServerState, numberOfVotes int) bool {
+
+    fmt.Printf("candidate = %v, term = %v, numberOfVotes = %v, ValidServerCount %v, calculateVoutes start\n", rf.me, rf.currentTerm, numberOfVotes, ValidServerCount(server))
+    if IsGetMajorVote(numberOfVotes, ValidServerCount(server)) {
+        fmt.Printf("candidate = %v, term = %v, get majority votes\n", rf.me, rf.currentTerm)
+        rf.mu.Lock()
+        rf.role = 2
+        rf.mu.Unlock()
+        return true
+    } else {
+        fmt.Printf("candidate = %v, term = %v, get less votes\n", rf.me, rf.currentTerm)
+        rf.mu.Lock()
+        rf.role = 0
+        rf.mu.Unlock()
+        return false
+    }
+    fmt.Printf("candidate = %v, term = %v, numberOfVotes = %v, validServerCount = %v, calculateVoutes end\n", rf.me, rf.currentTerm, numberOfVotes, ValidServerCount(server))
+    return false
 }
