@@ -222,6 +222,7 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
     } else {                                //current term of this server is lower than args
         rf.mu.Lock()
         rf.currentTerm = args.Term
+        rf.votedFor = strconv.Itoa(args.CandidateId)
         rf.mu.Unlock()
         if rf.role != 0 {                   //if the current term of candidate or leader is lower than args, than thansis to follower
             fmt.Printf("my role = %v, me = %v change to follower, term = %v\n", rf.role, rf.me, rf.currentTerm)
