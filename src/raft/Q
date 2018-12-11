@@ -94,7 +94,6 @@ type Raft struct {
     nextIndex       []int
     matchIndex      []int
 
-    exitChan        chan bool
     role            int                //0: follower, 1: candidate, 2: leader
     rpcState        chan RpcState
 }
@@ -363,11 +362,9 @@ func (rf *Raft) Start(command interface{}) (int, int, bool) {
 func (rf *Raft) Kill() {
 	// Your code here, if desired.
     fmt.Printf("My role = %v, my Id = %v, term = %v, will be killed now\n", rf.role, rf.me, rf.currentTerm)
-    go func(){
-        fmt.Printf("My role = %v, my Id = %v, term = %v, send exitChan\n", rf.role, rf.me, rf.currentTerm)
-        rf.exitChan <- true
-        fmt.Printf("My role = %v, my Id = %v, term = %v, send exitChan over\n", rf.role, rf.me, rf.currentTerm)
-    }()
+    rf.mu.Lock()
+    rf.role = 3
+    rf.mu.Unlock()
     fmt.Printf("My role = %v, my Id = %v, term = %v, has been killed\n", rf.role, rf.me, rf.currentTerm)
 }
 
@@ -403,7 +400,6 @@ func Make(peers []*labrpc.ClientEnd, me int,
 
     rf.mu.Lock()
     rf.rpcState = make(chan RpcState)
-    rf.exitChan = make(chan bool)
     rf.mu.Unlock()
 
     fmt.Printf("me = %v\n", me)
@@ -422,7 +418,6 @@ type Candidate struct {
 
 func serverHandler (rf *Raft) {
 
-    ExitServer:
     for {
 
         switch rf.role {
@@ -431,7 +426,7 @@ func serverHandler (rf *Raft) {
                 fmt.Printf("Follower = %v, term = %v, stage start......\n", rf.me, rf.currentTerm)
 
                 rf.mu.Lock()
-                rf.votedFor = ""            //a follower will get a vote
+                rf.votedFor = ""
                 rf.mu.Unlock()
 
                 ExitFollower:
@@ -453,9 +448,6 @@ func serverHandler (rf *Raft) {
                             if state.vState.voteDone == true {
                                 fmt.Printf("follower = %v, vote to somebody\n", rf.me)
                             }
-                        case <- rf.exitChan:
-                            fmt.Printf("follower = %v, term = %v, get channel rf.exitChan, break ExitServer\n", rf.me, rf.currentTerm)
-                            break ExitServer
                     }
                 }
                 fmt.Printf("Follower = %v, term = %v, stage end......\n", rf.me, rf.currentTerm)
@@ -473,6 +465,7 @@ func serverHandler (rf *Raft) {
                 rpcSucceedCount++   //candidate itself needless to do rpc call
 
                 fmt.Printf("Candidate = %v, term = %v, stage start......\n", rf.me, rf.currentTerm)
+                fmt.Printf("Candidate = %v, term = %v, numberOfVotes addr = %v, rpcCount addr = %v\n", rf.me, rf.currentTerm, &numberOfVotes, &rpcSucceedCount)
 
                 serverState   := make([]ServerState, len(rf.peers))
                 rpcCandidateReplyChan := make(chan RpcCandidateReply)
@@ -499,9 +492,6 @@ func serverHandler (rf *Raft) {
                             fmt.Printf("candidate = %v, term = %v, election time out, start a new election\n", rf.me, rf.currentTerm)
                             CalculateVotes(rf, serverState, numberOfVotes)
                             break ExitCandidate
-                        case <- rf.exitChan:
-                            fmt.Printf("candidate = %v, term = %v, get channel rf.exitChan, break ExitServer\n", rf.me, rf.currentTerm)
-                            break ExitServer
                         default:
                     }
 
@@ -586,6 +576,8 @@ func serverHandler (rf *Raft) {
 
                     }(i, &args, &reply, rpcCandidateReplyChan)
                 }
+//                numberOfVotes   = 0
+//                rpcSucceedCount = 0
                 fmt.Printf("Candidate = %v, term = %v, stage end......\n", rf.me, rf.currentTerm)
 
             /*Current server is leader*/
@@ -607,9 +599,6 @@ func serverHandler (rf *Raft) {
                     defer leaderTimer.Stop()
 
                     select {
-                        case <- rf.exitChan:
-                            fmt.Printf("leader = %v, term = %v, get channel rf.exitChan, break ExitServer\n", rf.me, rf.currentTerm)
-                            break ExitServer
                         case <- leaderTimer.C:
                             fmt.Printf("leader = %v, term = %v, heartbeat timerout\n", rf.me, rf.currentTerm)
 
@@ -712,6 +701,8 @@ func serverHandler (rf *Raft) {
                     }//select
                     fmt.Printf("leader = %v, term = %v, stage of leader end\n", rf.me, rf.currentTerm)
                 }//for
+            case 3:
+                fmt.Printf("me = %v, term = %v, has been killed\n", rf.me, rf.currentTerm)
         }//switch
     }//for
 }//serverHandler
