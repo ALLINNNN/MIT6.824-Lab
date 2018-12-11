@@ -442,6 +442,7 @@ func serverHandler (rf *Raft) {
                     followerTimer := time.NewTimer(time.Duration(timeout) * time.Millisecond)
                     defer followerTimer.Stop()
 
+                    fmt.Printf("follower = %v, term = %v, running.........\n", rf.me, rf.currentTerm)
                     select {
                         case <- followerTimer.C:
                             fmt.Printf("follower = %v, get timer.C channel, time out\n", rf.me)
@@ -488,7 +489,6 @@ func serverHandler (rf *Raft) {
 
                     select {
                         case state := <-rf.rpcState:
-
                             if state.isToFollower == true {
                                 TransistToFollower(rf)
                                 fmt.Printf("candidate = %v, term = %v, because leader is leagal, candidate transit to follower\n", rf.me, rf.currentTerm)
@@ -502,6 +502,7 @@ func serverHandler (rf *Raft) {
                         case <- rf.exitChan:
                             fmt.Printf("candidate = %v, term = %v, get channel rf.exitChan, break ExitServer\n", rf.me, rf.currentTerm)
                             break ExitServer
+
                         default:
                     }
 
@@ -576,14 +577,39 @@ func serverHandler (rf *Raft) {
 
                     go func(server int, args *RequestVoteArgs, reply *RequestVoteReply, rpcCandidateReplyChan chan RpcCandidateReply){
 
-                        fmt.Printf("candidate = %v, rpc executedId = %v, term = %v, send rpc request start......\n", args.CandidateId, server, args.Term)
-                        err := rf.sendRequestVote(server, args, reply)
-                        fmt.Printf("candidate = %v, rpc executedId = %v, term = %v, send rpc request end, result = %v......\n", args.CandidateId, server, args.Term, err)
+                        rpcChan := make(chan RpcCandidateReply)
+                        rpcTimeout := 500
+                        rpcTimer   := time.NewTimer(time.Duration(rpcTimeout) * time.Millisecond)
+                        defer rpcTimer.Stop()
+                        fmt.Printf("candidate = %v, rpc executedId = %v, term = %v, set rpcTimeout = %v\n", args.CandidateId, server, args.Term, rpcTimeout)
 
-                        fmt.Printf("candidate = %v, rpc executedId = %v, term = %v, rpcReplyChan sned\n", args.CandidateId, server, args.Term)
-                        rpcCandidateReplyChan <- RpcCandidateReply{reply, server, err}
-                        fmt.Printf("candidate = %v, rpc executedId = %v, term = %v, rpcReplyChan sned over\n", args.CandidateId, server, args.Term)
+                        go func(rpcChan chan RpcCandidateReply) {
+                            fmt.Printf("candidate = %v, rpc executedId = %v, term = %v, send rpc request start......\n", args.CandidateId, server, args.Term)
+                            err := rf.sendRequestVote(server, args, reply)
+                            fmt.Printf("candidate = %v, rpc executedId = %v, term = %v, send rpc request end, result = %v......\n", args.CandidateId, server, args.Term, err)
 
+                            if IsRpcCandidateChanClosed(rpcChan) == true {
+                                fmt.Printf("candidate = %v, term = %v, rpcChan has been closed\n", args.CandidateId, args.Term, server)
+                            } else {
+                                fmt.Printf("candidate = %v, term = %v, rpcChan has not been closed\n", args.CandidateId, args.Term, server)
+                                fmt.Printf("candidate = %v, term = %v, rpc executedId = %v, rpcReplyChan sned\n", args.CandidateId, args.Term, server)
+                                rpcChan <- RpcCandidateReply{reply, server, err}
+                                fmt.Printf("candidate = %v, term = %v, rpc executedId = %v, rpcReplyChan end\n", args.CandidateId, args.Term, server)
+                            }
+                        }(rpcChan)
+
+                        select {
+                            case <-rpcTimer.C:
+                                close(rpcChan)
+                                fmt.Printf("candidate = %v, term = %v, rpc executedId = %v, rpcChan timeout, send rpcReplyChan\n", args.CandidateId, args.Term, server)
+                                rpcCandidateReplyChan <- RpcCandidateReply{reply, server, false}
+                                fmt.Printf("candidate = %v, term = %v, rpc executedId = %v, rpcChan timeout, send rpcReplyChan end\n", args.CandidateId, args.Term, server)
+
+                            case rpc := <-rpcChan:
+                                fmt.Printf("candidate = %v, term = %v, rpc executedId = %v, rpcReplyChan sned\n", args.CandidateId, args.Term, server)
+                                rpcCandidateReplyChan <- rpc
+                                fmt.Printf("candidate = %v, term = %v, rpc executedId = %v, rpcReplyChan sned over\n", args.CandidateId, args.Term, server)
+                        }
                     }(i, &args, &reply, rpcCandidateReplyChan)
                 }
                 fmt.Printf("Candidate = %v, term = %v, stage end......\n", rf.me, rf.currentTerm)
@@ -600,7 +626,6 @@ func serverHandler (rf *Raft) {
 
                 ExitLeader:
                 for {
-
                     fmt.Printf("leader = %v, term = %v, start a heartbeatTimer\n", rf.me, rf.currentTerm)
                     heartbeatTime := 200
                     leaderTimer   := time.NewTimer(time.Duration(heartbeatTime) * time.Millisecond)
@@ -610,7 +635,8 @@ func serverHandler (rf *Raft) {
                         case <- rf.exitChan:
                             fmt.Printf("leader = %v, term = %v, get channel rf.exitChan, break ExitServer\n", rf.me, rf.currentTerm)
                             break ExitServer
-                        case <- leaderTimer.C:
+
+                          case <- leaderTimer.C:
                             fmt.Printf("leader = %v, term = %v, heartbeat timerout\n", rf.me, rf.currentTerm)
 
                             ExitHeartbeat:
@@ -698,13 +724,40 @@ func serverHandler (rf *Raft) {
 
                                 go func(server int, args *AppendEntriesArgs, reply *AppendEntriesReply, rpcLeaderReplyChan chan RpcLeaderReply) {
 
-                                    fmt.Printf("leader = %v, term = %v, rpc executedId = %v, send rpc request start......\n", args.LeaderId, args.Term, server)
-                                    err := rf.sendAppendEntries(server, args, reply)
-                                    fmt.Printf("leader = %v, term = %v, rpc executedId = %v, send rpc request end, result = %v......\n", args.LeaderId, args.Term, server, err)
+                                    rpcChan := make(chan RpcLeaderReply)
+                                    rpcTimeout := 500
+                                    rpcTimer   := time.NewTimer(time.Duration(rpcTimeout) * time.Millisecond)
+                                    defer rpcTimer.Stop()
+                                    fmt.Printf("leader = %v, rpc executedId = %v, term = %v, set rpcTimeout = %v\n", args.LeaderId, server, args.Term, rpcTimeout)
 
-                                     fmt.Printf("leader = %v, term = %v, rpc executedId = %v, rpcReplyChan sned\n", args.LeaderId, args.Term, server)
-                                     rpcLeaderReplyChan <- RpcLeaderReply{reply, server, err}
-                                     fmt.Printf("leader = %v, term = %v, rpc executedId = %v, rpcReplyChan end\n", args.LeaderId, args.Term, server)
+                                    go func(rpcChan chan RpcLeaderReply) {
+                                        fmt.Printf("leader = %v, term = %v, rpc executedId = %v, send rpc request start......\n", args.LeaderId, args.Term, server)
+                                        err := rf.sendAppendEntries(server, args, reply)
+                                        fmt.Printf("leader = %v, term = %v, rpc executedId = %v, send rpc request end, result = %v......\n", args.LeaderId, args.Term, server, err)
+
+                                        if IsRpcLeaderChanClosed(rpcChan) == true {
+                                            fmt.Printf("leader = %v, term = %v, rpc executedId = %v, rpcChan has been closed, donot send rpcChan\n", args.LeaderId, args.Term, server)
+                                        } else {
+                                            fmt.Printf("leader = %v, term = %v, rpc executedId = %v, rpcChan has not been closed\n", args.LeaderId, args.Term, server)
+                                            fmt.Printf("leader = %v, term = %v, rpc executedId = %v, rpcChan sned\n", args.LeaderId, args.Term, server)
+                                            rpcChan <- RpcLeaderReply{reply, server, err}
+                                            fmt.Printf("leader = %v, term = %v, rpc executedId = %v, rpcChan end\n", args.LeaderId, args.Term, server)
+                                        }
+                                    }(rpcChan)
+
+                                    select {
+                                        case <-rpcTimer.C:
+                                            close(rpcChan)
+                                            fmt.Printf("leader = %v, term = %v, rpc executedId = %v, rpcLeaderReplyChan timeout, send rpcReplyChan\n", args.LeaderId, args.Term, server)
+                                            rpcLeaderReplyChan <- RpcLeaderReply{reply, server, false}
+                                            fmt.Printf("leader = %v, term = %v, rpc executedId = %v, rpcLeaderReplyChan timeout, send rpcReplyChan end\n", args.LeaderId, args.Term, server)
+
+                                        case rpc := <-rpcChan:
+                                            fmt.Printf("leader = %v, term = %v, rpc executedId = %v, rpcReplyChan sned\n", args.LeaderId, args.Term, server)
+                                            rpcLeaderReplyChan <- rpc
+                                            fmt.Printf("leader = %v, term = %v, rpc executedId = %v, rpcReplyChan sned over\n", args.LeaderId, args.Term, server)
+                                    }
+
                                 }(i, &args, &reply, rpcLeaderReplyChan)
                             }
                             fmt.Printf("leader = %v, term = %v, heartbeat operation end, reset the leaderTimer\n", rf.me, rf.currentTerm)
@@ -771,6 +824,22 @@ func IsGetMajorVote(numberOfVote, total int) bool {
         return false
     }
 
+}
+func IsRpcCandidateChanClosed(ch <-chan RpcCandidateReply) bool {
+    select {
+        case <-ch:
+            return true
+        default:
+    }
+    return false
+}
+func IsRpcLeaderChanClosed(ch <-chan RpcLeaderReply) bool {
+    select {
+        case <-ch:
+            return true
+        default:
+    }
+    return false
 }
 func ValidServerCount(server []ServerState) int {
     count := 0
