@@ -57,29 +57,47 @@ func TestReElection2A(t *testing.T) {
 	leader1 := cfg.checkOneLeader()
 
 	// if the leader disconnects, a new one should be elected.
+    fmt.Printf("TestReElection2A, First, if the leader disconnects, a new one should be elected.\n")
+    fmt.Printf("TestReElection2A, First, leader1 = %v disconnect\n", leader1)
 	cfg.disconnect(leader1)
 	cfg.checkOneLeader()
 
+    fmt.Printf("TestReElection2A, Second, if the old leader rejoins, that shouldnot disturb the new leader.\n")
+    fmt.Printf("TestReElection2A, Second, leader1 = %v re-connect\n", leader1)
 	// if the old leader rejoins, that shouldn't
 	// disturb the new leader.
 	cfg.connect(leader1)
 	leader2 := cfg.checkOneLeader()
 
+    value := (leader2 + 1) % servers;
+
+    fmt.Printf("TestReElection2A, Third, if there's no quorum, no leader should be elected.\n")
+    fmt.Printf("TestReElection2A, Third, leader2 = %v, (leader2+1) mod servers = %v disconnect, servers = %v\n", leader2, value, servers)
+    fmt.Printf("TestReElection2A, Third, 2 * RaftElectionTimeout = %v.\n", 2 * RaftElectionTimeout)
 	// if there's no quorum, no leader should
 	// be elected.
 	cfg.disconnect(leader2)
 	cfg.disconnect((leader2 + 1) % servers)
-	time.Sleep(2 * RaftElectionTimeout)
-	cfg.checkNoLeader()
 
+    fmt.Printf("TestReElection2A, Third, 2 * RaftElectionTimeout start \n")
+    time.Sleep(2 * RaftElectionTimeout)
+    fmt.Printf("TestReElection2A, Third, 2 * RaftElectionTimeout end.\n")
+    cfg.checkNoLeader()
+
+    value = (leader2 + 1) % servers
+    fmt.Printf("TestReElection2A, Forth, if a quorum arises, it should elect a leader.\n")
+    fmt.Printf("TestReElection2A, Forth, leader2 = %v, (leader2 + 1) %% servers = %v re-connect\n", leader2, value)
 	// if a quorum arises, it should elect a leader.
 	cfg.connect((leader2 + 1) % servers)
 	cfg.checkOneLeader()
 
+    fmt.Printf("TestReElection2A, Fifth, re-join of last node shouldn't prevent leader from existing.\n")
+    fmt.Printf("TestReElection2A, Fifth, leader2 = %v re-connect\n", leader2)
 	// re-join of last node shouldn't prevent leader from existing.
 	cfg.connect(leader2)
 	cfg.checkOneLeader()
 
+    fmt.Printf("TestReElection2A, end.\n")
 	cfg.end()
 }
 

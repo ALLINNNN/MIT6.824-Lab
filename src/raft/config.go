@@ -345,13 +345,17 @@ func (cfg *config) checkTerms() int {
 
 // check that there's no leader
 func (cfg *config) checkNoLeader() {
+    fmt.Printf("cfg.n = %v\n", cfg.n)
 	for i := 0; i < cfg.n; i++ {
-		if cfg.connected[i] {
-			_, is_leader := cfg.rafts[i].GetState()
+        if cfg.connected[i] {
+			fmt.Printf("server = %v is on the net\n", i)
+            _, is_leader := cfg.rafts[i].GetState()
 			if is_leader {
 				cfg.t.Fatalf("expected no leader, but %v claims to be leader", i)
 			}
-		}
+		} else {
+			fmt.Printf("server = %v is not on the net\n", i)
+        }
 	}
 }
 

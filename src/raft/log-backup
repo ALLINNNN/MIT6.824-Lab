@@ -9,86 +9,86 @@ server handler
 create goroutine, program continue
 Test (2A): initial election ...
 Follower = 0, term = 0, stage start......
-timeout = 810
-Follower = 2, term = 0, stage start......
 Follower = 1, term = 0, stage start......
-timeout = 812
-timeout = 971
+timeout = 876
+Follower = 2, term = 0, stage start......
+timeout = 977
+timeout = 898
 Get state, My role = 0, Id = 0, term = 0, I am not a reader
 Get state, My role = 0, Id = 1, term = 0, I am not a reader
 Get state, My role = 0, Id = 2, term = 0, I am not a reader
 follower = 0, get timer.C channel, time out
 Follower = 0, term = 0, stage end......
 Candidate = 0, term = 1, stage start......
-electTimer = 457
+electTimer = 410
 candidate = 0, rpc executedId = 1, term = 1, send rpc request start......
 candidate = 0, rpc executedId = 2, term = 1, send rpc request start......
 My role = 0, my Id = 1, term = 0, receive a vote request from candidate = 0
 My role = 0, my Id = 1, rf.currentTerm = 0, args.Term = 1
 My role = 0, my Id = 1, voteDone, start send channel, candidate = 0
+My role = 0, my Id = 1, voteDone, somewhere receive channel, candidate = 0
 My role = 0, my Id = 2, term = 0, receive a vote request from candidate = 0
 My role = 0, my Id = 2, rf.currentTerm = 0, args.Term = 1
 My role = 0, my Id = 2, voteDone, start send channel, candidate = 0
 My role = 0, my Id = 2, voteDone, somewhere receive channel, candidate = 0
-My role = 0, my Id = 1, voteDone, somewhere receive channel, candidate = 0
 follower = 1, get channel rf.rpcState
 follower = 1, vote to somebody
-timeout = 862
+timeout = 923
 follower = 2, get channel rf.rpcState
 follower = 2, vote to somebody
-timeout = 808
-candidate = 0, rpc executedId = 2, term = 1, send rpc request end, result = true......
-candidate = 0, rpc executedId = 2, term = 1, rpcReplyChan sned
-candidate = 0, term = 1, follower = 2, rpc succeeded
-candidate = 0, term = 1, follower = 2 voted a granted vote
-candidate = 0, term = 1, server = 2, IsServerAllTrue = true, ValidServerCount = 3, rpcCount = 2
-candidate = 0, rpc executedId = 2, term = 1, rpcReplyChan sned over
 candidate = 0, rpc executedId = 1, term = 1, send rpc request end, result = true......
 candidate = 0, rpc executedId = 1, term = 1, rpcReplyChan sned
 candidate = 0, term = 1, follower = 1, rpc succeeded
 candidate = 0, term = 1, follower = 1 voted a granted vote
-candidate = 0, term = 1, server = 1, IsServerAllTrue = true, ValidServerCount = 3, rpcCount = 3
+candidate = 0, term = 1, server = 1, IsServerAllTrue = true, ValidServerCount = 3, rpcCount = 2
+timeout = 866
+candidate = 0, rpc executedId = 1, term = 1, rpcReplyChan sned over
+candidate = 0, rpc executedId = 2, term = 1, send rpc request end, result = true......
+candidate = 0, rpc executedId = 2, term = 1, rpcReplyChan sned
+candidate = 0, term = 1, follower = 2, rpc succeeded
+candidate = 0, term = 1, follower = 2 voted a granted vote
+candidate = 0, term = 1, server = 2, IsServerAllTrue = true, ValidServerCount = 3, rpcCount = 3
 candidate = 0, term = 1, numberOfVotes = 3, ValidServerCount 3, calculateVoutes start
 candidate = 0, term = 1, get majority votes
 Candidate = 0, term = 1, stage end......
 leader = 0, term = 1, I am a leader now
 leader = 0, term = 1, start a heartbeatTimer
-candidate = 0, rpc executedId = 1, term = 1, rpcReplyChan sned over
+candidate = 0, rpc executedId = 2, term = 1, rpcReplyChan sned over
 Get state, My role = 2, Id = 0, term = 1, I am a reader
 Get state, My role = 0, Id = 1, term = 1, I am not a reader
 Get state, My role = 0, Id = 2, term = 1, I am not a reader
 leader = 0, term = 1, heartbeat timerout
-leader = 0, term = 1, rpc executedId = 2, send rpc request start......
 leader = 0, term = 1, rpc executedId = 1, send rpc request start......
-My role = 0, Id = 2, term = 1, get heartbeat from leader = 0
-My role = 0, Id = 2, args.Term = 1, rf.currentTerm = 1
-My role = 0, Id = 2, term = 1, AppendEntries true
-My role = 0, Id = 2, term = 1, send heartbeatChan start
-My role = 0, Id = 2, term = 1, send heartbeatChan end
+leader = 0, term = 1, rpc executedId = 2, send rpc request start......
 My role = 0, Id = 1, term = 1, get heartbeat from leader = 0
 My role = 0, Id = 1, args.Term = 1, rf.currentTerm = 1
 My role = 0, Id = 1, term = 1, AppendEntries true
 My role = 0, Id = 1, term = 1, send heartbeatChan start
 My role = 0, Id = 1, term = 1, send heartbeatChan end
-follower = 2, get channel rf.rpcState
-timeout = 866
+My role = 0, Id = 2, term = 1, get heartbeat from leader = 0
+My role = 0, Id = 2, args.Term = 1, rf.currentTerm = 1
+My role = 0, Id = 2, term = 1, AppendEntries true
+My role = 0, Id = 2, term = 1, send heartbeatChan start
+My role = 0, Id = 2, term = 1, send heartbeatChan end
 follower = 1, get channel rf.rpcState
-timeout = 890
-leader = 0, term = 1, rpc executedId = 2, send rpc request end, result = true......
-leader = 0, term = 1, rpc executedId = 2, rpcReplyChan sned
+timeout = 841
+follower = 2, get channel rf.rpcState
+timeout = 811
 leader = 0, term = 1, rpc executedId = 1, send rpc request end, result = true......
 leader = 0, term = 1, rpc executedId = 1, rpcReplyChan sned
-leader = 0, term = 1, follower = 2, rpc succeed
-heartbeat success......
-leader = 0, term = 1, isServerAllTrue = true, ValidServerCount = 3, rpcSucceedCount = 2
 leader = 0, term = 1, follower = 1, rpc succeed
 heartbeat success......
+leader = 0, term = 1, rpc executedId = 2, send rpc request end, result = true......
+leader = 0, term = 1, rpc executedId = 2, rpcReplyChan sned
+leader = 0, term = 1, isServerAllTrue = true, ValidServerCount = 3, rpcSucceedCount = 2
+leader = 0, term = 1, follower = 2, rpc succeed
+heartbeat success......
 leader = 0, term = 1, isServerAllTrue = true, ValidServerCount = 3, rpcSucceedCount = 3
-leader = 0, term = 1, rpc executedId = 1, rpcReplyChan end
 leader = 0, term = 1, ValidServerCount = 3, rpcSucceedCount = 3, a heartbeat round is end, exit heartbeat
 leader = 0, term = 1, heartbeat operation end, reset the leaderTimer
 leader = 0, term = 1, start a heartbeatTimer
 leader = 0, term = 1, rpc executedId = 2, rpcReplyChan end
+leader = 0, term = 1, rpc executedId = 1, rpcReplyChan end
 Get state, My role = 2, Id = 0, term = 1, I am a reader
 Get state, My role = 0, Id = 1, term = 1, I am not a reader
 Get state, My role = 0, Id = 2, term = 1, I am not a reader
@@ -96,33 +96,33 @@ leader = 0, term = 1, heartbeat timerout
 follower = 2, get timer.C channel, time out
 Follower = 2, term = 1, stage end......
 Candidate = 2, term = 2, stage start......
-electTimer = 461
+electTimer = 480
 candidate = 2, rpc executedId = 0, term = 2, send rpc request start......
-My role = 2, my Id = 0, term = 1, receive a vote request from candidate = 2
 candidate = 2, rpc executedId = 1, term = 2, send rpc request start......
+My role = 2, my Id = 0, term = 1, receive a vote request from candidate = 2
 My role = 2, my Id = 0, rf.currentTerm = 1, args.Term = 2
 my role = 2, me = 0 change to follower, term = 2
 My role = 2, my Id = 0, voteDone, start send channel, candidate = 2
+leader = 0 , term = 2, get rpc state, isToFollower = true
+candidate = 0, term = 2, because leader is leagal, leader transit to follower
+Follower = 0, term = 2, stage start......
+timeout = 956
+My role = 2, my Id = 0, voteDone, somewhere receive channel, candidate = 2
 My role = 0, my Id = 1, term = 1, receive a vote request from candidate = 2
 My role = 0, my Id = 1, rf.currentTerm = 1, args.Term = 2
 My role = 0, my Id = 1, voteDone, start send channel, candidate = 2
 My role = 0, my Id = 1, voteDone, somewhere receive channel, candidate = 2
-leader = 0 , term = 2, get rpc state, isToFollower = true
-candidate = 0, term = 2, because leader is leagal, leader transit to follower
-Follower = 0, term = 2, stage start......
-timeout = 941
-My role = 2, my Id = 0, voteDone, somewhere receive channel, candidate = 2
-candidate = 2, rpc executedId = 1, term = 2, send rpc request end, result = true......
-candidate = 2, rpc executedId = 1, term = 2, rpcReplyChan sned
 follower = 1, get channel rf.rpcState
 follower = 1, vote to somebody
-timeout = 949
+timeout = 859
+candidate = 2, rpc executedId = 0, term = 2, send rpc request end, result = true......
+candidate = 2, rpc executedId = 1, term = 2, send rpc request end, result = true......
+candidate = 2, rpc executedId = 1, term = 2, rpcReplyChan sned
+candidate = 2, rpc executedId = 0, term = 2, rpcReplyChan sned
 candidate = 2, rpc executedId = 1, term = 2, rpcReplyChan sned over
 candidate = 2, term = 2, follower = 1, rpc succeeded
 candidate = 2, term = 2, follower = 1 voted a granted vote
 candidate = 2, term = 2, server = 1, IsServerAllTrue = true, ValidServerCount = 3, rpcCount = 2
-candidate = 2, rpc executedId = 0, term = 2, send rpc request end, result = true......
-candidate = 2, rpc executedId = 0, term = 2, rpcReplyChan sned
 candidate = 2, term = 2, follower = 0, rpc succeeded
 candidate = 2, term = 2, follower = 0 voted a granted vote
 candidate = 2, term = 2, server = 0, IsServerAllTrue = true, ValidServerCount = 3, rpcCount = 3
@@ -146,53 +146,52 @@ My role = 0, Id = 1, args.Term = 2, rf.currentTerm = 2
 My role = 0, Id = 1, term = 2, AppendEntries true
 My role = 0, Id = 1, term = 2, send heartbeatChan start
 My role = 0, Id = 1, term = 2, send heartbeatChan end
-timeout = 921
-follower = 1, get channel rf.rpcState
 leader = 2, term = 2, rpc executedId = 0, send rpc request end, result = true......
 leader = 2, term = 2, rpc executedId = 0, rpcReplyChan sned
+follower = 1, get channel rf.rpcState
 leader = 2, term = 2, follower = 0, rpc succeed
 heartbeat success......
 leader = 2, term = 2, isServerAllTrue = true, ValidServerCount = 3, rpcSucceedCount = 2
 leader = 2, term = 2, rpc executedId = 1, send rpc request end, result = true......
 leader = 2, term = 2, rpc executedId = 1, rpcReplyChan sned
-leader = 2, term = 2, rpc executedId = 0, rpcReplyChan end
+timeout = 875
 leader = 2, term = 2, follower = 1, rpc succeed
 heartbeat success......
 leader = 2, term = 2, isServerAllTrue = true, ValidServerCount = 3, rpcSucceedCount = 3
 leader = 2, term = 2, ValidServerCount = 3, rpcSucceedCount = 3, a heartbeat round is end, exit heartbeat
 leader = 2, term = 2, heartbeat operation end, reset the leaderTimer
-timeout = 958
 leader = 2, term = 2, start a heartbeatTimer
+timeout = 988
 leader = 2, term = 2, rpc executedId = 1, rpcReplyChan end
+leader = 2, term = 2, rpc executedId = 0, rpcReplyChan end
 leader = 2, term = 2, heartbeat timerout
 follower = 0, get timer.C channel, time out
 Follower = 0, term = 2, stage end......
 Candidate = 0, term = 3, stage start......
-electTimer = 454
+electTimer = 444
 candidate = 0, rpc executedId = 1, term = 3, send rpc request start......
 candidate = 0, rpc executedId = 2, term = 3, send rpc request start......
 My role = 0, my Id = 1, term = 2, receive a vote request from candidate = 0
 My role = 0, my Id = 1, rf.currentTerm = 2, args.Term = 3
 My role = 0, my Id = 1, voteDone, start send channel, candidate = 0
 My role = 0, my Id = 1, voteDone, somewhere receive channel, candidate = 0
-candidate = 0, rpc executedId = 1, term = 3, send rpc request end, result = true......
-candidate = 0, rpc executedId = 1, term = 3, rpcReplyChan sned
-follower = 1, get channel rf.rpcState
-follower = 1, vote to somebody
-timeout = 822
-candidate = 0, rpc executedId = 1, term = 3, rpcReplyChan sned over
-candidate = 0, term = 3, follower = 1, rpc succeeded
-candidate = 0, term = 3, follower = 1 voted a granted vote
-candidate = 0, term = 3, server = 1, IsServerAllTrue = true, ValidServerCount = 3, rpcCount = 2
 My role = 2, my Id = 2, term = 2, receive a vote request from candidate = 0
 My role = 2, my Id = 2, rf.currentTerm = 2, args.Term = 3
 my role = 2, me = 2 change to follower, term = 3
 My role = 2, my Id = 2, voteDone, start send channel, candidate = 0
+follower = 1, get channel rf.rpcState
+follower = 1, vote to somebody
 leader = 2 , term = 3, get rpc state, isToFollower = true
 candidate = 2, term = 3, because leader is leagal, leader transit to follower
 Follower = 2, term = 3, stage start......
-timeout = 946
 My role = 2, my Id = 2, voteDone, somewhere receive channel, candidate = 0
+timeout = 818
+candidate = 0, rpc executedId = 1, term = 3, send rpc request end, result = true......
+timeout = 930
+candidate = 0, rpc executedId = 1, term = 3, rpcReplyChan sned
+candidate = 0, term = 3, follower = 1, rpc succeeded
+candidate = 0, term = 3, follower = 1 voted a granted vote
+candidate = 0, term = 3, server = 1, IsServerAllTrue = true, ValidServerCount = 3, rpcCount = 2
 candidate = 0, rpc executedId = 2, term = 3, send rpc request end, result = true......
 candidate = 0, rpc executedId = 2, term = 3, rpcReplyChan sned
 candidate = 0, term = 3, follower = 2, rpc succeeded
@@ -203,6 +202,7 @@ candidate = 0, term = 3, get majority votes
 Candidate = 0, term = 3, stage end......
 leader = 0, term = 3, I am a leader now
 leader = 0, term = 3, start a heartbeatTimer
+candidate = 0, rpc executedId = 1, term = 3, rpcReplyChan sned over
 candidate = 0, rpc executedId = 2, term = 3, rpcReplyChan sned over
 Get state, My role = 2, Id = 0, term = 3, I am a reader
 Get state, My role = 0, Id = 1, term = 3, I am not a reader
@@ -215,68 +215,65 @@ My role = 0, Id = 1, args.Term = 3, rf.currentTerm = 3
 My role = 0, Id = 1, term = 3, AppendEntries true
 My role = 0, Id = 1, term = 3, send heartbeatChan start
 My role = 0, Id = 1, term = 3, send heartbeatChan end
-follower = 1, get channel rf.rpcState
-timeout = 927
 My role = 0, Id = 2, term = 3, get heartbeat from leader = 0
 My role = 0, Id = 2, args.Term = 3, rf.currentTerm = 3
 My role = 0, Id = 2, term = 3, AppendEntries true
 My role = 0, Id = 2, term = 3, send heartbeatChan start
-leader = 0, term = 3, rpc executedId = 1, send rpc request end, result = true......
-follower = 2, get channel rf.rpcState
-timeout = 865
 My role = 0, Id = 2, term = 3, send heartbeatChan end
-leader = 0, term = 3, rpc executedId = 1, rpcReplyChan sned
-leader = 0, term = 3, follower = 1, rpc succeed
-heartbeat success......
-leader = 0, term = 3, isServerAllTrue = true, ValidServerCount = 3, rpcSucceedCount = 2
+follower = 1, get channel rf.rpcState
+timeout = 897
+follower = 2, get channel rf.rpcState
+timeout = 832
 leader = 0, term = 3, rpc executedId = 2, send rpc request end, result = true......
 leader = 0, term = 3, rpc executedId = 2, rpcReplyChan sned
+leader = 0, term = 3, rpc executedId = 1, send rpc request end, result = true......
+leader = 0, term = 3, rpc executedId = 1, rpcReplyChan sned
 leader = 0, term = 3, follower = 2, rpc succeed
+heartbeat success......
+leader = 0, term = 3, isServerAllTrue = true, ValidServerCount = 3, rpcSucceedCount = 2
+leader = 0, term = 3, follower = 1, rpc succeed
 heartbeat success......
 leader = 0, term = 3, isServerAllTrue = true, ValidServerCount = 3, rpcSucceedCount = 3
 leader = 0, term = 3, ValidServerCount = 3, rpcSucceedCount = 3, a heartbeat round is end, exit heartbeat
 leader = 0, term = 3, heartbeat operation end, reset the leaderTimer
-leader = 0, term = 3, start a heartbeatTimer
 leader = 0, term = 3, rpc executedId = 1, rpcReplyChan end
+leader = 0, term = 3, start a heartbeatTimer
 leader = 0, term = 3, rpc executedId = 2, rpcReplyChan end
 leader = 0, term = 3, heartbeat timerout
 Get state, My role = 2, Id = 0, term = 3, I am a reader
 Get state, My role = 0, Id = 1, term = 3, I am not a reader
 Get state, My role = 0, Id = 2, term = 3, I am not a reader
-  ... Passed --   3.5  3   12    0
+  ... Passed --   3.6  3   12    0
 me = 0
 server handler
 create goroutine, program continue
 me = 1
 server handler
 create goroutine, program continue
-Follower = 0, term = 0, stage start......
-timeout = 975
+Follower = 1, term = 0, stage start......
+timeout = 983
 me = 2
 server handler
-Follower = 1, term = 0, stage start......
-Follower = 2, term = 0, stage start......
-timeout = 824
-timeout = 996
 create goroutine, program continue
+Follower = 0, term = 0, stage start......
 Test (2A): election after network failure ...
-Get state, My role = 0, Id = 0, term = 0, I am not a reader
-Get state, My role = 0, Id = 1, term = 0, I am not a reader
-Get state, My role = 0, Id = 2, term = 0, I am not a reader
+timeout = 836
+Follower = 2, term = 0, stage start......
+timeout = 888
 follower = 2, get timer.C channel, time out
 Follower = 2, term = 3, stage end......
 Candidate = 2, term = 4, stage start......
-electTimer = 453
+electTimer = 438
 candidate = 2, rpc executedId = 0, term = 4, send rpc request start......
 candidate = 2, rpc executedId = 0, term = 4, send rpc request end, result = false......
 candidate = 2, rpc executedId = 0, term = 4, rpcReplyChan sned
 candidate = 2, term = 4, server = 0 rpc failure, failCount = 1
 candidate = 2, term = 4, server = 0 failure times more than 5, set failure flag to it
+candidate = 2, term = 4, server = 0, rpc failed
 candidate = 2, rpc executedId = 1, term = 4, send rpc request start......
 candidate = 2, rpc executedId = 0, term = 4, rpcReplyChan sned over
 candidate = 2, rpc executedId = 1, term = 4, send rpc request end, result = false......
 candidate = 2, rpc executedId = 1, term = 4, rpcReplyChan sned
-candidate = 2, term = 4, server = 0, rpc failed
 candidate = 2, term = 4, server = 1 rpc failure, failCount = 1
 candidate = 2, term = 4, server = 1 failure times more than 5, set failure flag to it
 candidate = 2, term = 4, numberOfVotes = 1, ValidServerCount 1, calculateVoutes start
@@ -288,17 +285,16 @@ candidate = 2, rpc executedId = 1, term = 4, rpcReplyChan sned over
 follower = 1, get timer.C channel, time out
 Follower = 1, term = 3, stage end......
 Candidate = 1, term = 4, stage start......
-electTimer = 476
+electTimer = 497
 candidate = 1, rpc executedId = 0, term = 4, send rpc request start......
 candidate = 1, rpc executedId = 0, term = 4, send rpc request end, result = false......
 candidate = 1, rpc executedId = 0, term = 4, rpcReplyChan sned
 candidate = 1, term = 4, server = 0 rpc failure, failCount = 1
 candidate = 1, term = 4, server = 0 failure times more than 5, set failure flag to it
+candidate = 1, term = 4, server = 0, rpc failed
 candidate = 1, rpc executedId = 2, term = 4, send rpc request start......
-candidate = 1, rpc executedId = 0, term = 4, rpcReplyChan sned over
 candidate = 1, rpc executedId = 2, term = 4, send rpc request end, result = false......
 candidate = 1, rpc executedId = 2, term = 4, rpcReplyChan sned
-candidate = 1, term = 4, server = 0, rpc failed
 candidate = 1, term = 4, server = 2 rpc failure, failCount = 1
 candidate = 1, term = 4, server = 2 failure times more than 5, set failure flag to it
 candidate = 1, term = 4, numberOfVotes = 1, ValidServerCount 1, calculateVoutes start
@@ -307,16 +303,22 @@ Candidate = 1, term = 4, stage end......
 leader = 1, term = 4, I am a leader now
 leader = 1, term = 4, start a heartbeatTimer
 candidate = 1, rpc executedId = 2, term = 4, rpcReplyChan sned over
+candidate = 1, rpc executedId = 0, term = 4, rpcReplyChan sned over
+Get state, My role = 0, Id = 0, term = 0, I am not a reader
+Get state, My role = 0, Id = 1, term = 0, I am not a reader
+Get state, My role = 0, Id = 2, term = 0, I am not a reader
 leader = 2, term = 4, heartbeat timerout
 leader = 2, term = 4, rpc executedId = 0, send rpc request start......
 leader = 2, term = 4, rpc executedId = 0, send rpc request end, result = false......
 leader = 2, term = 4, rpc executedId = 0, rpcReplyChan sned
 leader = 2, term = 4, isServerAllTrue = true, ValidServerCount = 3, rpcSucceedCount = 1, rpc failure
+leader = 2, term = 4, server = 0 failure times more than 1, set failure flag to it
 leader = 2, term = 4, follower = 0, rpc failure
 leader = 2, term = 4, rpc executedId = 1, send rpc request start......
 leader = 2, term = 4, rpc executedId = 1, send rpc request end, result = false......
 leader = 2, term = 4, rpc executedId = 1, rpcReplyChan sned
 leader = 2, term = 4, isServerAllTrue = true, ValidServerCount = 2, rpcSucceedCount = 1, rpc failure
+leader = 2, term = 4, server = 1 failure times more than 1, set failure flag to it
 leader = 2, term = 4, heartbeat operation end, reset the leaderTimer
 leader = 2, term = 4, start a heartbeatTimer
 leader = 2, term = 4, rpc executedId = 1, rpcReplyChan end
@@ -326,185 +328,173 @@ leader = 1, term = 4, rpc executedId = 0, send rpc request start......
 leader = 1, term = 4, rpc executedId = 0, send rpc request end, result = false......
 leader = 1, term = 4, rpc executedId = 0, rpcReplyChan sned
 leader = 1, term = 4, isServerAllTrue = true, ValidServerCount = 3, rpcSucceedCount = 1, rpc failure
+leader = 1, term = 4, server = 0 failure times more than 1, set failure flag to it
 leader = 1, term = 4, follower = 0, rpc failure
 leader = 1, term = 4, rpc executedId = 2, send rpc request start......
 leader = 1, term = 4, rpc executedId = 2, send rpc request end, result = false......
 leader = 1, term = 4, rpc executedId = 2, rpcReplyChan sned
 leader = 1, term = 4, isServerAllTrue = true, ValidServerCount = 2, rpcSucceedCount = 1, rpc failure
+leader = 1, term = 4, server = 2 failure times more than 1, set failure flag to it
 leader = 1, term = 4, heartbeat operation end, reset the leaderTimer
 leader = 1, term = 4, start a heartbeatTimer
 leader = 1, term = 4, rpc executedId = 2, rpcReplyChan end
 leader = 1, term = 4, rpc executedId = 0, rpcReplyChan end
-follower = 1, get timer.C channel, time out
-Follower = 1, term = 0, stage end......
-Candidate = 1, term = 1, stage start......
-electTimer = 425
-candidate = 1, rpc executedId = 0, term = 1, send rpc request start......
-candidate = 1, rpc executedId = 2, term = 1, send rpc request start......
-My role = 0, my Id = 0, term = 0, receive a vote request from candidate = 1
-My role = 0, my Id = 0, rf.currentTerm = 0, args.Term = 1
-My role = 0, my Id = 0, voteDone, start send channel, candidate = 1
-My role = 0, my Id = 0, voteDone, somewhere receive channel, candidate = 1
-candidate = 1, rpc executedId = 0, term = 1, send rpc request end, result = true......
-candidate = 1, rpc executedId = 0, term = 1, rpcReplyChan sned
-follower = 0, get channel rf.rpcState
-candidate = 1, term = 1, follower = 0, rpc succeeded
-candidate = 1, term = 1, follower = 0 voted a granted vote
-candidate = 1, term = 1, server = 0, IsServerAllTrue = true, ValidServerCount = 3, rpcCount = 2
-candidate = 1, rpc executedId = 0, term = 1, rpcReplyChan sned over
-follower = 0, vote to somebody
-timeout = 856
-My role = 0, my Id = 2, term = 0, receive a vote request from candidate = 1
-My role = 0, my Id = 2, rf.currentTerm = 0, args.Term = 1
-My role = 0, my Id = 2, voteDone, start send channel, candidate = 1
-My role = 0, my Id = 2, voteDone, somewhere receive channel, candidate = 1
-candidate = 1, rpc executedId = 2, term = 1, send rpc request end, result = true......
-candidate = 1, rpc executedId = 2, term = 1, rpcReplyChan sned
-follower = 2, get channel rf.rpcState
-candidate = 1, rpc executedId = 2, term = 1, rpcReplyChan sned over
-follower = 2, vote to somebody
-timeout = 987
-candidate = 1, term = 1, follower = 2, rpc succeeded
-candidate = 1, term = 1, follower = 2 voted a granted vote
-candidate = 1, term = 1, server = 2, IsServerAllTrue = true, ValidServerCount = 3, rpcCount = 3
-candidate = 1, term = 1, numberOfVotes = 3, ValidServerCount 3, calculateVoutes start
-candidate = 1, term = 1, get majority votes
-Candidate = 1, term = 1, stage end......
-leader = 1, term = 1, I am a leader now
-leader = 1, term = 1, start a heartbeatTimer
 leader = 2, term = 4, heartbeat timerout
-Get state, My role = 0, Id = 0, term = 1, I am not a reader
-Get state, My role = 2, Id = 1, term = 1, I am a reader
-Get state, My role = 0, Id = 2, term = 1, I am not a reader
-leader = 1, term = 4, heartbeat timerout
-leader = 1, term = 1, heartbeat timerout
-leader = 1, term = 1, rpc executedId = 2, send rpc request start......
-leader = 1, term = 1, rpc executedId = 0, send rpc request start......
-Get state, My role = 0, Id = 0, term = 1, I am not a reader
-Get state, My role = 0, Id = 2, term = 1, I am not a reader
 follower = 0, get timer.C channel, time out
-Follower = 0, term = 1, stage end......
-Candidate = 0, term = 2, stage start......
-electTimer = 457
-candidate = 0, rpc executedId = 2, term = 2, send rpc request start......
-My role = 0, my Id = 2, term = 1, receive a vote request from candidate = 0
-My role = 0, my Id = 2, rf.currentTerm = 1, args.Term = 2
+Follower = 0, term = 0, stage end......
+Candidate = 0, term = 1, stage start......
+electTimer = 448
+candidate = 0, rpc executedId = 1, term = 1, send rpc request start......
+My role = 0, my Id = 1, term = 0, receive a vote request from candidate = 0
+My role = 0, my Id = 1, rf.currentTerm = 0, args.Term = 1
+My role = 0, my Id = 1, voteDone, start send channel, candidate = 0
+My role = 0, my Id = 1, voteDone, somewhere receive channel, candidate = 0
+candidate = 0, rpc executedId = 1, term = 1, send rpc request end, result = true......
+candidate = 0, rpc executedId = 1, term = 1, rpcReplyChan sned
+follower = 1, get channel rf.rpcState
+candidate = 0, rpc executedId = 1, term = 1, rpcReplyChan sned over
+follower = 1, vote to somebody
+candidate = 0, rpc executedId = 2, term = 1, send rpc request start......
+timeout = 852
+candidate = 0, term = 1, follower = 1, rpc succeeded
+candidate = 0, term = 1, follower = 1 voted a granted vote
+candidate = 0, term = 1, server = 1, IsServerAllTrue = true, ValidServerCount = 3, rpcCount = 2
+My role = 0, my Id = 2, term = 0, receive a vote request from candidate = 0
+My role = 0, my Id = 2, rf.currentTerm = 0, args.Term = 1
 My role = 0, my Id = 2, voteDone, start send channel, candidate = 0
 My role = 0, my Id = 2, voteDone, somewhere receive channel, candidate = 0
-candidate = 0, rpc executedId = 2, term = 2, send rpc request end, result = true......
-candidate = 0, rpc executedId = 2, term = 2, rpcReplyChan sned
-candidate = 0, rpc executedId = 1, term = 2, send rpc request start......
+candidate = 0, rpc executedId = 2, term = 1, send rpc request end, result = true......
+candidate = 0, rpc executedId = 2, term = 1, rpcReplyChan sned
 follower = 2, get channel rf.rpcState
 follower = 2, vote to somebody
-timeout = 812
-candidate = 0, term = 2, follower = 2, rpc succeeded
-candidate = 0, term = 2, follower = 2 voted a granted vote
-candidate = 0, term = 2, server = 2, IsServerAllTrue = true, ValidServerCount = 3, rpcCount = 2
-candidate = 0, rpc executedId = 2, term = 2, rpcReplyChan sned over
-Get state, My role = 1, Id = 0, term = 2, I am not a reader
+timeout = 924
+candidate = 0, rpc executedId = 2, term = 1, rpcReplyChan sned over
+candidate = 0, term = 1, follower = 2, rpc succeeded
+candidate = 0, term = 1, follower = 2 voted a granted vote
+candidate = 0, term = 1, server = 2, IsServerAllTrue = true, ValidServerCount = 3, rpcCount = 3
+candidate = 0, term = 1, numberOfVotes = 3, ValidServerCount 3, calculateVoutes start
+candidate = 0, term = 1, get majority votes
+Candidate = 0, term = 1, stage end......
+leader = 0, term = 1, I am a leader now
+leader = 0, term = 1, start a heartbeatTimer
+leader = 1, term = 4, heartbeat timerout
+Get state, My role = 2, Id = 0, term = 1, I am a reader
+Get state, My role = 0, Id = 1, term = 1, I am not a reader
+Get state, My role = 0, Id = 2, term = 1, I am not a reader
+leader = 0, term = 1, heartbeat timerout
+leader = 0, term = 1, rpc executedId = 2, send rpc request start......
+leader = 0, term = 1, rpc executedId = 1, send rpc request start......
+leader = 0, term = 1, rpc executedId = 2, send rpc request end, result = false......
+leader = 0, term = 1, rpc executedId = 2, rpcReplyChan sned
+leader = 0, term = 1, isServerAllTrue = true, ValidServerCount = 3, rpcSucceedCount = 1, rpc failure
+leader = 0, term = 1, server = 2 failure times more than 1, set failure flag to it
+leader = 0, term = 1, follower = 2, rpc failure
+leader = 0, term = 1, rpc executedId = 1, send rpc request end, result = false......
+leader = 0, term = 1, rpc executedId = 1, rpcReplyChan sned
+leader = 0, term = 1, isServerAllTrue = true, ValidServerCount = 2, rpcSucceedCount = 1, rpc failure
+leader = 0, term = 1, server = 1 failure times more than 1, set failure flag to it
+leader = 0, term = 1, heartbeat operation end, reset the leaderTimer
+leader = 0, term = 1, start a heartbeatTimer
+leader = 0, term = 1, rpc executedId = 1, rpcReplyChan end
+leader = 0, term = 1, rpc executedId = 2, rpcReplyChan end
+leader = 0, term = 1, heartbeat timerout
+Get state, My role = 0, Id = 1, term = 1, I am not a reader
+Get state, My role = 0, Id = 2, term = 1, I am not a reader
+follower = 1, get timer.C channel, time out
+Follower = 1, term = 1, stage end......
+Candidate = 1, term = 2, stage start......
+electTimer = 401
+candidate = 1, rpc executedId = 2, term = 2, send rpc request start......
+My role = 0, my Id = 2, term = 1, receive a vote request from candidate = 1
+My role = 0, my Id = 2, rf.currentTerm = 1, args.Term = 2
+My role = 0, my Id = 2, voteDone, start send channel, candidate = 1
+My role = 0, my Id = 2, voteDone, somewhere receive channel, candidate = 1
+candidate = 1, rpc executedId = 2, term = 2, send rpc request end, result = true......
+candidate = 1, rpc executedId = 2, term = 2, rpcReplyChan sned
+candidate = 1, rpc executedId = 0, term = 2, send rpc request start......
+follower = 2, get channel rf.rpcState
+follower = 2, vote to somebody
+timeout = 915
+candidate = 1, term = 2, follower = 2, rpc succeeded
+candidate = 1, term = 2, follower = 2 voted a granted vote
+candidate = 1, term = 2, server = 2, IsServerAllTrue = true, ValidServerCount = 3, rpcCount = 2
+candidate = 1, rpc executedId = 2, term = 2, rpcReplyChan sned over
+Get state, My role = 1, Id = 1, term = 2, I am not a reader
 Get state, My role = 0, Id = 2, term = 2, I am not a reader
-candidate = 0, term = 2, election time out, start a new election
-candidate = 0, term = 2, numberOfVotes = 2, ValidServerCount 3, calculateVoutes start
-candidate = 0, term = 2, get majority votes
-Candidate = 0, term = 2, stage end......
-leader = 0, term = 2, I am a leader now
-leader = 0, term = 2, start a heartbeatTimer
-leader = 0, term = 2, heartbeat timerout
-leader = 0, term = 2, rpc executedId = 2, send rpc request start......
-My role = 0, Id = 2, term = 2, get heartbeat from leader = 0
+candidate = 1, term = 2, election time out, start a new election
+candidate = 1, term = 2, numberOfVotes = 2, ValidServerCount 3, calculateVoutes start
+candidate = 1, term = 2, get majority votes
+Candidate = 1, term = 2, stage end......
+leader = 1, term = 2, I am a leader now
+leader = 1, term = 2, start a heartbeatTimer
+leader = 1, term = 2, heartbeat timerout
+leader = 1, term = 2, rpc executedId = 2, send rpc request start......
+My role = 0, Id = 2, term = 2, get heartbeat from leader = 1
 My role = 0, Id = 2, args.Term = 2, rf.currentTerm = 2
 My role = 0, Id = 2, term = 2, AppendEntries true
 My role = 0, Id = 2, term = 2, send heartbeatChan start
 My role = 0, Id = 2, term = 2, send heartbeatChan end
-leader = 0, term = 2, rpc executedId = 2, send rpc request end, result = true......
-leader = 0, term = 2, rpc executedId = 2, rpcReplyChan sned
-leader = 0, term = 2, rpc executedId = 1, send rpc request start......
-follower = 2, get channel rf.rpcState
-timeout = 931
-leader = 0, term = 2, follower = 2, rpc succeed
+leader = 1, term = 2, rpc executedId = 2, send rpc request end, result = true......
+leader = 1, term = 2, rpc executedId = 2, rpcReplyChan sned
+leader = 1, term = 2, follower = 2, rpc succeed
 heartbeat success......
-leader = 0, term = 2, isServerAllTrue = true, ValidServerCount = 3, rpcSucceedCount = 2
-leader = 0, term = 2, rpc executedId = 2, rpcReplyChan end
-Get state, My role = 2, Id = 0, term = 2, I am a reader
+leader = 1, term = 2, isServerAllTrue = true, ValidServerCount = 3, rpcSucceedCount = 2
+follower = 2, get channel rf.rpcState
+timeout = 899
+leader = 1, term = 2, rpc executedId = 2, rpcReplyChan end
+leader = 1, term = 2, rpc executedId = 0, send rpc request start......
+Get state, My role = 2, Id = 1, term = 2, I am a reader
 Get state, My role = 0, Id = 2, term = 2, I am not a reader
-Get state, My role = 2, Id = 0, term = 2, I am a reader
-Get state, My role = 2, Id = 1, term = 1, I am a reader
+Get state, My role = 2, Id = 0, term = 1, I am a reader
+Get state, My role = 2, Id = 1, term = 2, I am a reader
 Get state, My role = 0, Id = 2, term = 2, I am not a reader
 follower = 2, get timer.C channel, time out
 Follower = 2, term = 2, stage end......
 Candidate = 2, term = 3, stage start......
-electTimer = 484
+electTimer = 431
 candidate = 2, rpc executedId = 1, term = 3, send rpc request start......
 candidate = 2, rpc executedId = 0, term = 3, send rpc request start......
-leader = 0, term = 2, rpc executedId = 1, send rpc request end, result = false......
-leader = 0, term = 2, rpc executedId = 1, rpcReplyChan sned
-leader = 0, term = 2, isServerAllTrue = true, ValidServerCount = 3, rpcSucceedCount = 2, rpc failure
-leader = 0, term = 2, heartbeat operation end, reset the leaderTimer
-leader = 0, term = 2, start a heartbeatTimer
-leader = 0, term = 2, rpc executedId = 1, rpcReplyChan end
-leader = 0, term = 2, heartbeat timerout
 candidate = 2, term = 3, election time out, start a new election
 candidate = 2, term = 3, numberOfVotes = 1, ValidServerCount 3, calculateVoutes start
 candidate = 2, term = 3, get less votes
 Candidate = 2, term = 3, stage end......
-Follower = 2, term = 3, stage start......
-timeout = 806
-leader = 1, term = 1, rpc executedId = 2, send rpc request end, result = false......
-leader = 1, term = 1, rpc executedId = 2, rpcReplyChan sned
-leader = 1, term = 1, isServerAllTrue = true, ValidServerCount = 3, rpcSucceedCount = 1, rpc failure
-leader = 1, term = 1, follower = 2, rpc failure
-leader = 1, term = 1, rpc executedId = 2, rpcReplyChan end
-candidate = 2, rpc executedId = 1, term = 3, send rpc request end, result = false......
-candidate = 2, rpc executedId = 1, term = 3, rpcReplyChan sned
-follower = 2, get timer.C channel, time out
-Follower = 2, term = 3, stage end......
 Candidate = 2, term = 4, stage start......
-electTimer = 492
+electTimer = 435
 candidate = 2, rpc executedId = 1, term = 4, send rpc request start......
 candidate = 2, rpc executedId = 0, term = 4, send rpc request start......
-candidate = 2, rpc executedId = 1, term = 4, send rpc request end, result = false......
-candidate = 2, rpc executedId = 1, term = 4, rpcReplyChan sned
-candidate = 2, term = 4, server = 1 rpc failure, failCount = 1
-candidate = 2, term = 4, server = 1 failure times more than 5, set failure flag to it
-candidate = 2, term = 4, server = 1, rpc failed
-candidate = 2, rpc executedId = 1, term = 4, rpcReplyChan sned over
-Get state, My role = 1, Id = 2, term = 4, I am not a reader
+candidate = 2, rpc executedId = 0, term = 4, send rpc request end, result = false......
+candidate = 2, rpc executedId = 0, term = 4, rpcReplyChan sned
+candidate = 2, term = 4, server = 0 rpc failure, failCount = 1
+candidate = 2, term = 4, server = 0 failure times more than 5, set failure flag to it
+candidate = 2, term = 4, server = 0, rpc failed
+candidate = 2, rpc executedId = 0, term = 4, rpcReplyChan sned over
 candidate = 2, term = 4, election time out, start a new election
 candidate = 2, term = 4, numberOfVotes = 1, ValidServerCount 2, calculateVoutes start
-candidate = 2, term = 4, get majority votes
+candidate = 2, term = 4, get less votes
 Candidate = 2, term = 4, stage end......
-leader = 2, term = 4, I am a leader now
-leader = 2, term = 4, start a heartbeatTimer
-leader = 2, term = 4, heartbeat timerout
-leader = 2, term = 4, rpc executedId = 1, send rpc request start......
-My role = 2, Id = 1, term = 1, get heartbeat from leader = 2
-My role = 2, Id = 1, args.Term = 4, rf.currentTerm = 1
-My role = 2, Id = 1, term = 1, AppendEntries true
-My role = 2, Id = 1, term = 4, send heartbeatChan start
-leader = 1 , term = 4, get rpc state, isToFollower = true
-candidate = 1, term = 4, because leader is leagal, leader transit to follower
-Follower = 1, term = 4, stage start......
-timeout = 848
-My role = 0, Id = 1, term = 4, send heartbeatChan end
-leader = 2, term = 4, rpc executedId = 1, send rpc request end, result = true......
-leader = 2, term = 4, rpc executedId = 1, rpcReplyChan sned
-leader = 2, term = 4, follower = 1, rpc succeed
-heartbeat success......
-leader = 2, term = 4, isServerAllTrue = true, ValidServerCount = 3, rpcSucceedCount = 2
-leader = 2, term = 4, rpc executedId = 1, rpcReplyChan end
-leader = 2, term = 4, rpc executedId = 0, send rpc request start......
-Get state, My role = 0, Id = 1, term = 4, I am not a reader
-Get state, My role = 2, Id = 2, term = 4, I am a reader
-candidate = 0, rpc executedId = 1, term = 2, send rpc request end, result = false......
-candidate = 0, rpc executedId = 1, term = 2, rpcReplyChan sned
-leader = 2, term = 4, rpc executedId = 0, send rpc request end, result = false......
-leader = 2, term = 4, rpc executedId = 0, rpcReplyChan sned
-Get state, My role = 2, Id = 0, term = 2, I am a reader
-leader = 2, term = 4, isServerAllTrue = true, ValidServerCount = 3, rpcSucceedCount = 2, rpc failure
-leader = 2, term = 4, heartbeat operation end, reset the leaderTimer
-leader = 2, term = 4, start a heartbeatTimer
-Get state, My role = 0, Id = 1, term = 4, I am not a reader
-Get state, My role = 2, Id = 2, term = 4, I am a reader
-  ... Passed --   6.1  3   14    0
-PASS
-ok  	raft	9.595s
+Candidate = 2, term = 5, stage start......
+electTimer = 424
+candidate = 2, rpc executedId = 1, term = 5, send rpc request start......
+candidate = 2, rpc executedId = 0, term = 5, send rpc request start......
+candidate = 2, term = 5, election time out, start a new election
+candidate = 2, term = 5, numberOfVotes = 1, ValidServerCount 3, calculateVoutes start
+candidate = 2, term = 5, get less votes
+Candidate = 2, term = 5, stage end......
+Candidate = 2, term = 6, stage start......
+electTimer = 401
+candidate = 2, rpc executedId = 1, term = 6, send rpc request start......
+candidate = 2, rpc executedId = 0, term = 6, send rpc request start......
+candidate = 2, term = 6, election time out, start a new election
+candidate = 2, term = 6, numberOfVotes = 1, ValidServerCount 3, calculateVoutes start
+candidate = 2, term = 6, get less votes
+Candidate = 2, term = 6, stage end......
+Candidate = 2, term = 7, stage start......
+electTimer = 417
+candidate = 2, rpc executedId = 1, term = 7, send rpc request start......
+candidate = 2, rpc executedId = 0, term = 7, send rpc request start......
+Get state, My role = 2, Id = 0, term = 1, I am a reader
+--- FAIL: TestReElection2A (5.11s)
+	config.go:352: expected no leader, but 0 claims to be leader
+FAIL
+exit status 1
+FAIL	raft	8.712s
