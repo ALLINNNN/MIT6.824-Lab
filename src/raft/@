@@ -620,19 +620,17 @@ func serverHandler (rf *Raft) {
 
                 var rpcSucceedCount int
                 rpcLeaderReplyChan  := make(chan RpcLeaderReply)
-//                serverState         := make([]ServerState, len(rf.peers))
+                serverState         := make([]ServerState, len(rf.peers))
 
                 rpcSucceedCount++
 
                 ExitLeader:
                 for {
                     fmt.Printf("leader = %v, term = %v, start a heartbeatTimer\n", rf.me, rf.currentTerm)
-                    heartbeatTime := 100
+                    heartbeatTime := 200
                     leaderTimer   := time.NewTimer(time.Duration(heartbeatTime) * time.Millisecond)
                     defer leaderTimer.Stop()
-                    serverState         := make([]ServerState, len(rf.peers))
 
-                    fmt.Printf("leader = %v, term = %v, start select\n", rf.me, rf.currentTerm)
                     select {
                         case <- rf.exitChan:
                             fmt.Printf("leader = %v, term = %v, get channel rf.exitChan, break ExitServer\n", rf.me, rf.currentTerm)
@@ -763,7 +761,7 @@ func serverHandler (rf *Raft) {
                                 }(i, &args, &reply, rpcLeaderReplyChan)
                             }
                             fmt.Printf("leader = %v, term = %v, heartbeat operation end, reset the leaderTimer\n", rf.me, rf.currentTerm)
-//                            leaderTimer.Reset(time.Duration(heartbeatTime) * time.Millisecond)
+                            leaderTimer.Reset(time.Duration(heartbeatTime) * time.Millisecond)
                     }//select
                     fmt.Printf("leader = %v, term = %v, stage of leader end\n", rf.me, rf.currentTerm)
                 }//for

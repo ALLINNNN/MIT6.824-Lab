@@ -297,8 +297,10 @@ func (cfg *config) setlongreordering(longrel bool) {
 // try a few times in case re-elections are needed.
 func (cfg *config) checkOneLeader() int {
 	for iters := 0; iters < 10; iters++ {
-		ms := 450 + (rand.Int63() % 100)
+        ms := 450 + (rand.Int63() % 100)
+        fmt.Printf("checkOneLeader, sleep ms = %v start\n", ms)
 		time.Sleep(time.Duration(ms) * time.Millisecond)
+        fmt.Printf("checkOneLeader, sleep ms = %v end\n", ms)
 
 		leaders := make(map[int][]int)
 		for i := 0; i < cfg.n; i++ {
@@ -320,6 +322,7 @@ func (cfg *config) checkOneLeader() int {
 		}
 
 		if len(leaders) != 0 {
+            fmt.Printf("checkOneLeader, return leaders[lastTermWithLeader][0] = %v\n", leaders[lastTermWithLeader][0])
 			return leaders[lastTermWithLeader][0]
 		}
 	}
