@@ -175,7 +175,8 @@ func (cfg *config) start1(i int) {
 				for j := 0; j < len(cfg.logs); j++ {
 					if old, oldok := cfg.logs[j][m.CommandIndex]; oldok && old != v {
 						// some server has already committed a different value for this entry!
-						err_msg = fmt.Sprintf("commit index=%v server=%v %v != server=%v %v",
+//						err_msg = fmt.Sprintf("commit index=%v server=%v %v != server=%v %v",
+						err_msg = fmt.Sprintf("commit index=%v server=%v cmd=%v != server=%v cmd=%v",
 							m.CommandIndex, i, m.Command, j, old)
 					}
 				}
@@ -373,6 +374,7 @@ func (cfg *config) nCommitted(index int) (int, interface{}) {
 
 		cfg.mu.Lock()
 		cmd1, ok := cfg.logs[i][index]
+        fmt.Printf("i = %v, index = %v, cmd1 = %v, ok = %v\n", i, index, cmd1, ok)
 		cfg.mu.Unlock()
 
 		if ok {
@@ -447,7 +449,8 @@ func (cfg *config) one(cmd int, expectedServers int, retry bool) int {
 			if rf != nil {
 				index1, _, ok := rf.Start(cmd)
 				if ok {
-					index = index1
+				    fmt.Printf("Found leader, index = %v\n", index1)
+                    index = index1
 					break
 				}
 			}

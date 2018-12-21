@@ -115,12 +115,13 @@ func TestBasicAgree2B(t *testing.T) {
 			t.Fatalf("some have committed before Start()")
 		}
 
+        fmt.Printf("cfg.one, cmd = %v, server = %v\n", index*100, servers)
 		xindex := cfg.one(index*100, servers, false)
 		if xindex != index {
 			t.Fatalf("got index %v but expected %v", xindex, index)
 		}
 	}
-
+    fmt.Printf("TestBasicAgree2B end\n")
 	cfg.end()
 }
 
@@ -134,14 +135,21 @@ func TestFailAgree2B(t *testing.T) {
 	cfg.one(101, servers, false)
 
 	// follower network disconnection
-	leader := cfg.checkOneLeader()
+    fmt.Printf("Test (2B): checkOneLeader\n")
+    leader := cfg.checkOneLeader()
+    fmt.Printf("Test (2B): disconnect server (leader+1)%%servers = %v\n", (leader+1)%servers)
 	cfg.disconnect((leader + 1) % servers)
 
 	// agree despite one disconnected server?
+    fmt.Printf("Test (2B): start entry 102\n")
 	cfg.one(102, servers-1, false)
+    fmt.Printf("Test (2B): start entry 103\n")
 	cfg.one(103, servers-1, false)
+    fmt.Printf("Test (2B): sleep election timeout = %v\n", RaftElectionTimeout)
 	time.Sleep(RaftElectionTimeout)
+    fmt.Printf("Test (2B): start entry 104\n")
 	cfg.one(104, servers-1, false)
+    fmt.Printf("Test (2B): start entry 105\n")
 	cfg.one(105, servers-1, false)
 
 	// re-connect
@@ -152,6 +160,7 @@ func TestFailAgree2B(t *testing.T) {
 	time.Sleep(RaftElectionTimeout)
 	cfg.one(107, servers, true)
 
+    fmt.Printf("TestFailAgree2B end\n")
 	cfg.end()
 }
 
