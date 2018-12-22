@@ -145,7 +145,7 @@ func TestFailAgree2B(t *testing.T) {
 	cfg.one(102, servers-1, false)
     fmt.Printf("Test (2B): start entry 103\n")
 	cfg.one(103, servers-1, false)
-    fmt.Printf("Test (2B): sleep election timeout = %v\n", RaftElectionTimeout)
+    fmt.Printf("Test (2B): first sleep election timeout = %v\n", RaftElectionTimeout)
 	time.Sleep(RaftElectionTimeout)
     fmt.Printf("Test (2B): start entry 104\n")
 	cfg.one(104, servers-1, false)
@@ -153,11 +153,15 @@ func TestFailAgree2B(t *testing.T) {
 	cfg.one(105, servers-1, false)
 
 	// re-connect
+    fmt.Printf("Test (2B): re-connect (leader+1)%%servers = %v\n", (leader+1)%servers)
 	cfg.connect((leader + 1) % servers)
 
 	// agree with full set of servers?
+    fmt.Printf("Test (2B): start entry 106\n")
 	cfg.one(106, servers, true)
+    fmt.Printf("Test (2B): second sleep election timeout = %v\n", RaftElectionTimeout)
 	time.Sleep(RaftElectionTimeout)
+    fmt.Printf("Test (2B): start entry 107\n")
 	cfg.one(107, servers, true)
 
     fmt.Printf("TestFailAgree2B end\n")
@@ -175,10 +179,14 @@ func TestFailNoAgree2B(t *testing.T) {
 
 	// 3 of 5 followers disconnect
 	leader := cfg.checkOneLeader()
+	fmt.Printf("Test (2B): no agreement, disconnect server = %v\n", (leader+1) % servers)
 	cfg.disconnect((leader + 1) % servers)
+	fmt.Printf("Test (2B): no agreement, disconnect server = %v\n", (leader+2) % servers)
 	cfg.disconnect((leader + 2) % servers)
+	fmt.Printf("Test (2B): no agreement, disconnect server = %v\n", (leader+3) % servers)
 	cfg.disconnect((leader + 3) % servers)
 
+	fmt.Printf("Test (2B): no agreement, start(20)\n")
 	index, _, ok := cfg.rafts[leader].Start(20)
 	if ok != true {
 		t.Fatalf("leader rejected Start()")
@@ -187,16 +195,21 @@ func TestFailNoAgree2B(t *testing.T) {
 		t.Fatalf("expected index 2, got %v", index)
 	}
 
+	fmt.Printf("Test (2B): no agreement, sleep time = %v\n", 2 * RaftElectionTimeout)
 	time.Sleep(2 * RaftElectionTimeout)
 
+	fmt.Printf("Test (2B): no agreement, index = %v, start nCommitted(index)\n", index)
 	n, _ := cfg.nCommitted(index)
 	if n > 0 {
 		t.Fatalf("%v committed but no majority", n)
 	}
 
 	// repair
+	fmt.Printf("Test (2B): no agreement, connect server = %v\n", (leader+1) % servers)
 	cfg.connect((leader + 1) % servers)
+	fmt.Printf("Test (2B): no agreement, connect server = %v\n", (leader+2) % servers)
 	cfg.connect((leader + 2) % servers)
+	fmt.Printf("Test (2B): no agreement, connect server = %v\n", (leader+3) % servers)
 	cfg.connect((leader + 3) % servers)
 
 	// the disconnected majority may have chosen a leader from
@@ -211,6 +224,7 @@ func TestFailNoAgree2B(t *testing.T) {
 	}
 
 	cfg.one(1000, servers, true)
+	fmt.Printf("Test (2B): no agreement if too many followers disconnect end\n")
 
 	cfg.end()
 }
@@ -231,12 +245,14 @@ loop:
 		}
 
 		leader := cfg.checkOneLeader()
+	    fmt.Printf("Test (2B): concurrent Start()s checkOneLeader, leader = %v\n", leader)
 		_, term, ok := cfg.rafts[leader].Start(1)
 		if !ok {
 			// leader moved on really quickly
 			continue
 		}
 
+	    fmt.Printf("Test (2B): concurrent Start()s, start iterate\n")
 		iters := 5
 		var wg sync.WaitGroup
 		is := make(chan int, iters)
@@ -245,10 +261,13 @@ loop:
 			go func(i int) {
 				defer wg.Done()
 				i, term1, ok := cfg.rafts[leader].Start(100 + i)
+	            fmt.Printf("Test (2B): concurrent Start()s, i = %v, term1 = %v, ok = %v\n", i, term1, ok)
 				if term1 != term {
+	                fmt.Printf("Test (2B): concurrent Start()s, term1 = %v != term = %v, return\n", term1, term)
 					return
 				}
 				if ok != true {
+	                fmt.Printf("Test (2B): concurrent Start()s, ok = %v , return\n", ok)
 					return
 				}
 				is <- i
@@ -257,14 +276,17 @@ loop:
 
 		wg.Wait()
 		close(is)
+	    fmt.Printf("Test (2B): concurrent Start()s, end iterate, start check term\n")
 
 		for j := 0; j < servers; j++ {
 			if t, _ := cfg.rafts[j].GetState(); t != term {
 				// term changed -- can't expect low RPC counts
+	            fmt.Printf("Test (2B): concurrent Start()s, t = %v != term = %v, continue loop\n", t, term)
 				continue loop
 			}
 		}
 
+	    fmt.Printf("Test (2B): concurrent Start()s, check cmd start\n")
 		failed := false
 		cmds := []int{}
 		for index := range is {
@@ -283,6 +305,7 @@ loop:
 			}
 		}
 
+	    fmt.Printf("Test (2B): concurrent Start()s, check cmd end, failed = %v\n", failed)
 		if failed {
 			// avoid leaking goroutines
 			go func() {
@@ -312,6 +335,7 @@ loop:
 	if !success {
 		t.Fatalf("term changed too often")
 	}
+	fmt.Printf("Test (2B): concurrent Start()s end\n")
 
 	cfg.end()
 }
@@ -350,6 +374,7 @@ func TestRejoin2B(t *testing.T) {
 	cfg.connect(leader2)
 
 	cfg.one(105, servers, true)
+	fmt.Printf("Test (2B): rejoin of partitioned leader end\n")
 
 	cfg.end()
 }
@@ -361,68 +386,94 @@ func TestBackup2B(t *testing.T) {
 
 	cfg.begin("Test (2B): leader backs up quickly over incorrect follower logs")
 
+    fmt.Printf("Test (2B): leader backs up, cfg.one(rand.Int) start\n")
 	cfg.one(rand.Int(), servers, true)
 
 	// put leader and one follower in a partition
+    fmt.Printf("Test (2B): leader backs up, put leader and one follower in a partition\n")
 	leader1 := cfg.checkOneLeader()
+    fmt.Printf("Test (2B): leader backs up, checkOneLeader, leader = %v\n", leader1)
 	cfg.disconnect((leader1 + 2) % servers)
+    fmt.Printf("Test (2B): leader backs up, disconnect(%v)\n", (leader1+2)%servers)
 	cfg.disconnect((leader1 + 3) % servers)
+    fmt.Printf("Test (2B): leader backs up, disconnect(%v)\n", (leader1+3)%servers)
 	cfg.disconnect((leader1 + 4) % servers)
+    fmt.Printf("Test (2B): leader backs up, disconnect(%v)\n", (leader1+4)%servers)
 
 	// submit lots of commands that won't commit
+    fmt.Printf("Test (2B): leader backs up, submit lots of commands that won't commit\n")
 	for i := 0; i < 50; i++ {
 		cfg.rafts[leader1].Start(rand.Int())
 	}
 
+    fmt.Printf("Test (2B): leader backs up, time sleep = %v\n", RaftElectionTimeout / 2)
 	time.Sleep(RaftElectionTimeout / 2)
 
+    fmt.Printf("Test (2B): leader backs up, disconnect(%v)\n", (leader1+0)%servers)
 	cfg.disconnect((leader1 + 0) % servers)
+    fmt.Printf("Test (2B): leader backs up, disconnect(%v)\n", (leader1+1)%servers)
 	cfg.disconnect((leader1 + 1) % servers)
 
 	// allow other partition to recover
+    fmt.Printf("Test (2B): leader backs up, connect(%v)\n", (leader1+2)%servers)
 	cfg.connect((leader1 + 2) % servers)
+    fmt.Printf("Test (2B): leader backs up, connect(%v)\n", (leader1+3)%servers)
 	cfg.connect((leader1 + 3) % servers)
+    fmt.Printf("Test (2B): leader backs up, connect(%v)\n", (leader1+4)%servers)
 	cfg.connect((leader1 + 4) % servers)
 
 	// lots of successful commands to new group.
+    fmt.Printf("Test (2B): leader backs up, lots of successful commands to new group.\n")
 	for i := 0; i < 50; i++ {
 		cfg.one(rand.Int(), 3, true)
 	}
 
 	// now another partitioned leader and one follower
+    fmt.Printf("Test (2B): leader backs up, now another partitioned leader and one follower\n")
 	leader2 := cfg.checkOneLeader()
+    fmt.Printf("Test (2B): leader backs up, checkOneLeader, leader2 = %v\n", leader2)
 	other := (leader1 + 2) % servers
 	if leader2 == other {
 		other = (leader2 + 1) % servers
 	}
+    fmt.Printf("Test (2B): leader backs up, other = %v, disconnect(other)\n", other)
 	cfg.disconnect(other)
 
 	// lots more commands that won't commit
+    fmt.Printf("Test (2B): leader backs up, lots more commands that won't commit\n")
 	for i := 0; i < 50; i++ {
 		cfg.rafts[leader2].Start(rand.Int())
 	}
 
+    fmt.Printf("Test (2B): leader backs up, time sleep = %v\n", RaftElectionTimeout / 2)
 	time.Sleep(RaftElectionTimeout / 2)
 
 	// bring original leader back to life,
 	for i := 0; i < servers; i++ {
+        fmt.Printf("Test (2B): leader backs up, disconnect(%v)\n", i)
 		cfg.disconnect(i)
 	}
+    fmt.Printf("Test (2B): leader backs up, connect(%v)\n", (leader1+0)%servers)
 	cfg.connect((leader1 + 0) % servers)
+    fmt.Printf("Test (2B): leader backs up, connect(%v)\n", (leader1+1)%servers)
 	cfg.connect((leader1 + 1) % servers)
+    fmt.Printf("Test (2B): leader backs up, connect(%v)\n", other)
 	cfg.connect(other)
 
 	// lots of successful commands to new group.
+    fmt.Printf("Test (2B): leader backs up, lots of successful commands to new group.\n")
 	for i := 0; i < 50; i++ {
 		cfg.one(rand.Int(), 3, true)
 	}
 
 	// now everyone
 	for i := 0; i < servers; i++ {
+        fmt.Printf("Test (2B): leader backs up, connect(%v)\n", i)
 		cfg.connect(i)
 	}
 	cfg.one(rand.Int(), servers, true)
 
+	fmt.Printf("Test (2B): leader backs up quickly over incorrect follower logs end\n")
 	cfg.end()
 }
 
@@ -534,6 +585,7 @@ loop:
 	}
 
 	cfg.end()
+	fmt.Printf("Test (2B): RPC counts aren't too high end\n")
 }
 
 func TestPersist12C(t *testing.T) {

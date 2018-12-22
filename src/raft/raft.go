@@ -28,7 +28,6 @@ import (
     "time"
     "math/rand"
     "strconv"
-    "strings"
 )
 
 
@@ -58,10 +57,12 @@ type AppendEntryState struct {
 //    leaderIsLeagal  bool
 //    leaderFrom      int
     isApplyMsg      bool
+    isHeartbeat     bool
+    preCommitIndex  int
 }
 
 type VoteState struct {
-    voteDone        bool
+    voteGrant       bool
 }
 
 type RpcState struct {
@@ -99,7 +100,7 @@ type Raft struct {
     exitChan        chan bool
     role            int                //0: follower, 1: candidate, 2: leader
     rpcState        chan RpcState
-    isHeartbeat     bool
+    isHbChan        chan bool
 }
 
 // return currentTerm and whether this server
@@ -234,16 +235,38 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
             fmt.Printf("My role = %v, my Id = %v, current voter has voted to candidate, term = %v\n", rf.role, rf.me, rf.currentTerm)
         }
     } else {                                //current term of this server is lower than args
+        fmt.Printf("My role = %v, my Id = %v, term = %v, rf.log[len(rf.log) - 1].Term = %v < args.LastLogTerm = %v, set new currentTerm\n", rf.role, rf.me, rf.currentTerm, rf.log[len(rf.log) - 1].Term, args.Term)
         rf.mu.Lock()
         rf.currentTerm = args.Term
-        rf.votedFor = strconv.Itoa(args.CandidateId)
         rf.mu.Unlock()
+
+        if rf.log[len(rf.log) - 1].Term > args.LastLogTerm {
+            fmt.Printf("My role = %v, my Id = %v, term = %v, rf.log[len(rf.log) - 1].Term = %v > args.LastLogTerm = %v\n", rf.role, rf.me, rf.currentTerm, rf.log[len(rf.log) - 1].Term, args.LastLogTerm)
+            reply.VoteGranted = false
+        } else if rf.log[len(rf.log) - 1].Term == args.LastLogTerm {
+            fmt.Printf("My role = %v, my Id = %v, term = %v, rf.log[len(rf.log) - 1].Term = %v == args.LastLogTerm = %v\n", rf.role, rf.me, rf.currentTerm, rf.log[len(rf.log) - 1].Term, args.LastLogTerm)
+            if len(rf.log) - 1 > args.LastLogIndex {
+                fmt.Printf("My role = %v, my Id = %v, term = %v, len(rf.log) - 1 = %v > args.LastLogIndex = %v, vote deny\n", rf.role, rf.me, rf.currentTerm, len(rf.log) - 1, args.LastLogIndex)
+                reply.VoteGranted = false
+            } else {
+                fmt.Printf("My role = %v, my Id = %v, term = %v, len(rf.log) - 1 = %v <= args.LastLogIndex = %v, vote grant\n", rf.role, rf.me, rf.currentTerm, len(rf.log) - 1, args.LastLogIndex)
+                rf.mu.Lock()
+                rf.votedFor = strconv.Itoa(args.CandidateId)
+                rf.mu.Unlock()
+                reply.VoteGranted = true
+            }
+        } else {
+            rf.mu.Lock()
+            rf.votedFor = strconv.Itoa(args.CandidateId)
+            rf.mu.Unlock()
+
+            reply.VoteGranted = true
+        }
 
         if rf.role != 0 {                   //if the current term of candidate or leader is lower than args, than thansis to follower
             fmt.Printf("my role = %v, me = %v change to follower, term = %v\n", rf.role, rf.me, rf.currentTerm)
             isChangeRole = true
         }
-        reply.VoteGranted = true
     }
 
     /*pass rpc state to current server*/
@@ -296,6 +319,7 @@ type AppendEntriesArgs struct {
     PrevLogTerm     int
     Entries         []LogEntry
     LeaderCommit    int
+    Heartbeat       bool
 }
 
 type AppendEntriesReply struct {
@@ -314,9 +338,12 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 
     var isApply      bool
     var isChangeRole bool
+    var preIndex     int
+//    var min          int
     fmt.Printf("My role = %v, Id = %v, args.Term = %v, rf.currentTerm = %v\n", rf.role, rf.me, args.Term, rf.currentTerm)
     if args.Term >= rf.currentTerm {
         fmt.Printf("My role = %v, Id = %v, term = %v, AppendEntries true\n", rf.role, rf.me, rf.currentTerm)
+        fmt.Printf("My role = %v, Id = %v, args.Term = %v >= rf.currentTerm = %v, set new currentTerm\n", rf.role, rf.me, args.Term, rf.currentTerm)
 
         rf.mu.Lock()
         rf.currentTerm = args.Term
@@ -326,20 +353,36 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
             isChangeRole = true
         }
 
+            fmt.Printf("My role = %v, Id = %v, term = %v, AppendEntries, len(rf.log) = %v, PrevLogIndex = %v\n", rf.role, rf.me, rf.currentTerm, len(rf.log), args.PrevLogIndex)
         if len(rf.log) < args.PrevLogIndex {
             fmt.Printf("My role = %v, Id = %v, term = %v, AppendEntries, len(rf.log) < PrevLogIndex, reply.Success = false\n", rf.role, rf.me, rf.currentTerm)
             reply.Success = false
         } else if len(rf.log) == args.PrevLogIndex {
-            fmt.Printf("My role = %v, Id = %v, term = %v, AppendEntries, len(rf.log)=%v = PrevLogIndex=%v\n", rf.role, rf.me, rf.currentTerm)
+            fmt.Printf("My role = %v, Id = %v, term = %v, AppendEntries, len(rf.log)=%v = PrevLogIndex=%v\n", rf.role, rf.me, rf.currentTerm, len(rf.log), args.PrevLogIndex)
             if len(rf.log) == 1 {
-                isApply = true
-                rf.mu.Lock()
-                rf.log = append(rf.log[:args.PrevLogIndex], args.Entries...)
-                for i := 0; i < len(rf.log); i++ {
-                    fmt.Printf("My role = %v, Id = %v, term = %v, AppendEntries, log[%v].Entry = %v\n", rf.role, rf.me, rf.currentTerm, i, rf.log[i].Entry)
+                if args.Heartbeat == false {
+                    fmt.Printf("My role = %v, Id = %v, term = %v, AppendEntries, agrs.Heartbeat = false\n", rf.role, rf.me, rf.currentTerm)
+                    isApply = true
+                    rf.mu.Lock()
+                    rf.log = append(rf.log[:args.PrevLogIndex], args.Entries...)
+                    for i := 0; i < len(rf.log); i++ {
+                        fmt.Printf("My role = %v, Id = %v, term = %v, AppendEntries, log[%v].Entry = %v\n", rf.role, rf.me, rf.currentTerm, i, rf.log[i].Entry)
+                    }
+//                    rf.commitIndex = len(rf.log) - 1
+/*                    if args.LeaderCommit <= len(rf.log) - 1 {
+                        min = args.LeaderCommit
+                    } else {
+                        min = len(rf.log) - 1
+                    }
+                    if args.LeaderCommit > rf.commitIndex {
+                        rf.commitIndex = min
+                    }
+*/
+                    rf.mu.Unlock()
+                    preIndex = args.PrevLogIndex
+                } else {
+                    fmt.Printf("My role = %v, Id = %v, term = %v, AppendEntries, agrs.Heartbeat = true, do nothing\n", rf.role, rf.me, rf.currentTerm)
                 }
-                rf.commitIndex = len(rf.log) - 1
-                rf.mu.Unlock()
                 reply.Success = true
                 fmt.Printf("My role = %v, Id = %v, term = %v, AppendEntries, len(rf.log) = PrevLogIndex, len(rf.log) = 1, success = true\n", rf.role, rf.me, rf.currentTerm)
             } else {
@@ -355,31 +398,33 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
             } else {
                 fmt.Printf("My role = %v, Id = %v, term = %v, AppendEntries, rf.log[args.PrevLogIndex].Term == args.PrevLogTerm, reply.Success = true\n", rf.role, rf.me, rf.currentTerm)
 
-                if strings.Compare(args.Entries[0].Entry, "") == 0 {
-                    fmt.Printf("My role = %v, Id = %v, term = %v, entry = null, this is heartbeat, reply success = true\n", rf.role, rf.me, rf.currentTerm)
+                if args.Heartbeat == true {
+                    fmt.Printf("My role = %v, Id = %v, term = %v, AppendEntries, agrs.Heartbeat = true, do nothing\n", rf.role, rf.me, rf.currentTerm)
                 } else {
+                    fmt.Printf("My role = %v, Id = %v, term = %v, AppendEntries, agrs.Heartbeat = false\n", rf.role, rf.me, rf.currentTerm)
                     isApply = true
                     rf.mu.Lock()
                     rf.log = append(rf.log[:args.PrevLogIndex], args.Entries...)
                     for i := 0; i < len(rf.log); i++ {
                         fmt.Printf("My role = %v, Id = %v, term = %v, AppendEntries, log[%v].Entry = %v\n", rf.role, rf.me, rf.currentTerm, i, rf.log[i].Entry)
                     }
-                    rf.commitIndex = len(rf.log) - 1
+//                    rf.commitIndex = len(rf.log) - 1
                     rf.mu.Unlock()
+                    preIndex = args.PrevLogIndex
                 }
                 reply.Success = true
             }
         }
     } else {
-        fmt.Printf("My role = %v, Id = %v, AppendEntries failure\n", rf.role, rf.me)
+        fmt.Printf("My role = %v, Id = %v, currentTerm = %v > args.Term, AppendEntries failure\n", rf.role, rf.me, rf.currentTerm, args.Term)
         reply.Term = rf.currentTerm
         reply.Success = false
     }
 
     fmt.Printf("My role = %v, Id = %v, term = %v, send heartbeatChan start\n", rf.role, rf.me, rf.currentTerm)
-    func(leader int, isChangeRole ,isApply bool) {
-        rf.rpcState <- RpcState{AppendEntryState{isApply}, VoteState{}, isChangeRole}
-    }(args.LeaderId, isChangeRole, isApply)
+    func(leader int, isChangeRole ,isApply bool, preIndex int) {
+        rf.rpcState <- RpcState{AppendEntryState{isApply, true, preIndex}, VoteState{}, isChangeRole}
+    }(args.LeaderId, isChangeRole, isApply, preIndex)
     fmt.Printf("My role = %v, Id = %v, term = %v, send heartbeatChan end\n", rf.role, rf.me, rf.currentTerm)
 }
 
@@ -413,7 +458,6 @@ func (rf *Raft) Start(command interface{}) (int, int, bool) {
     if rf.role == 2 {
         fmt.Printf("My role = %v, my Id = %v, term = %v, I am leader\n", rf.role, rf.me, rf.currentTerm)
 
-        rf.isHeartbeat = false
         rf.log = append(rf.log, LogEntry{fmt.Sprintf("%v", command), rf.currentTerm})
         InitNextIndex(rf)
 
@@ -425,6 +469,11 @@ func (rf *Raft) Start(command interface{}) (int, int, bool) {
             fmt.Printf("My role = %v, my Id = %v, term = %v, rf.log[%v].Term = %v, rf.log[%v].Entry = %v\n", rf.role, rf.me, rf.currentTerm, i, rf.log[i].Term, i, rf.log[i].Entry)
         }
 
+        go func(ch chan bool) {
+            fmt.Printf("My role = %v, my Id = %v, term = %v, send isHbChan start\n", rf.role, rf.me, rf.currentTerm)
+            ch <- false
+            fmt.Printf("My role = %v, my Id = %v, term = %v, send isHbChan end\n", rf.role, rf.me, rf.currentTerm)
+        } (rf.isHbChan)
     } else {
         fmt.Printf("My role = %v, my Id = %v, term = %v, I am not a leader, return false\n", rf.role, rf.me, rf.currentTerm)
         isLeader = false
@@ -457,6 +506,7 @@ type ServerState struct {
     isHandout       bool
     isFailure       bool
     isDuplicated    bool
+    isRpcReturn     bool
 }
 
 //
@@ -486,9 +536,9 @@ func Make(peers []*labrpc.ClientEnd, me int,
     rf.log         = make([]LogEntry, 1)
     rf.rpcState    = make(chan RpcState)
     rf.exitChan    = make(chan bool)
+    rf.isHbChan    = make(chan bool)
     rf.nextIndex   = make([]int, len(rf.peers))
     rf.matchIndex  = make([]int, len(rf.peers))
-    rf.isHeartbeat = true
     InitNextIndex(rf)
     rf.mu.Unlock()
 
@@ -519,13 +569,13 @@ func serverHandler (rf *Raft, applyCh chan ApplyMsg) {
                 rf.votedFor = ""            //a follower will get a vote
                 rf.mu.Unlock()
 
+                timeout := GetRandamNumber(600, 800)
+                fmt.Printf("follower = %v, term = %v, timeout = %v\n", rf.me, rf.currentTerm, timeout)
+                followerTimer := time.NewTimer(time.Duration(timeout) * time.Millisecond)
+                defer followerTimer.Stop()
+
                 ExitFollower:
                 for {
-
-                    timeout := GetRandamNumber(800, 1000)
-                    fmt.Printf("follower = %v, term = %v, timeout = %v\n", rf.me, rf.currentTerm, timeout)
-                    followerTimer := time.NewTimer(time.Duration(timeout) * time.Millisecond)
-                    defer followerTimer.Stop()
 
                     fmt.Printf("follower = %v, term = %v, running.........\n", rf.me, rf.currentTerm)
                     select {
@@ -535,18 +585,40 @@ func serverHandler (rf *Raft, applyCh chan ApplyMsg) {
                             break ExitFollower
 
                         case state := <-rf.rpcState:
+                            isReset := false
                             fmt.Printf("follower = %v, get channel rf.rpcState\n", rf.me)
-                            if state.vState.voteDone == true {
-                                fmt.Printf("follower = %v, vote to somebody\n", rf.me)
+                            if state.vState.voteGrant == true {
+                                isReset = true
+                                fmt.Printf("follower = %v, vote to somebody, reset timer\n", rf.me)
+                            } else {
+                                isReset = false
+                                fmt.Printf("follower = %v, vote deny, donot reset the timer\n", rf.me)
+                            }
+                            if state.aeState.isHeartbeat == true {
+                                isReset = true
                             }
                             if state.aeState.isApplyMsg == true {
-                                fmt.Printf("follower = %v, term = %v, isApplyMsg = true\n", rf.me, rf.currentTerm)
-                                go func(ch chan ApplyMsg) {
-                                    cmd, _ := strconv.Atoi(rf.log[rf.commitIndex].Entry)
-                                    fmt.Printf("follower = %v, term = %v, applyChan send\n", rf.me, rf.currentTerm)
-                                    ch <- ApplyMsg{true, cmd, rf.commitIndex}
-                                    fmt.Printf("follower = %v, term = %v, applyChan send end\n", rf.me, rf.currentTerm)
-                                } (applyCh)
+                                isReset = true
+                                fmt.Printf("follower = %v, term = %v, preCommitIndex = %v, commitIndex = %v, len(rf.log) - 1 = %v, isApplyMsg = true\n", rf.me, rf.currentTerm, state.aeState.preCommitIndex, rf.commitIndex, len(rf.log) - 1)
+                                fmt.Printf("follower = %v, term = %v, commitIndex = %v\n", rf.me, rf.currentTerm, rf.commitIndex)
+                                rf.mu.Lock()
+                                rf.commitIndex++
+                                rf.mu.Unlock()
+                                for j := rf.commitIndex; j < len(rf.log); j++ {
+                                    cmd, _ := strconv.Atoi(rf.log[j].Entry)
+                                    fmt.Printf("follower = %v, term = %v, j = %v, commitIndex = %v, cmd = %v, applyChan send\n", rf.me, rf.currentTerm, j, rf.commitIndex, cmd)
+                                    applyCh <- ApplyMsg{true, cmd, j}
+                                    fmt.Printf("follower = %v, term = %v, applyChan send end, commitIndex = %v\n", rf.me, rf.currentTerm, rf.commitIndex)
+                                }
+                                rf.mu.Lock()
+                                rf.commitIndex = len(rf.log) - 1
+                                rf.mu.Unlock()
+                                fmt.Printf("follower = %v, term = %v, commitIndex = %v\n", rf.me, rf.currentTerm, rf.commitIndex)
+                            }
+                            if isReset == true {
+                                fmt.Printf("follower = %v, term = %v, reset timer\n", rf.me, rf.currentTerm)
+                                timeout =GetRandamNumber(800, 1000)
+                                followerTimer = time.NewTimer(time.Duration(timeout) * time.Millisecond)
                             }
                         case <- rf.exitChan:
                             fmt.Printf("follower = %v, term = %v, get channel rf.exitChan, break ExitServer\n", rf.me, rf.currentTerm)
@@ -570,7 +642,7 @@ func serverHandler (rf *Raft, applyCh chan ApplyMsg) {
                 serverState   := make([]ServerState, len(rf.peers))
                 rpcCandidateReplyChan := make(chan RpcCandidateReply)
 
-                electTime := GetRandamNumber(400, 500)
+                electTime := GetRandamNumber(600, 800)
                 fmt.Printf("electTimer = %v\n", electTime)
                 candidateTimer := time.NewTimer(time.Duration(electTime) * time.Millisecond)
                 defer candidateTimer.Stop()
@@ -582,13 +654,24 @@ func serverHandler (rf *Raft, applyCh chan ApplyMsg) {
                     select {
                         case state := <-rf.rpcState:
                             if state.aeState.isApplyMsg == true {
-                                fmt.Printf("candidate = %v, term = %v, isApplyMsg = true\n", rf.me, rf.currentTerm)
-                                go func(ch chan ApplyMsg) {
-                                    cmd, _ := strconv.Atoi(rf.log[rf.commitIndex].Entry)
-                                    fmt.Printf("candidate = %v, term = %v, applyChan send\n", rf.me, rf.currentTerm)
-                                    ch <- ApplyMsg{true, cmd, rf.commitIndex}
-                                    fmt.Printf("candidate = %v, term = %v, applyChan send end\n", rf.me, rf.currentTerm)
-                                } (applyCh)
+                                fmt.Printf("candidate = %v, term = %v, preCommitIndex = %v, commitIndex = %v, len(rf.log) - 1 = %v, isApplyMsg = true\n", rf.me, rf.currentTerm, state.aeState.preCommitIndex, rf.commitIndex, len(rf.log) - 1)
+                                fmt.Printf("follower = %v, term = %v, commitIndex = %v\n", rf.me, rf.currentTerm, rf.commitIndex)
+                                rf.mu.Lock()
+                                rf.commitIndex++
+                                rf.mu.Unlock()
+                                for j := rf.commitIndex; j < len(rf.log); j++ {
+                                    cmd, _ := strconv.Atoi(rf.log[j].Entry)
+                                    fmt.Printf("candidate = %v, term = %v, j = %v, commitIndex = %v, cmd = %v, applyChan send\n", rf.me, rf.currentTerm, j, rf.commitIndex, cmd)
+                                    applyCh <- ApplyMsg{true, cmd, j}
+                                    rf.mu.Lock()
+                                    rf.commitIndex++
+                                    rf.mu.Unlock()
+                                    fmt.Printf("candidate = %v, term = %v, applyChan send end, commitIndex = %v\n", rf.me, rf.currentTerm, rf.commitIndex)
+                                }
+                                rf.mu.Lock()
+                                rf.commitIndex = len(rf.log) - 1
+                                rf.mu.Unlock()
+                                fmt.Printf("follower = %v, term = %v, commitIndex = %v\n", rf.me, rf.currentTerm, rf.commitIndex)
                             }
                             if state.isToFollower == true {
                                 TransistToFollower(rf)
@@ -611,13 +694,22 @@ func serverHandler (rf *Raft, applyCh chan ApplyMsg) {
 
                     select {
                         case rpcResult := <-rpcCandidateReplyChan:
+                            fmt.Printf("candidate = %v, term = %v, server = %v, rpcReturn\n", rf.me, rf.currentTerm, rpcResult.ExecutedId)
+                            serverState[rpcResult.ExecutedId].isRpcReturn = true
+                            fmt.Printf("candidate = %v, term = %v, server = %v, state[%v].isRpcReturn = %v\n", rf.me, rf.currentTerm, rpcResult.ExecutedId, rpcResult.ExecutedId, serverState[rpcResult.ExecutedId].isRpcReturn)
                             if rpcResult.Result == true {           //previous rpc call succeed
                                 fmt.Printf("candidate = %v, term = %v, server = %v, rpc succeeded\n", rf.me, rf.currentTerm, rpcResult.ExecutedId)
 
-//                                PrintRaft(rf)
-
                                 serverState[rpcResult.ExecutedId].rpcFailCount = 0
                                 serverState[rpcResult.ExecutedId].isFailure = false
+
+                                fmt.Printf("candidate = %v, term = %v, reply.Term = %v\n", rf.me, rf.currentTerm, rpcResult.Reply.Term)
+                                if rpcResult.Reply.Term > rf.currentTerm {
+                                    fmt.Printf("candidate = %v, term = %v < reply.Term = %v, set new currentTerm\n", rf.me, rf.currentTerm, rpcResult.Reply.Term)
+                                    rf.mu.Lock()
+                                    rf.currentTerm = rpcResult.Reply.Term
+                                    rf.mu.Unlock()
+                                }
 
                                 rpcSucceedCount++
                                 if rpcResult.Reply.VoteGranted == true {
@@ -634,11 +726,16 @@ func serverHandler (rf *Raft, applyCh chan ApplyMsg) {
                                 }
 
                                 /*All server has reply the result of vote*/
-                                fmt.Printf("candidate = %v, term = %v, server = %v, IsServerAllTrue = %v, ValidServerCount = %v, rpcCount = %v\n", rf.me, rf.currentTerm, rpcResult.ExecutedId, IsServerAllTrue(serverState), ValidServerCount(serverState), rpcSucceedCount)
-                                if IsServerAllTrue(serverState) == true && ValidServerCount(serverState) <= rpcSucceedCount{
+                                fmt.Printf("candidate = %v, term = %v, server = %v, IsServerAllTrue = %v, ValidServerCount = %v, rpcCount = %v, IsRpcAllReturn = %v\n", rf.me, rf.currentTerm, rpcResult.ExecutedId, IsServerAllTrue(serverState), ValidServerCount(serverState), rpcSucceedCount, IsRpcAllReturn(serverState))
+                                if IsServerAllTrue(serverState) == true && ValidServerCount(serverState) <= rpcSucceedCount && IsRpcAllReturn(serverState){
 
-                                    CalculateVotes(rf, serverState, numberOfVotes)
-                                    break ExitCandidate
+                                    ok := CalculateVotes(rf, serverState, numberOfVotes)
+                                    if ok == true {
+                                        fmt.Printf("candidate = %v, term = %v, rpc success, get majority votes, transist to leader\n", rf.me, rf.currentTerm)
+                                        break ExitCandidate
+                                    }
+                                    fmt.Printf("candidate = %v, term = %v, rpc success get less votes, wait for election timeout\n", rf.me, rf.currentTerm)
+
                                 }
                             } else {                            //previous rpc call failure
                                 serverState[rpcResult.ExecutedId].rpcFailCount++
@@ -648,12 +745,18 @@ func serverHandler (rf *Raft, applyCh chan ApplyMsg) {
                                     serverState[rpcResult.ExecutedId].isFailure = true
                                 }
 
-                                if IsServerAllTrue(serverState) == true && ValidServerCount(serverState) <= rpcSucceedCount{
+                                fmt.Printf("candidate = %v, term = %v, server = %v, IsServerAllTrue = %v, ValidServerCount = %v, rpcCount = %v, IsRpcAllReturn = %v\n", rf.me, rf.currentTerm, rpcResult.ExecutedId, IsServerAllTrue(serverState), ValidServerCount(serverState), rpcSucceedCount, IsRpcAllReturn(serverState))
+                                if IsServerAllTrue(serverState) == true && ValidServerCount(serverState) <= rpcSucceedCount && IsRpcAllReturn(serverState) {
 
-                                    CalculateVotes(rf, serverState, numberOfVotes)
-                                    break ExitCandidate
+                                    ok := CalculateVotes(rf, serverState, numberOfVotes)
+                                    if ok == true {
+                                        fmt.Printf("candidate = %v, term = %v, rpc fails, get majority votes, transist to leader\n", rf.me, rf.currentTerm)
+                                        break ExitCandidate
+                                    }
+                                    fmt.Printf("candidate = %v, term = %v, rpc fails, get less votes, wait for election timeout\n", rf.me, rf.currentTerm)
+                                } else {
+                                    serverState[rpcResult.ExecutedId].isHandout = false         //re-transmit rpc call to the server
                                 }
-                                serverState[rpcResult.ExecutedId].isHandout = false         //re-transmit rpc call to the server
 
                                 fmt.Printf("candidate = %v, term = %v, server = %v, rpc failed\n", rf.me, rf.currentTerm, rpcResult.ExecutedId)
                             }
@@ -665,7 +768,8 @@ func serverHandler (rf *Raft, applyCh chan ApplyMsg) {
                     }
 
                     if i == rf.me {
-                        serverState[i].isHandout = true
+                        serverState[i].isHandout   = true
+                        serverState[i].isRpcReturn = true
                         continue
                     }
 
@@ -681,15 +785,16 @@ func serverHandler (rf *Raft, applyCh chan ApplyMsg) {
                     rf.mu.Lock()
                     args.Term = rf.currentTerm
                     args.CandidateId = rf.me
-                    args.LastLogIndex = rf.commitIndex
-                    args.LastLogTerm = rf.log[rf.commitIndex].Term
+                    args.LastLogIndex = len(rf.log) - 1
+                    args.LastLogTerm = rf.log[args.LastLogIndex].Term
                     fmt.Printf("candidate = %v, term = %v, LastLogIndex = %v, LastLogTerm = %v\n", rf.me, rf.currentTerm, args.LastLogIndex, args.LastLogTerm)
                     rf.mu.Unlock()
+                    serverState[i].isRpcReturn = false
 
                     go func(server int, args *RequestVoteArgs, reply *RequestVoteReply, rpcCandidateReplyChan chan RpcCandidateReply) {
 
                         rpcChan := make(chan RpcCandidateReply)
-                        rpcTimeout := 500
+                        rpcTimeout := 300
                         rpcTimer   := time.NewTimer(time.Duration(rpcTimeout) * time.Millisecond)
                         defer rpcTimer.Stop()
                         fmt.Printf("candidate = %v, rpc executedId = %v, term = %v, set rpcTimeout = %v\n", args.CandidateId, server, args.Term, rpcTimeout)
@@ -711,8 +816,8 @@ func serverHandler (rf *Raft, applyCh chan ApplyMsg) {
 
                         select {
                             case <-rpcTimer.C:
-                                close(rpcChan)
                                 fmt.Printf("candidate = %v, term = %v, rpc executedId = %v, rpcChan timeout, send rpcReplyChan\n", args.CandidateId, args.Term, server)
+                                close(rpcChan)
                                 rpcCandidateReplyChan <- RpcCandidateReply{reply, server, false}
                                 fmt.Printf("candidate = %v, term = %v, rpc executedId = %v, rpcChan timeout, send rpcReplyChan end\n", args.CandidateId, args.Term, server)
 
@@ -738,15 +843,23 @@ func serverHandler (rf *Raft, applyCh chan ApplyMsg) {
                     defer leaderTimer.Stop()
                     serverState   := make([]ServerState, len(rf.peers))
                     rpcSucceedCount    := 1
-                    duplicatedCount    := 1
+                    appendEntryCount   := 1
                     rpcLeaderReplyChan := make(chan RpcLeaderReply)
+                    isHeartbeat        := true
+
+                    select {
+                       case ch := <-rf.isHbChan:
+                           isHeartbeat = ch
+                           fmt.Printf("leader = %v, term = %v, get channel rf.isHbChan = %v\n", rf.me, rf.currentTerm, isHeartbeat)
+                       default:
+                    }
 
                     select {
                         case <- rf.exitChan:
                             fmt.Printf("leader = %v, term = %v, get channel rf.exitChan, break ExitServer\n", rf.me, rf.currentTerm)
                             break ExitServer
 
-                          case <- leaderTimer.C:
+                        case <- leaderTimer.C:
                             fmt.Printf("leader = %v, term = %v, heartbeat timerout\n", rf.me, rf.currentTerm)
 
                             ExitHeartbeat:
@@ -757,6 +870,8 @@ func serverHandler (rf *Raft, applyCh chan ApplyMsg) {
 
                                 select {
                                     case rpcResult := <-rpcLeaderReplyChan:
+                                        fmt.Printf("leader = %v, term = %v, server = %v, rpcReturn\n", rf.me, rf.currentTerm, rpcResult.ExecutedId)
+                                        serverState[rpcResult.ExecutedId].isRpcReturn = true
                                         if rpcResult.Result == true {
                                             fmt.Printf("leader = %v, term = %v, follower = %v, rpc succeed\n", rf.me, rf.currentTerm, rpcResult.ExecutedId)
                                             rpcSucceedCount++
@@ -766,29 +881,39 @@ func serverHandler (rf *Raft, applyCh chan ApplyMsg) {
 
                                             if rpcResult.Reply.Success == true {
 
-                                                duplicatedCount++
+                                                appendEntryCount++
                                                 rf.mu.Lock()
                                                 rf.nextIndex[rpcResult.ExecutedId]  = len(rf.log)
-                                                rf.matchIndex[rpcResult.ExecutedId] = len(rf.log)
+                                                rf.matchIndex[rpcResult.ExecutedId] = len(rf.log) - 1
                                                 rf.mu.Unlock()
 
-                                                fmt.Printf("leader = %v, term = %v, isServerAllTrue = %v, ValidServerCount = %v, rpcSucceedCount = %v\n", rf.me, rf.currentTerm, IsServerAllTrue(serverState), ValidServerCount(serverState), rpcSucceedCount)
-                                                if IsServerAllTrue(serverState) == true && ValidServerCount(serverState) <= rpcSucceedCount {
-                                                    fmt.Printf("leader = %v, term = %v, ValidServerCount = %v, rpcSucceedCount = %v, a heartbeat round is end\n", rf.me, rf.currentTerm, ValidServerCount(serverState), rpcSucceedCount)
-                                                    if CalculateDuplicated(rf, serverState, duplicatedCount) == true {
+                                                fmt.Printf("leader = %v, term = %v, isServerAllTrue = %v, ValidServerCount = %v, appendEntryCount = %v, IsRpcAllReturn = %v\n", rf.me, rf.currentTerm, IsServerAllTrue(serverState), ValidServerCount(serverState), appendEntryCount, IsRpcAllReturn(serverState))
+//                                                if IsServerAllTrue(serverState) == true && ValidServerCount(serverState) <= appendEntryCount {
+                                                if IsServerAllTrue(serverState) == true && ValidServerCount(serverState) <= appendEntryCount && IsRpcAllReturn(serverState) == true {
+                                                    fmt.Printf("leader = %v, term = %v, ValidServerCount = %v, appendEntryCount = %v, a heartbeat round is end\n", rf.me, rf.currentTerm, ValidServerCount(serverState), appendEntryCount)
+                                                    if CalculateDuplicated(rf, serverState, appendEntryCount) == true {
                                                         rf.mu.Lock()
-                                                        fmt.Printf("leader = %v, term = %v, isHeartbeat = %v\n", rf.me, rf.currentTerm, rf.isHeartbeat)
-                                                        if rf.isHeartbeat == false {
-                                                            rf.commitIndex++
+                                                        fmt.Printf("leader = %v, term = %v, isHeartbeat = %v\n", rf.me, rf.currentTerm, isHeartbeat)
+                                                        if isHeartbeat == false {
 
                                                             fmt.Printf("leader = %v, term = %v, majority server has duplicated, commitIndex = %v, exit appendEntries\n", rf.me, rf.currentTerm, rf.commitIndex)
                                                             go func(ch chan ApplyMsg) {
-                                                                fmt.Printf("leader = %v, term = %v,len(rf.log) = %v, commitIndex = %v, send applyMsg\n", rf.me, rf.currentTerm, len(rf.log), rf.commitIndex)
-                                                                cmd, _ := strconv.Atoi(rf.log[rf.commitIndex].Entry)
-                                                                ch <- ApplyMsg{true, cmd, rf.commitIndex}
-                                                                fmt.Printf("leader = %v, term = %v,len(rf.log) = %v, commitIndex = %v, send applyMsg end\n", rf.me, rf.currentTerm, len(rf.log), rf.commitIndex)
+                                                                fmt.Printf("leader = %v, term = %v, commitIndex = %v, len(rf.log) = %v\n", rf.me, rf.currentTerm, rf.commitIndex, len(rf.log))
+                                                                rf.mu.Lock()
+                                                                rf.commitIndex++
+                                                                rf.mu.Unlock()
+                                                                for j := rf.commitIndex; j < len(rf.log); j++ {
+                                                                    cmd, _ := strconv.Atoi(rf.log[j].Entry)
+                                                                    fmt.Printf("leader = %v, term = %v, len(rf.log) - 1 = %v, commitIndex = %v, cmd = %v, send applyMsg\n", rf.me, rf.currentTerm, len(rf.log) - 1, rf.commitIndex, cmd)
+                                                                    ch <- ApplyMsg{true, cmd, j}
+                                                                    fmt.Printf("leader = %v, term = %v, len(rf.log) - 1 = %v, commitIndex = %v, send applyMsg end\n", rf.me, rf.currentTerm, len(rf.log) - 1, rf.commitIndex)
+                                                                }
+                                                                rf.mu.Lock()
+                                                                rf.commitIndex = len(rf.log) - 1
+                                                                rf.mu.Unlock()
+                                                                fmt.Printf("leader = %v, term = %v, commitIndex = %v, len(rf.log) = %v\n", rf.me, rf.currentTerm, rf.commitIndex, len(rf.log))
                                                             } (applyCh)
-                                                            rf.isHeartbeat = true
+                                                            isHeartbeat = true
                                                         }
                                                         rf.mu.Unlock()
                                                         break ExitHeartbeat
@@ -804,6 +929,21 @@ func serverHandler (rf *Raft, applyCh chan ApplyMsg) {
                                             } else {
                                                 fmt.Printf("appendEntries failure......\n")
 
+                                                if IsReachQuorum(serverState) == false {
+                                                    fmt.Printf("leader = %v, term = %v, transist to follower\n", rf.me, rf.currentTerm)
+                                                    TransistToFollower(rf)
+                                                    break ExitLeader
+                                                } else {
+                                                    fmt.Printf("leader = %v, term = %v, there is quorum\n", rf.me, rf.currentTerm)
+                                                }
+                                                if rpcResult.Reply.Term > rf.currentTerm {
+                                                   fmt.Printf("leader = %v, term = %v, rpc executedId = %v, reply.Term = %v > currentTerm = %v, set new Term, transist to follower\n", rf.me, rf.currentTerm, rpcResult.ExecutedId, rpcResult.Reply.Term, rf.currentTerm)
+                                                   rf.mu.Lock()
+                                                   rf.currentTerm = rpcResult.Reply.Term
+                                                   rf.mu.Unlock()
+                                                   TransistToFollower(rf)
+                                                   break ExitLeader
+                                                }
                                                 rf.mu.Lock()
                                                 rf.nextIndex[rpcResult.ExecutedId]--
                                                 rf.mu.Unlock()
@@ -820,9 +960,43 @@ func serverHandler (rf *Raft, applyCh chan ApplyMsg) {
                                                 serverState[rpcResult.ExecutedId].isFailure = true
                                             }
 
-                                            if IsServerAllTrue(serverState) == true && ValidServerCount(serverState) <= rpcSucceedCount {
+                                            fmt.Printf("leader = %v, term = %v, isServerAllTrue = %v, ValidServerCount = %v, appendEntryCount = %v, IsRpcAllReturn = %v\n", rf.me, rf.currentTerm, IsServerAllTrue(serverState), ValidServerCount(serverState), appendEntryCount, IsRpcAllReturn(serverState))
+                                            if IsServerAllTrue(serverState) == true && ValidServerCount(serverState) <= appendEntryCount && IsRpcAllReturn(serverState) == true {
                                                 if IsReachQuorum(serverState) == true {
-                                                    break ExitHeartbeat
+                                                    if CalculateDuplicated(rf, serverState, appendEntryCount) == true {
+                                                        rf.mu.Lock()
+                                                        fmt.Printf("leader = %v, term = %v, isHeartbeat = %v\n", rf.me, rf.currentTerm, isHeartbeat)
+                                                        if isHeartbeat == false {
+
+                                                            fmt.Printf("leader = %v, term = %v, majority server has duplicated, commitIndex = %v, exit appendEntries\n", rf.me, rf.currentTerm, rf.commitIndex)
+                                                            go func(ch chan ApplyMsg) {
+                                                                rf.mu.Lock()
+                                                                rf.commitIndex++
+                                                                rf.mu.Unlock()
+                                                                for j := rf.commitIndex; j < len(rf.log); j++ {
+                                                                    cmd, _ := strconv.Atoi(rf.log[j].Entry)
+                                                                    fmt.Printf("leader = %v, term = %v, len(rf.log) - 1 = %v, commitIndex = %v, j = %v,  cmd = %v, send applyMsg\n", rf.me, rf.currentTerm, len(rf.log) - 1, rf.commitIndex, j, cmd)
+                                                                    ch <- ApplyMsg{true, cmd, rf.commitIndex}
+                                                                    fmt.Printf("leader = %v, term = %v, len(rf.log) - 1 = %v, commitIndex = %v, j = %v, send applyMsg end\n", rf.me, rf.currentTerm, len(rf.log) - 1, rf.commitIndex, j)
+                                                                }
+                                                                rf.mu.Lock()
+                                                                rf.commitIndex = len(rf.log) - 1
+                                                                rf.mu.Unlock()
+                                                                fmt.Printf("leader = %v, term = %v, commitIndex = %v, len(rf.log) = %v\n", rf.me, rf.currentTerm, rf.commitIndex, len(rf.log))
+
+                                                            } (applyCh)
+                                                            isHeartbeat = true
+                                                        }
+                                                        rf.mu.Unlock()
+                                                        break ExitHeartbeat
+                                                    } else {
+                                                        if rf.role == 0 {
+                                                            fmt.Printf("leader = %v, term = %v, has no quorum, transist to follower\n", rf.me, rf.currentTerm, rpcResult.ExecutedId)
+                                                            break ExitLeader
+                                                        }
+                                                        fmt.Printf("leader = %v, term = %v, less server has duplicated, start new appendEntries\n", rf.me, rf.currentTerm)
+                                                        break ExitHeartbeat
+                                                    }
                                                 } else {
                                                     fmt.Printf("leader = %v, term = %v, transist to follower\n", rf.me, rf.currentTerm, rpcResult.ExecutedId)
                                                     TransistToFollower(rf)
@@ -848,6 +1022,7 @@ func serverHandler (rf *Raft, applyCh chan ApplyMsg) {
                                 }
                                 if i == rf.me {
                                     serverState[i].isHandout = true
+                                    serverState[i].isRpcReturn = true
                                     continue
                                 }
 
@@ -858,6 +1033,9 @@ func serverHandler (rf *Raft, applyCh chan ApplyMsg) {
                                 }
 
                                 rf.mu.Lock()
+                                for j := 0; j < len(rf.log); j++ {
+                                    fmt.Printf("leader = %v, term = %v, log[%v].Entry = %v\n", rf.me, rf.currentTerm, j, rf.log[j].Entry)
+                                }
                                 fmt.Printf("leader = %v, term = %v, rf.nextIndex[%v] = %v\n", rf.me, rf.currentTerm, i, rf.nextIndex[i])
                                 fmt.Printf("leader = %v, term = %v, len(rf.log) = %v\n", rf.me, rf.currentTerm, len(rf.log))
                                 args.Term         = rf.currentTerm
@@ -865,21 +1043,24 @@ func serverHandler (rf *Raft, applyCh chan ApplyMsg) {
                                 args.PrevLogIndex = rf.nextIndex[i] - 1
                                 args.PrevLogTerm  = rf.log[args.PrevLogIndex].Term
                                 args.LeaderCommit = rf.commitIndex
-                                if rf.isHeartbeat == false {
-                                    args.Entries      = make([]LogEntry, len(rf.log) - args.PrevLogIndex)
-                                    args.Entries      = append(rf.log[args.PrevLogIndex:])
+                                if isHeartbeat == false {
+                                    args.Entries   = make([]LogEntry, len(rf.log) - args.PrevLogIndex)
+                                    args.Entries   = append(rf.log[args.PrevLogIndex:])
+                                    args.Heartbeat = false
                                     for j := 0; j < len(args.Entries); j++ {
                                         fmt.Printf("leader = %v, term = %v, entries[%v] = %v\n", rf.me, rf.currentTerm, j, args.Entries[j])
                                     }
                                 } else {
+                                    args.Heartbeat = true
                                     args.Entries = make([]LogEntry, 1)
                                 }
                                 rf.mu.Unlock()
+                                serverState[i].isRpcReturn = false
 
                                 go func(server int, args *AppendEntriesArgs, reply *AppendEntriesReply, rpcLeaderReplyChan chan RpcLeaderReply) {
 
                                     rpcChan := make(chan RpcLeaderReply)
-                                    rpcTimeout := 500
+                                    rpcTimeout := 300
                                     rpcTimer   := time.NewTimer(time.Duration(rpcTimeout) * time.Millisecond)
                                     defer rpcTimer.Stop()
                                     fmt.Printf("leader = %v, rpc executedId = %v, term = %v, set rpcTimeout = %v\n", args.LeaderId, server, args.Term, rpcTimeout)
@@ -937,6 +1118,15 @@ func IsReachQuorum(server []ServerState) bool {
         fmt.Printf("There is quorum\n")
         return true
     }
+}
+
+func IsRpcAllReturn(server []ServerState) bool {
+    for i := 0; i < len(server); i++ {
+        if server[i].isRpcReturn == false {
+            return false
+        }
+    }
+    return true
 }
 
 func TransistToFollower(rf *Raft) {
@@ -1050,24 +1240,6 @@ func CalculateDuplicated(rf *Raft, server []ServerState, numberOfDuplicated int)
 
 }
 
-func PrintRaft(rf *Raft) {
-    fmt.Printf("----------me = %v, Print Raft----------\n", rf.me)
-    fmt.Printf("me = %v, currentTerm = %v\n", rf.me, rf.currentTerm)
-    fmt.Printf("me = %v, votedFor = %v\n", rf.me, rf.votedFor)
-    for i := 0; i < len(rf.log); i++ {
-        fmt.Printf("me = %v, log[%v].Term = %v, ", rf.me, i, rf.log[i].Term)
-        fmt.Printf("me = %v, log[%v].Entry = %v\n", rf.me, i, rf.log[i].Entry)
-    }
-    fmt.Printf("me = %v, commitIndex = %v\n", rf.me, rf.commitIndex)
-    fmt.Printf("me = %v, lastApplied = %v\n", rf.me, rf.lastApplied)
-    for i := 0; i < len(rf.nextIndex); i++ {
-        fmt.Printf("me = %v, nextIndex[%v] = %v\n", rf.me, i, rf.nextIndex[i])
-    }
-    for i := 0; i < len(rf.matchIndex); i++ {
-        fmt.Printf("me = %v, matchIndex[%v] = %v\n", rf.me, i, rf.matchIndex[i])
-    }
-    fmt.Printf("----------me = %v, Print Raft end----------\n", rf.me)
-}
 func InitNextIndex(rf *Raft) {
     for i := 0; i < len(rf.nextIndex); i++ {
         fmt.Printf("server = %v, nextIndex[%v] = %v\n", i, i, len(rf.log))
