@@ -326,6 +326,7 @@ type AppendEntriesArgs struct {
 type AppendEntriesReply struct {
     Term        int
     Success     bool
+    MatchIndex  int
 }
 
 type RpcLeaderReply struct {
@@ -508,6 +509,7 @@ type ServerState struct {
     isFailure       bool
     isDuplicated    bool
     isRpcReturn     bool
+    lastHbSuccess   bool
 }
 
 //
@@ -835,7 +837,8 @@ func serverHandler (rf *Raft, applyCh chan ApplyMsg) {
             case 2:
                 fmt.Printf("leader = %v, term = %v, I am a leader now\n", rf.me, rf.currentTerm)
 
-                isAllowApply := make([]bool, len(rf.peers))
+                isAllowApply  := make([]bool, len(rf.peers))
+                lastHbSuccess := make([]bool, len(rf.peers))
                 ExitLeader:
                 for {
                     fmt.Printf("leader = %v, term = %v, start a heartbeatTimer\n", rf.me, rf.currentTerm)
@@ -882,10 +885,12 @@ func serverHandler (rf *Raft, applyCh chan ApplyMsg) {
 
                                             if rpcResult.Reply.Success == true {
 
+                                                lastHbSuccess[rpcResult.ExecutedId] = true
                                                 appendEntryCount++
                                                 rf.mu.Lock()
+                                                rf.matchIndex[rpcResult.ExecutedId] = rf.nextIndex[rpcResult.ExecutedId] - 1
                                                 rf.nextIndex[rpcResult.ExecutedId]  = len(rf.log)
-                                                rf.matchIndex[rpcResult.ExecutedId] = len(rf.log) - 1
+                                                fmt.Printf("leader = %v, term = %v, follower = %v, matchIndex = %v\n", rf.me, rf.currentTerm, rpcResult.ExecutedId, rf.matchIndex[rpcResult.ExecutedId])
                                                 rf.mu.Unlock()
 
                                                 fmt.Printf("leader = %v, term = %v, isServerAllTrue = %v, ValidServerCount = %v, appendEntryCount = %v, IsRpcAllReturn = %v\n", rf.me, rf.currentTerm, IsServerAllTrue(serverState), ValidServerCount(serverState), appendEntryCount, IsRpcAllReturn(serverState))
@@ -925,6 +930,7 @@ func serverHandler (rf *Raft, applyCh chan ApplyMsg) {
                                                             break ExitLeader
                                                         }
                                                         fmt.Printf("leader = %v, term = %v, less server has duplicated, start new appendEntries\n", rf.me, rf.currentTerm)
+                                                        lastHbSuccess[rpcResult.ExecutedId] = false
                                                         break ExitHeartbeat
                                                     }
                                                 }
@@ -933,6 +939,9 @@ func serverHandler (rf *Raft, applyCh chan ApplyMsg) {
 
                                                 if IsReachQuorum(serverState) == false {
                                                     fmt.Printf("leader = %v, term = %v, transist to follower\n", rf.me, rf.currentTerm)
+                                                    for j := 0; j < len(rf.peers); j++ {
+                                                        lastHbSuccess[j] = false
+                                                    }
                                                     TransistToFollower(rf)
                                                     break ExitLeader
                                                 } else {
@@ -970,22 +979,20 @@ func serverHandler (rf *Raft, applyCh chan ApplyMsg) {
                                                         if isHeartbeat == false {
 
                                                             fmt.Printf("leader = %v, term = %v, majority server has duplicated, commitIndex = %v, exit appendEntries\n", rf.me, rf.currentTerm, rf.commitIndex)
-//                                                            go func(ch chan ApplyMsg) {
-                                                                rf.mu.Lock()
-                                                                rf.commitIndex++
-                                                                rf.mu.Unlock()
-                                                                for j := rf.commitIndex; j < len(rf.log); j++ {
-                                                                    cmd, _ := strconv.Atoi(rf.log[j].Entry)
-                                                                    fmt.Printf("leader = %v, term = %v, len(rf.log) - 1 = %v, commitIndex = %v, j = %v,  cmd = %v, send applyMsg\n", rf.me, rf.currentTerm, len(rf.log) - 1, rf.commitIndex, j, cmd)
-                                                                    applyCh <- ApplyMsg{true, cmd, rf.commitIndex}
-                                                                    fmt.Printf("leader = %v, term = %v, len(rf.log) - 1 = %v, commitIndex = %v, j = %v, send applyMsg end\n", rf.me, rf.currentTerm, len(rf.log) - 1, rf.commitIndex, j)
-                                                                }
-                                                                rf.mu.Lock()
-                                                                rf.commitIndex = len(rf.log) - 1
-                                                                rf.mu.Unlock()
-                                                                fmt.Printf("leader = %v, term = %v, commitIndex = %v, len(rf.log) = %v\n", rf.me, rf.currentTerm, rf.commitIndex, len(rf.log))
+                                                            rf.mu.Lock()
+                                                            rf.commitIndex++
+                                                            rf.mu.Unlock()
+                                                            for j := rf.commitIndex; j < len(rf.log); j++ {
+                                                                cmd, _ := strconv.Atoi(rf.log[j].Entry)
+                                                                fmt.Printf("leader = %v, term = %v, len(rf.log) - 1 = %v, commitIndex = %v, j = %v,  cmd = %v, send applyMsg\n", rf.me, rf.currentTerm, len(rf.log) - 1, rf.commitIndex, j, cmd)
+                                                                applyCh <- ApplyMsg{true, cmd, rf.commitIndex}
+                                                                fmt.Printf("leader = %v, term = %v, len(rf.log) - 1 = %v, commitIndex = %v, j = %v, send applyMsg end\n", rf.me, rf.currentTerm, len(rf.log) - 1, rf.commitIndex, j)
+                                                            }
+                                                            rf.mu.Lock()
+                                                            rf.commitIndex = len(rf.log) - 1
+                                                            rf.mu.Unlock()
+                                                            fmt.Printf("leader = %v, term = %v, commitIndex = %v, len(rf.log) = %v\n", rf.me, rf.currentTerm, rf.commitIndex, len(rf.log))
 
-//                                                            } (applyCh)
                                                             for j := 0; j < len(rf.peers); j++ {
                                                                 isAllowApply[j] = true
                                                             }
@@ -998,6 +1005,9 @@ func serverHandler (rf *Raft, applyCh chan ApplyMsg) {
                                                             break ExitLeader
                                                         }
                                                         fmt.Printf("leader = %v, term = %v, less server has duplicated, start new appendEntries\n", rf.me, rf.currentTerm)
+                                                        for j := 0; j < len(rf.peers); j++ {
+                                                            lastHbSuccess[j] = false
+                                                        }
                                                         break ExitHeartbeat
                                                     }
                                                 } else {
@@ -1047,6 +1057,11 @@ func serverHandler (rf *Raft, applyCh chan ApplyMsg) {
                                 args.PrevLogTerm  = rf.log[args.PrevLogIndex].Term
                                 args.LeaderCommit = rf.commitIndex
                                 if isHeartbeat == false {
+                                    if lastHbSuccess[i] == true {
+                                        fmt.Printf("leader = %v, term = %v, server = %v, matchIndex = %v\n", rf.me, rf.currentTerm, i, rf.matchIndex[i])
+                                        args.PrevLogIndex = rf.matchIndex[i]
+                                        lastHbSuccess[i] = false
+                                    }
                                     args.Entries   = make([]LogEntry, len(rf.log) - args.PrevLogIndex)
                                     args.Entries   = append(rf.log[args.PrevLogIndex:])
                                     args.Heartbeat = false
@@ -1219,7 +1234,8 @@ func CalculateVotes(rf *Raft, server []ServerState, numberOfVotes int) bool {
         return false
     }
 
-    if IsGetMajority(numberOfVotes, ValidServerCount(server)) {
+//    if IsGetMajority(numberOfVotes, ValidServerCount(server)) {
+    if IsGetMajority(numberOfVotes, len(server)) {
         fmt.Printf("candidate = %v, term = %v, get majority votes\n", rf.me, rf.currentTerm)
         TransistToLeader(rf)
         return true

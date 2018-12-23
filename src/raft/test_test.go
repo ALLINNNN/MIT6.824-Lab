@@ -487,13 +487,16 @@ func TestCount2B(t *testing.T) {
 	rpcs := func() (n int) {
 		for j := 0; j < servers; j++ {
 			n += cfg.rpcCount(j)
+            fmt.Printf("server = %v, rpcCount(%v) = %v, total = %v\n", j, j, cfg.rpcCount(j), n)
 		}
 		return
 	}
 
 	leader := cfg.checkOneLeader()
+	fmt.Printf("Test (2B): RPC counts, checkOneLeader = %v\n", leader)
 
 	total1 := rpcs()
+	fmt.Printf("Test (2B): RPC counts, total1 = %v\n", total1)
 
 	if total1 > 30 || total1 < 1 {
 		t.Fatalf("too many or few RPCs (%v) to elect initial leader\n", total1)
@@ -509,10 +512,13 @@ loop:
 		}
 
 		leader = cfg.checkOneLeader()
+	    fmt.Printf("Test (2B): RPC counts, checkOneLeader = %v\n", leader)
 		total1 = rpcs()
+	    fmt.Printf("Test (2B): RPC counts, total1 = %v\n", total1)
 
 		iters := 10
 		starti, term, ok := cfg.rafts[leader].Start(1)
+	    fmt.Printf("Test (2B): RPC counts, starti = %v, term = %v, ok = %v\n", starti, term, ok)
 		if !ok {
 			// leader moved on really quickly
 			continue
@@ -520,13 +526,17 @@ loop:
 		cmds := []int{}
 		for i := 1; i < iters+2; i++ {
 			x := int(rand.Int31())
+	        fmt.Printf("Test (2B): RPC counts, start, leader = %v, cmd = %v\n", leader, x)
 			cmds = append(cmds, x)
 			index1, term1, ok := cfg.rafts[leader].Start(x)
+	        fmt.Printf("Test (2B): RPC counts, index1 = %v, term1 = %v, ok = %v, term = %v\n", index1, term1, ok, term)
 			if term1 != term {
 				// Term changed while starting
+	            fmt.Printf("Test (2B): RPC counts, Term changed while starting, term = %v != term1 = %v\n", term, term1)
 				continue loop
 			}
 			if !ok {
+	            fmt.Printf("Test (2B): RPC counts, No longer the leader, so term has changed\n")
 				// No longer the leader, so term has changed
 				continue loop
 			}
@@ -539,6 +549,7 @@ loop:
 			cmd := cfg.wait(starti+i, servers, term)
 			if ix, ok := cmd.(int); ok == false || ix != cmds[i-1] {
 				if ix == -1 {
+	                fmt.Printf("Test (2B): RPC counts, term changed -- try again\n")
 					// term changed -- try again
 					continue loop
 				}
@@ -555,13 +566,16 @@ loop:
 				failed = true
 			}
 			total2 += cfg.rpcCount(j)
+	        fmt.Printf("Test (2B): RPC counts, rpcCount(%v) = %v, total2 = %v\n", j, cfg.rpcCount(j), total2)
 		}
 
 		if failed {
+	        fmt.Printf("Test (2B): RPC counts, failed, continue loop\n")
 			continue loop
 		}
 
 		if total2-total1 > (iters+1+3)*3 {
+	        fmt.Printf("Test (2B): RPC counts, total2 = %v, total1 = %v, total2-total1 = %v, limitation = %v\n", total2, total1, total2 - total1, (iters+1+3)*3)
 			t.Fatalf("too many RPCs (%v) for %v entries\n", total2-total1, iters)
 		}
 
