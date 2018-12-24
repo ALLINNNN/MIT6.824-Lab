@@ -609,41 +609,63 @@ func TestPersist12C(t *testing.T) {
 
 	cfg.begin("Test (2C): basic persistence")
 
+	fmt.Printf("Test (2C): basic persistence, start cmd 11\n")
 	cfg.one(11, servers, true)
 
 	// crash and re-start all
 	for i := 0; i < servers; i++ {
+	    fmt.Printf("Test (2C): basic persistence, start server = %v\n", i)
 		cfg.start1(i)
 	}
+	fmt.Printf("Test (2C): basic persistence, start1 end\n")
 	for i := 0; i < servers; i++ {
 		cfg.disconnect(i)
 		cfg.connect(i)
 	}
 
+	fmt.Printf("Test (2C): basic persistence, start cmd 12\n")
 	cfg.one(12, servers, true)
 
 	leader1 := cfg.checkOneLeader()
+	fmt.Printf("Test (2C): basic persistence, checkOneLeader = %v\n", leader1)
 	cfg.disconnect(leader1)
+	fmt.Printf("Test (2C): basic persistence, start server = %v\n", leader1)
 	cfg.start1(leader1)
+	fmt.Printf("Test (2C): basic persistence, connect = %v\n", leader1)
 	cfg.connect(leader1)
 
+	fmt.Printf("Test (2C): basic persistence, start cmd 13\n")
 	cfg.one(13, servers, true)
 
 	leader2 := cfg.checkOneLeader()
+	fmt.Printf("Test (2C): basic persistence2, checkOneLeader = %v\n", leader2)
 	cfg.disconnect(leader2)
+	fmt.Printf("Test (2C): basic persistence2, disconnect = %v\n", leader2)
 	cfg.one(14, servers-1, true)
+	fmt.Printf("Test (2C): basic persistence2, start cmd 14\n")
 	cfg.start1(leader2)
+	fmt.Printf("Test (2C): basic persistence2, start server = %v\n", leader2)
 	cfg.connect(leader2)
+	fmt.Printf("Test (2C): basic persistence2, connect = %v\n", leader2)
 
+	fmt.Printf("Test (2C): basic persistence, wait start\n")
 	cfg.wait(4, servers, -1) // wait for leader2 to join before killing i3
+	fmt.Printf("Test (2C): basic persistence, wait end\n")
 
 	i3 := (cfg.checkOneLeader() + 1) % servers
+	fmt.Printf("Test (2C): basic persistence2, checkOneLeader = %v\n", i3)
 	cfg.disconnect(i3)
+	fmt.Printf("Test (2C): basic persistence2, disconnect = %v\n", i3)
 	cfg.one(15, servers-1, true)
+	fmt.Printf("Test (2C): basic persistence, start cmd 15\n")
 	cfg.start1(i3)
+	fmt.Printf("Test (2C): basic persistence, start server = %v\n", i3)
 	cfg.connect(i3)
+	fmt.Printf("Test (2C): basic persistence2, connect = %v\n", i3)
 
+	fmt.Printf("Test (2C): basic persistence, start cmd 16\n")
 	cfg.one(16, servers, true)
+	fmt.Printf("Test (2C): basic persistence end\n")
 
 	cfg.end()
 }
@@ -745,48 +767,63 @@ func TestFigure82C(t *testing.T) {
 
 	nup := servers
 	for iters := 0; iters < 1000; iters++ {
+	    fmt.Printf("Test (2C): Figure 8, round = %v\n", iters)
 		leader := -1
 		for i := 0; i < servers; i++ {
 			if cfg.rafts[i] != nil {
 				_, _, ok := cfg.rafts[i].Start(rand.Int())
 				if ok {
 					leader = i
+	                fmt.Printf("Test (2C): Figure 8, find leader = %v\n", leader)
 				}
 			}
 		}
 
 		if (rand.Int() % 1000) < 100 {
 			ms := rand.Int63() % (int64(RaftElectionTimeout/time.Millisecond) / 2)
+	        fmt.Printf("Test (2C): Figure 8, sleep time = %v\n", ms)
 			time.Sleep(time.Duration(ms) * time.Millisecond)
 		} else {
 			ms := (rand.Int63() % 13)
+	        fmt.Printf("Test (2C): Figure 8, sleep time = %v\n", ms)
 			time.Sleep(time.Duration(ms) * time.Millisecond)
 		}
 
 		if leader != -1 {
+	        fmt.Printf("Test (2C): Figure 8, crash leader = %v\n", leader)
 			cfg.crash1(leader)
 			nup -= 1
+	        fmt.Printf("Test (2C): Figure 8, crash leader, nup = %v\n", nup)
 		}
 
 		if nup < 3 {
 			s := rand.Int() % servers
+	        fmt.Printf("Test (2C): Figure 8, nup < 3, s = %v\n", s)
 			if cfg.rafts[s] == nil {
 				cfg.start1(s)
 				cfg.connect(s)
 				nup += 1
-			}
+	            fmt.Printf("Test (2C): Figure 8, start server = %v, nup = %v\n", s, nup)
+			} else {
+	            fmt.Printf("Test (2C): Figure 8, server = %v has started\n", s)
+            }
 		}
 	}
 
+	fmt.Printf("Test (2C): Figure 8, start all server\n")
 	for i := 0; i < servers; i++ {
 		if cfg.rafts[i] == nil {
+	        fmt.Printf("Test (2C): Figure 8, start server = %v\n", i)
 			cfg.start1(i)
+	        fmt.Printf("Test (2C): Figure 8, connect server = %v\n", i)
 			cfg.connect(i)
 		}
 	}
 
+	fmt.Printf("Test (2C): Figure 8, one(rand.Int())\n")
 	cfg.one(rand.Int(), servers, true)
 
+	fmt.Printf("Test (2C): Figure 8, end\n")
 	cfg.end()
 }
 
@@ -800,22 +837,31 @@ func TestUnreliableAgree2C(t *testing.T) {
 	var wg sync.WaitGroup
 
 	for iters := 1; iters < 50; iters++ {
+	    fmt.Printf("Test (2C): unreliable agreement, iters = %v\n", iters)
 		for j := 0; j < 4; j++ {
 			wg.Add(1)
 			go func(iters, j int) {
 				defer wg.Done()
+	            fmt.Printf("Test (2C): unreliable agreement, one start, iters = %v, cmd = %v\n", iters, (100*iters)+j)
 				cfg.one((100*iters)+j, 1, true)
+	            fmt.Printf("Test (2C): unreliable agreement, one end, iters = %v, cmd = %v\n", iters, (100*iters)+j)
 			}(iters, j)
 		}
+	    fmt.Printf("Test (2C): unreliable agreement, iters = %v, one(iters, 1, true), start\n", iters)
 		cfg.one(iters, 1, true)
+	    fmt.Printf("Test (2C): unreliable agreement, iters = %v, one(iters, 1, true), end\n", iters)
 	}
 
+	fmt.Printf("Test (2C): unreliable agreement, setunreliable(false)\n")
 	cfg.setunreliable(false)
 
+	fmt.Printf("Test (2C): unreliable agreement, wait wg\n")
 	wg.Wait()
 
+	fmt.Printf("Test (2C): unreliable agreement, one(100, %v, true)\n", servers)
 	cfg.one(100, servers, true)
 
+	fmt.Printf("Test (2C): unreliable agreement, end\n")
 	cfg.end()
 }
 
